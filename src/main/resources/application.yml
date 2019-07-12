@@ -1,0 +1,29 @@
+#服务配置
+server:
+  port: 8887
+
+#spring配置
+spring:
+  #thymeleaf模板
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
+  #jdbc配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootdb?useUnicode=true&characterEncoding=utf8
+    username: mango
+    password: root5.7.22
+
+
+#Mybatis配置
+mybatis:
+  #设置别名
+  type-aliases-package: com.xlx.ssmshiro.entity
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:generatorConfig.xml
+
+
