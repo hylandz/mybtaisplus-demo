@@ -1,8 +1,9 @@
 package com.xlx.ssmshiro.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Dept {
+public class Dept implements Serializable {
     private Long deptId;
 
     private String deptName;

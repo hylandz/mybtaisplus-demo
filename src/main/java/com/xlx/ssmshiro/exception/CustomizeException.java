@@ -1,0 +1,28 @@
+package com.xlx.ssmshiro.exception;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * 自定义异常
+ *
+ * @author xielx on 2019/7/13
+ */
+public class CustomizeException extends RuntimeException implements ICustomizeException{
+
+  // 状态码
+  @Getter
+  @Setter
+  private Integer code;
+
+  // 提示信息
+  @Getter
+  @Setter
+  private String message;
+
+
+  public CustomizeException(Integer code,String message){
+    this.code = code;
+    this.message = message;
+  }
+}

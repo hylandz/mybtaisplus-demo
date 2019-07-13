@@ -1,25 +1,30 @@
 package com.xlx.ssmshiro.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
-    private Long userId;
+/**
+ * 用户
+ */
+public class User  implements Serializable {
 
-    private Long deptId;
+    private Long userId; //主键
 
-    private String avatarName;
+    private Long deptId; // 部门id
 
-    private String avatarUrl;
+    private String avatarName; // 昵称
 
-    private String userAccount;
+    private String avatarUrl; //头像url
 
-    private String userName;
+    private String userAccount; //账号
 
-    private String userPassword;
+    private String userName; //用户名
 
-    private String salt;
+    private String userPassword; //密码
 
-    private String token;
+    private String salt; //盐值
+
+    private String token; //
 
     private String mail;
 

@@ -26,4 +26,7 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   config-location: classpath:generatorConfig.xml
 
-
+#日志配置
+logging:
+  level:
+    com.xlx.ssmshiro: debug

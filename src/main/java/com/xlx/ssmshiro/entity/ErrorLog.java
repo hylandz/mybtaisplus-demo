@@ -1,6 +1,8 @@
 package com.xlx.ssmshiro.entity;
 
-public class ErrorLog {
+import java.io.Serializable;
+
+public class ErrorLog implements Serializable {
     private Long logId;
 
     private String uri;

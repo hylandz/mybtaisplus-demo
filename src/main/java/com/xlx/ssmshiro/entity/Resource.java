@@ -1,8 +1,9 @@
 package com.xlx.ssmshiro.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Resource {
+public class Resource implements Serializable {
     private Long menuId;
 
     private String name;
@@ -23,9 +24,9 @@ public class Resource {
 
     private Date gmtCreate;
 
-    private Date gmtModified;
+    private Date gmtModified;
 
-    public Resource(Long menuId, String name, String icon, String type, String url, Long parentId, String parentIds, String permission, Boolean available, Date gmtCreate, Date gmtModified) {
+    public Resource(Long menuId, String name, String icon, String type, String url, Long parentId, String parentIds, String permission, Boolean available, Date gmtCreate, Date gmtModified) {
         this.menuId = menuId;
         this.name = name;
         this.icon = icon;
@@ -36,7 +37,7 @@ public class Resource {
         this.permission = permission;
         this.available = available;
         this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+        this.gmtModified = gmtModified;
     }
 
     public Resource() {
@@ -123,11 +124,11 @@ public class Resource {
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public Date getGmtModified() {
+        return gmtModified;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

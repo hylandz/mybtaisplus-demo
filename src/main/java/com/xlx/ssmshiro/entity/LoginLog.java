@@ -1,8 +1,9 @@
 package com.xlx.ssmshiro.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LoginLog {
+public class LoginLog implements Serializable {
     private Long logId;
 
     private String account;

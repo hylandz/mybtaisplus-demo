@@ -1,8 +1,9 @@
 package com.xlx.ssmshiro.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Role {
+public class Role implements Serializable {
     private Long role_id;
 
     private String role_key;
