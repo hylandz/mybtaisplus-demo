@@ -1,10 +1,13 @@
 package com.xlx.ssmshiro.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Resource implements Serializable {
-    private Long menuId;
+    private Long resourceId;
 
     private String name;
 
@@ -26,30 +29,21 @@ public class Resource implements Serializable {
 
     private Date gmtModified;
 
-    public Resource(Long menuId, String name, String icon, String type, String url, Long parentId, String parentIds, String permission, Boolean available, Date gmtCreate, Date gmtModified) {
-        this.menuId = menuId;
-        this.name = name;
-        this.icon = icon;
-        this.type = type;
-        this.url = url;
-        this.parentId = parentId;
-        this.parentIds = parentIds;
-        this.permission = permission;
-        this.available = available;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 
     public Resource() {
         super();
     }
 
-    public Long getMenuId() {
-        return menuId;
+    public Long getResourceId() {
+        return resourceId;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
     }
 
     public String getName() {

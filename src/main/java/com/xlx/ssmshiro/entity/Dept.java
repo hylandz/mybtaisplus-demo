@@ -1,5 +1,8 @@
 package com.xlx.ssmshiro.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,14 +21,9 @@ public class Dept implements Serializable {
 
     private Date gmtModified;
 
-    public Dept(Long deptId, String deptName, Long parentId, String parentIds, Boolean available, Date gmtCreate, Date gmtModified) {
-        this.deptId = deptId;
-        this.deptName = deptName;
-        this.parentId = parentId;
-        this.parentIds = parentIds;
-        this.available = available;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 
     public Dept() {

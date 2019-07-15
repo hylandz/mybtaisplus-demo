@@ -3,7 +3,7 @@
 <mapper namespace="com.xlx.ssmshiro.dao.ResourceMapper">
   <resultMap id="BaseResultMap" type="com.xlx.ssmshiro.entity.Resource">
     <constructor>
-      <idArg column="menu_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <idArg column="resource_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="icon" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,38 +13,38 @@
       <arg column="permission" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="available" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    menu_id, name, icon, type, url, parent_id, parent_ids, permission, available, gmt_create, 
-    gmt_modified
+    resource_id, name, icon, type, url, parent_id, parent_ids, permission, available, gmt_create,
+    gmt_modified
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_resources
-    where menu_id = #{menuId,jdbcType=BIGINT}
+    where resource_id = #{resourced,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_resources
-    where menu_id = #{menuId,jdbcType=BIGINT}
+    where resource_id = #{resourceId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.xlx.ssmshiro.entity.Resource">
-    insert into sys_resources (menu_id, name, icon, 
+    insert into sys_resources (resource_id, name, icon, 
       type, url, parent_id, 
       parent_ids, permission, available, 
-      gmt_create, gmt_modified)
-    values (#{menuId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      gmt_create, gmt_modified)
+    values (#{resourceId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
       #{parentIds,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, #{available,jdbcType=BIT}, 
-      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.xlx.ssmshiro.entity.Resource">
     insert into sys_resources
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="menuId != null">
-        menu_id,
+      <if test="resourceId != null">
+        resource_id,
       </if>
       <if test="name != null">
         name,
@@ -73,13 +73,13 @@
       <if test="gmtCreate != null">
         gmt_create,
       </if>
-      <if test="gmtModified != null">
-        gmt_modified,
+      <if test="gmtModified != null">
+        gmt_modified,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="menuId != null">
-        #{menuId,jdbcType=BIGINT},
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -108,8 +108,8 @@
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModified != null">
-        #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -143,11 +143,11 @@
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
-      <if test="gmtModified != null">
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where menu_id = #{menuId,jdbcType=BIGINT}
+    where resource_id = #{resourceId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xlx.ssmshiro.entity.Resource">
     update sys_resources
@@ -160,7 +160,7 @@
       permission = #{permission,jdbcType=VARCHAR},
       available = #{available,jdbcType=BIT},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
-    where menu_id = #{menuId,jdbcType=BIGINT}
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where resource_id = #{resourceId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -1,5 +1,8 @@
 package com.xlx.ssmshiro.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,44 +27,43 @@ public class User  implements Serializable {
 
     private String salt; //盐值
 
-    private String token; //
+    private String token; //cookie使用
 
-    private String mail;
+    private String mail; //邮箱
 
-    private String phone;
+    private String phone; //电话
 
-    private Boolean locked;
+    private Boolean locked = Boolean.FALSE; //不锁定
 
-    private String loginIp;
+    private String loginIp; // 登录ip
 
-    private Date loginDate;
+    private Date loginDate; //最后登录时间
 
-    private Date gmtCreate;
+    private Date gmtCreate; //创建时间
 
-    private Date gmtModified;
+    private Date gmtModified; //修改时间
 
-    public User(Long userId, Long deptId, String avatarName, String avatarUrl, String userAccount, String userName, String userPassword, String salt, String token, String mail, String phone, Boolean locked, String loginIp, Date loginDate, Date gmtCreate, Date gmtModified) {
-        this.userId = userId;
-        this.deptId = deptId;
-        this.avatarName = avatarName;
-        this.avatarUrl = avatarUrl;
-        this.userAccount = userAccount;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.salt = salt;
-        this.token = token;
-        this.mail = mail;
-        this.phone = phone;
-        this.locked = locked;
-        this.loginIp = loginIp;
-        this.loginDate = loginDate;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    /**
+     * 盐 = 用户名 + salt
+     * @return
+     */
+    public String getCridentialSalt(){
+        return userName + salt;
     }
 
     public User() {
         super();
     }
+
+
+
+
 
     public Long getUserId() {
         return userId;

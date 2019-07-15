@@ -21,8 +21,21 @@ public class CustomizeException extends RuntimeException implements ICustomizeEx
   private String message;
 
 
+  public CustomizeException(){
+    super();
+  }
+
   public CustomizeException(Integer code,String message){
     this.code = code;
     this.message = message;
+  }
+
+  public CustomizeException(ICustomizeException iCustomize){
+    this.code = iCustomize.getCode();
+    this.message = iCustomize.getMessage();
+  }
+
+  public CustomizeException(String message){
+    super(message);
   }
 }

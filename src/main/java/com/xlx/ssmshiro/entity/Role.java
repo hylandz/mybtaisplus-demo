@@ -1,5 +1,8 @@
 package com.xlx.ssmshiro.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,13 +19,9 @@ public class Role implements Serializable {
 
     private Date gmt_modified;
 
-    public Role(Long role_id, String role_key, String role_name, Boolean available, Date gmt_create, Date gmt_modified) {
-        this.role_id = role_id;
-        this.role_key = role_key;
-        this.role_name = role_name;
-        this.available = available;
-        this.gmt_create = gmt_create;
-        this.gmt_modified = gmt_modified;
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
 
     public Role() {
