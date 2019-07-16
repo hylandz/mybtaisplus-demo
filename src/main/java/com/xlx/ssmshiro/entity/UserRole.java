@@ -1,45 +1,53 @@
 package com.xlx.ssmshiro.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
-public class UserRole implements Serializable {
+import com.baomidou.mybatisplus.annotations.Version;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author xlx
+ * @since 2019-07-16
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("sys_user_role")
+public class UserRole extends Model<UserRole> {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-
+    /**
+     * 用户id
+     */
     private Long userId;
-
+    /**
+     * 角色id
+     */
     private Long roleId;
 
-    public UserRole(Long id, Long userId, Long roleId) {
-        this.id = id;
-        this.userId = userId;
-        this.roleId = roleId;
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
     }
 
-    public UserRole() {
-        super();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
 }

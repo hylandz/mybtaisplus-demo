@@ -1,17 +1,16 @@
 package com.xlx.ssmshiro.dao;
 
 import com.xlx.ssmshiro.entity.RoleResource;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 
-public interface RoleResourceMapper {
-    int deleteByPrimaryKey(Long id);
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author xlx
+ * @since 2019-07-16
+ */
+public interface RoleResourceMapper extends BaseMapper<RoleResource> {
 
-    int insert(RoleResource record);
-
-    int insertSelective(RoleResource record);
-
-    RoleResource selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(RoleResource record);
-
-    int updateByPrimaryKey(RoleResource record);
 }

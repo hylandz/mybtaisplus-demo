@@ -1,11 +1,11 @@
 package com.xlx.ssmshiro.entity;
 
 import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotations.Version;
@@ -25,8 +25,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_role_resource")
-public class RoleResource extends Model<RoleResource> {
+public class LogLogin extends Model<LogLogin> {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,13 +35,29 @@ public class RoleResource extends Model<RoleResource> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
-     * 角色id
+     * 登录账户
      */
-    private Long roleId;
+    private String account;
     /**
-     * 资源id
+     * 登录ip
      */
-    private Long resourceId;
+    private String ip;
+    /**
+     * 浏览器
+     */
+    private String browser;
+    /**
+     * 操作系统
+     */
+    private String os;
+    /**
+     * 登录信息
+     */
+    private String message;
+    /**
+     * 创建时间/登录时间
+     */
+    private Date gmtCreate;
 
 
     @Override

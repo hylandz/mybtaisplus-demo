@@ -25,22 +25,26 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter</artifactId>
         </dependency>
+
         <!--spring-boot-web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <!--spring-boot-test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- spring-boot 拦截器 -->
+
+        <!-- spring-boot aop -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+
         <!--quartz调度-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,11 +57,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+
         <!-- spring-boot-jdbc-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <!--spring-context的支持-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -91,11 +97,33 @@
         </dependency>
 
         <!--mybatis-->
+
+        <!--mybatis-plus-->
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.0.1</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>2.3.3</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <!--mybatis-plus generate插件-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-maven-plugin</artifactId>
+            <version>1.0</version>
+        </dependency>-->
 
         <!--mysql-->
         <dependency>
@@ -103,42 +131,49 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <!--druid-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.14</version>
         </dependency>
+
         <!--excel-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>4.1.0</version>
         </dependency>
+
         <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
         <!-- http客户端-->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.14.1</version>
         </dependency>
+
         <!--javax mail-->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <!--jwt:json web token-->
+
+        <!--jwt/jJwt-->
         <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.8.1</version>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
+
 
 
         
@@ -146,7 +181,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>3.5</version>
         </dependency>
         <!--thymeleaf模板-->
         <dependency>
@@ -160,6 +195,20 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.57</version>
         </dependency>
+        <!--日志-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.0-alpha0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>2.0.0-alpha0</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
 
@@ -170,6 +219,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- 如果mapper.xml是放在src/main/java目录下，需配置以下<resources>-->
 
             <!--mybatis的generator插件 -->
             <plugin>
@@ -182,6 +232,8 @@
                 <overwrite>true</overwrite>
             </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 
