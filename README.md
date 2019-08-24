@@ -1,3 +1,3 @@
 # ssm-shiro
 ssm整合shiro
-`Spring`+`SpringMVC`+Mybatis-Plus`
+`Spring`+`SpringMVC`+`Mybatis-Plus`+`Shiro`
