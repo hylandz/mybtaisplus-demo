@@ -1,7 +1,7 @@
 package com.xlx.shiro.common.util;
 
-import com.xlx.shiro.dto.ResultDTO;
-import com.xlx.shiro.service.UserService;
+import com.xlx.shiro.system.dto.ResultDTO;
+import com.xlx.shiro.system.service.UserService;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;

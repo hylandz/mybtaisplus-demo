@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xlx.shiro.dao.LoginLogMapper">
-  <resultMap id="BaseResultMap" type="com.xlx.shiro.entity.LoginLog">
+<mapper namespace="com.xlx.shiro.system.dao.LoginLogMapper">
+  <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.LoginLog">
     <constructor>
       <idArg column="log_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="account" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -26,7 +26,7 @@
     delete from login_log
     where log_id = #{logId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xlx.shiro.entity.LoginLog">
+  <insert id="insert" parameterType="com.xlx.shiro.system.entity.LoginLog">
     insert into login_log (log_id, account, request_uri, 
       user_agent, method, message, 
       ip, gmt_create)
@@ -34,7 +34,7 @@
       #{userAgent,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
       #{ip,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xlx.shiro.entity.LoginLog">
+  <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.LoginLog">
     insert into login_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="logId != null">
@@ -89,7 +89,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.entity.LoginLog">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.LoginLog">
     update login_log
     <set>
       <if test="account != null">
@@ -116,7 +116,7 @@
     </set>
     where log_id = #{logId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.entity.LoginLog">
+  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.LoginLog">
     update login_log
     set account = #{account,jdbcType=VARCHAR},
       request_uri = #{requestUri,jdbcType=VARCHAR},

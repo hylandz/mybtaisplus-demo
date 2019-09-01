@@ -1,7 +1,6 @@
 package com.xlx.shiro.common.config;
 
-import com.xlx.shiro.shiro.bind.CurrentUserMethodArgumentResolver;
-import org.springframework.context.annotation.Configuration;
+import com.xlx.shiro.system.shiro.bind.CurrentUserMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

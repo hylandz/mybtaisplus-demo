@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xlx.shiro.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.xlx.shiro.entity.User">
+<mapper namespace="com.xlx.shiro.system.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.User">
         <constructor>
             <idArg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
             <arg column="dept_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
@@ -64,7 +64,7 @@
         from sys_user
         where user_id = #{userId,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="com.xlx.shiro.entity.User">
+    <insert id="insert" parameterType="com.xlx.shiro.system.entity.User">
         insert into sys_user (user_id, dept_id, avatar_name,
                               avatar_url, user_name, user_real,
                               user_password, salt, token,
@@ -77,7 +77,7 @@
                 #{loginIp,jdbcType=VARCHAR},
                 #{loginDate,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.xlx.shiro.entity.User">
+    <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.User">
         insert into sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -180,7 +180,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.entity.User">
+    <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.User">
         update sys_user
         <set>
             <if test="deptId != null">
@@ -231,7 +231,7 @@
         </set>
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.entity.User">
+    <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.User">
         update sys_user
         set dept_id       = #{deptId,jdbcType=BIGINT},
             avatar_name   = #{avatarName,jdbcType=VARCHAR},
@@ -251,14 +251,14 @@
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
     <!--登录成功,修改登录时间 -->
-    <update id="updateLoginDate" parameterType="com.xlx.shiro.entity.User">
+    <update id="updateLoginDate" parameterType="com.xlx.shiro.system.entity.User">
         update sys_user
         set login_date = #{loginDate}
         where user_name = #{userName}
     </update>
 
     <!--修改密码-->
-    <update id="updatePassword" parameterType="com.xlx.shiro.entity.User">
+    <update id="updatePassword" parameterType="com.xlx.shiro.system.entity.User">
         update sys_user
         set user_password = #{newPwd,jdbcType=VARCHAR},
             salt= #{salt,jdbcType=VARCHAR}

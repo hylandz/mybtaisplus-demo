@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xlx.shiro.dao.DeptMapper">
-  <resultMap id="BaseResultMap" type="com.xlx.shiro.entity.Dept">
+<mapper namespace="com.xlx.shiro.system.dao.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.Dept">
     <constructor>
       <idArg column="dept_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="dept_name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     delete from sys_dept
     where dept_id = #{deptId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xlx.shiro.entity.Dept">
+  <insert id="insert" parameterType="com.xlx.shiro.system.entity.Dept">
     insert into sys_dept (dept_id, dept_name, parent_id, 
       parent_ids, available, gmt_create, 
       gmt_modified)
@@ -33,7 +33,7 @@
       #{parentIds,jdbcType=VARCHAR}, #{available,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.xlx.shiro.entity.Dept">
+  <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.Dept">
     insert into sys_dept
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="deptId != null">
@@ -82,7 +82,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.entity.Dept">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.Dept">
     update sys_dept
     <set>
       <if test="deptName != null">
@@ -106,7 +106,7 @@
     </set>
     where dept_id = #{deptId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.entity.Dept">
+  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.Dept">
     update sys_dept
     set dept_name = #{deptName,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=BIGINT},

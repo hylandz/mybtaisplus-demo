@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xlx.shiro.dao.ErrorLogMapper">
-  <resultMap id="BaseResultMap" type="com.xlx.shiro.entity.ErrorLog">
+<mapper namespace="com.xlx.shiro.system.dao.ErrorLogMapper">
+  <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.ErrorLog">
     <constructor>
       <idArg column="log_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="uri" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -21,13 +21,13 @@
     delete from error_log
     where log_id = #{logId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xlx.shiro.entity.ErrorLog">
+  <insert id="insert" parameterType="com.xlx.shiro.system.entity.ErrorLog">
     insert into error_log (log_id, uri, method
       )
     values (#{logId,jdbcType=BIGINT}, #{uri,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xlx.shiro.entity.ErrorLog">
+  <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.ErrorLog">
     insert into error_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="logId != null">
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.entity.ErrorLog">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.ErrorLog">
     update error_log
     <set>
       <if test="uri != null">
@@ -64,7 +64,7 @@
     </set>
     where log_id = #{logId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.entity.ErrorLog">
+  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.ErrorLog">
     update error_log
     set uri = #{uri,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR}

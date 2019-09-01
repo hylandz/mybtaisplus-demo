@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xlx.shiro.dao.UserRoleMapper">
-  <resultMap id="BaseResultMap" type="com.xlx.shiro.entity.UserRole">
+<mapper namespace="com.xlx.shiro.system.dao.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.UserRole">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="user_id" javaType="java.lang.Long" jdbcType="BIGINT" />
@@ -21,13 +21,13 @@
     delete from sys_user_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xlx.shiro.entity.UserRole">
+  <insert id="insert" parameterType="com.xlx.shiro.system.entity.UserRole">
     insert into sys_user_role (id, user_id, role_id
       )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.xlx.shiro.entity.UserRole">
+  <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.UserRole">
     insert into sys_user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.entity.UserRole">
+  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.UserRole">
     update sys_user_role
     <set>
       <if test="userId != null">
@@ -64,7 +64,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.entity.UserRole">
+  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.UserRole">
     update sys_user_role
     set user_id = #{userId,jdbcType=BIGINT},
       role_id = #{roleId,jdbcType=BIGINT}

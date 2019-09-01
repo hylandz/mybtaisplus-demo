@@ -1,9 +1,9 @@
 package com.xlx.shiro.common.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.xlx.shiro.shiro.credentials.RetryLimitHashedCredentialsMatcher;
-import com.xlx.shiro.shiro.filter.SysUserFilter;
-import com.xlx.shiro.shiro.realm.UserRealm;
+import com.xlx.shiro.system.shiro.credentials.RetryLimitHashedCredentialsMatcher;
+import com.xlx.shiro.system.shiro.filter.SysUserFilter;
+import com.xlx.shiro.system.shiro.realm.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -174,7 +174,7 @@ public class ShiroConfig {
 		logger.info("****rememberMeManager");
 		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
 		//cookie加密的密钥
-		cookieRememberMeManager.setCipherKey(Base64.decode("c3ByaW5nYm9vcnNoaXJv"));
+		cookieRememberMeManager.setCipherKey(Base64.decode("c3ByaW5nYm9vdHNoaXJv"));
 		//RememberMeCookie
 		cookieRememberMeManager.setCookie(rememberMeCookie);
 		return cookieRememberMeManager;

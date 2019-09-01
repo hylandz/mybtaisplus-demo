@@ -1,6 +1,6 @@
 package com.xlx.shiro.common.advice;
 
-import com.xlx.shiro.dto.ResultDTO;
+import com.xlx.shiro.system.dto.ResultDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
