@@ -14,10 +14,15 @@ import java.util.Set;
  * @since 2019-07-16
  */
 public interface UsersMapper extends BaseMapper<Users> {
+  /**
+   * *******************
+   * 基本的CRUD不用写
+   * *******************
+   */
 
 
-  Set<String> findRoles(String userAccount);
-  Set<String> findPermissions(String userAccount);
+  Set<String> selectAllRoles(String userAccount);
+  Set<String> selectAllPermissions(String userAccount);
 
 
 }

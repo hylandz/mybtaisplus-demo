@@ -1,9 +1,12 @@
 package com.xlx.ssmshiro.controller;
 
 
+import com.xlx.ssmshiro.service.UsersService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -16,6 +19,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
+
+	@Resource
+	private UsersService usersService;
+
+
+
 
 }
 

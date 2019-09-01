@@ -25,7 +25,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("sys_resources")
 public class Resources extends Model<Resources> {
 

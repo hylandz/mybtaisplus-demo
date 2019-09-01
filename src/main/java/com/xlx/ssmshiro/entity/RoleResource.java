@@ -24,7 +24,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("sys_role_resource")
 public class RoleResource extends Model<RoleResource> {
 

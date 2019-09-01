@@ -29,4 +29,13 @@
         user_id, dept_id, avatar_name, avatar_url, user_account, user_name, user_password, salt, token, gender, birth, mail, phone, locked, login_ip, login_date, gmt_create, gmt_modified
     </sql>
 
+    <!--查询帐号的所有权限-->
+    <select id="selectAllPermissions" resultType="java.lang.String" parameterType="string">
+
+    </select>
+    <!--查询帐号的所有角色-->
+    <select id="selectAllRoles" resultType="java.lang.String" parameterType="string">
+
+    </select>
+
 </mapper>

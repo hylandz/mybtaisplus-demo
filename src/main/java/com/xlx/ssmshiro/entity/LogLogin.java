@@ -24,7 +24,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 public class LogLogin extends Model<LogLogin> {
 
     private static final long serialVersionUID = 1L;

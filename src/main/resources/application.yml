@@ -18,7 +18,6 @@ spring:
 #    username: mango
 #    password: root5.7.22
 
-
 #mybatis-plus
 #mybatis-plus:
 #  mapper-locations: classpath:/mapper/*Mapper.xml
@@ -48,7 +47,8 @@ spring:
 #    cache-enabled: false
 
 
-#日志配置
+# 日志配置
 logging:
   level:
     com.xlx.ssmshiro: debug
+    org.springframework: warn

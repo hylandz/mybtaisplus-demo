@@ -54,37 +54,49 @@
 
     <!--mybatis-plus配置开始-->
     <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+        <!--1. 数据源-->
         <property name="dataSource" ref="dataSource"/>
-        <!-- 配置实体扫描路径，多个package可以用分号; 逗号, 分隔， 支持通配符*-->
+        <!-- 2. 配置实体扫描路径，多个package可以用分号; 逗号, 分隔， 支持通配符*-->
         <!-- com.a.b.entity;com.a.c.entity;com.d.*.entity-->
         <property name="typeAliasesPackage" value="com.xlx.ssmshiro.entity"/>
+        <!--3. 自定义配置-->
         <property name="configuration" ref="mybatisConfig"/>
-        <!-- MP 全局配置注入 -->
+        <!-- 4. MP 全局配置注入 -->
         <property name="globalConfig" ref="globalConfig"/>
+        <!--5. 插件-->
         <property name="plugins">
             <array>
                 <!-- 分页插件配置 -->
                 <bean id="paginationInterceptor"
                       class="com.baomidou.mybatisplus.plugins.PaginationInterceptor"/>
+                <!--分析插件-->
+                <!--<bean class="com.baomidou.mybatisplus.plugins.SqlExplainInterceptor">
+                    <property name="stopProceed" value="true"></property>
+                </bean>-->
                 <!-- 乐观锁插件 -->
                 <bean id="optimisticLockerInterceptor"
                       class="com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor">
                 </bean>
                 <!-- 性能拦截器，兼打印sql，不建议生产环境配置-->
                 <bean id="performanceInterceptor"
-                      class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor"/>
+                      class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor">
+                </bean>
             </array>
         </property>
     </bean>
 
+    <!--自定义填充字段处理-->
+    <bean id="myMetaObjectHandler" class="com.xlx.ssmshiro.common.mpconfig.MyMetaObjectHandler"/>
+    <!--mp配置-->
     <bean id="mybatisConfig" class="com.baomidou.mybatisplus.MybatisConfiguration">
         <property name="mapUnderscoreToCamelCase" value="true"/>
     </bean>
 
     <!-- 定义 MP 全局策略 -->
     <bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
-        <!-- 逻辑删除 定义下面3个参数-->
+        <!-- 逻辑/假删除 定义下面3个参数-->
         <property name="sqlInjector" ref="logicSqlInjector"/>
+        <!--删除操作时更新为-1-->
         <property name="logicDeleteValue" value="-1"/>
         <property name="logicNotDeleteValue" value="1"/>
         <!-- 全局ID类型： 0, "数据库ID自增"， 1, "用户输入ID", 2, "全局唯一ID", 3, "全局唯一ID"-->
@@ -92,8 +104,12 @@
         <property name="dbColumnUnderline" value="true"/>
         <property name="capitalMode" value="true"/>
 
+        <!--公共字段填充处理器-->
+        <property name="metaObjectHandler" ref="myMetaObjectHandler"/>
+
     </bean>
 
+    <!--逻辑删除-->
     <bean id="logicSqlInjector" class="com.baomidou.mybatisplus.mapper.LogicSqlInjector"/>
 
     <!-- 配置mybatis 扫描mapper接口的路径, 相当于注解@MapperScan，@MapperScan("com.baomidou.mybatisplus.test.h2.entity.mapper")-->
@@ -101,7 +117,7 @@
         <property name="basePackage" value="com.xlx.ssmshiro.dao"/>
     </bean>
     
-   <!-- 配置Spring的事务管理器 -->
+   <!-- 配置Spring的事务管理器bean -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
@@ -125,6 +141,6 @@
     	如果添加上面的属性则使用基于类的cglib的方式，相反，如果没有写或者是false则通过jdk的基于接口的方式生成代理类
      -->
     
-	<aop:aspectj-autoproxy proxy-target-class="true"/>	
-		
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
 </beans>

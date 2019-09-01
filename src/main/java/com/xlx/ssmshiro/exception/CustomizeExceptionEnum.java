@@ -5,7 +5,10 @@ package com.xlx.ssmshiro.exception;
  */
 public enum CustomizeExceptionEnum implements ICustomizeException{
 
-  NETWORK_ERROR(1001, "网络错误请重试");
+  NETWORK_ERROR(1001, "网络错误请重试"),
+  LOGIN_ERROR(1002,"用户名或密码错误"),
+  ACCOUNT_LOCKED_ERROT(1003,"用户被锁,请联系管理员"),
+  CAPTCHA_CODE_ERROR(1004,"验证码错误");
 
   private Integer code;
   private String message;
