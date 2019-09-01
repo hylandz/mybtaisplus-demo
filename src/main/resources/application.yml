@@ -1,0 +1,44 @@
+server:
+  port: 8887
+
+#spring配置
+spring:
+  #数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootdb?useUnicode=true&characterEncoding=utf8
+    username: mango
+    password: root5.7.22
+
+  #模板
+  thymeleaf:
+    model: HTML
+    encoding: utf-8
+    cache: false
+
+
+
+# MyBatis
+mybatis:
+  # 搜索指定包别名
+  type-aliases-package: com.xlx.shiro.entity
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+# 日志配置
+logging:
+  level:
+    com.xlx: info
+    org.springframework: warn
+
+
+shiro:
+  crypto:
+    algorithmName: md5
+    hashIterations: 2
+
+
