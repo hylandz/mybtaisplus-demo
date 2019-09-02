@@ -1,7 +1,7 @@
 <style>
 .navigation { margin-left: 0px; height: 80%; }
 .navigation div { padding-left: 1px; }
-.navigation div ul { overflow: hidden; display: none; height: auto; margin: 0; margin-left: -.8rem; }
+.navigation div ul { overflow: hidden; display: none; height: auto; margin: 0 0 0 -.8rem; }
 .navigation span { display: block; line-height: 25px; padding: .5rem .5rem; cursor: pointer; }
 .navigation span:hover { background-color: rgba(0, 0, 0, 0.03); }
 .navigation a { color: #333; text-decoration: none; }
@@ -13,8 +13,8 @@
             <div class="user__info" data-toggle="dropdown">
                 <img class="user__img">
                 <div>
-                    <div class="user__name" data-th-utext="${user.username}"></div>
-                    <div class="user__email" data-th-utext="${user.email}"></div>
+                    <div class="user__name" data-th-utext="${user.userName}"></div>
+                    <div class="user__email" data-th-utext="${user.mail}"></div>
                 </div>
             </div>
             <div class="dropdown-menu">

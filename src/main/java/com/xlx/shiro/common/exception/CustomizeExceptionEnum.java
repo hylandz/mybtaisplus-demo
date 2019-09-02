@@ -8,6 +8,8 @@ public enum CustomizeExceptionEnum implements ICustomizeException{
   NETWORK_ERROR(1001, "网络错误请重试"),
   AUTHENTICATION_ERROR(1002,"用户名或密码错误"),
   LOCKED_ACCOUNT_ERROR(1003,"帐号被锁,请联系管理员"),
+  CAPTCHA_CODE_NOT_NULL(1004,"验证码不能为空"),
+  CAPTCHA_CODE_ERROR(1005,"验证码错误"),
   ;
 
 

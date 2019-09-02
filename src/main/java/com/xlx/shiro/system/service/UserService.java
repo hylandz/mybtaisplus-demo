@@ -77,20 +77,14 @@ public class UserService {
     return userMapper.selectUserByUserName(userName);
   }
 
-  /**
-   * 根据帐号获取该用户的权限集
-   * @param userName 登录帐号
-   */
-  public Set<String> getPermissions(String userName){
-    return userMapper.selectPermissionsByUserName(userName);
-  }
 
   /**
-   * 根据帐号获取该用户的角色集
-   * @param userName 登录帐号
+   * 用户id查询用户
+   * @param userId 用户id
+   * @return User
    */
-  public Set<String> getRoles(String userName){
-    return userMapper.selectRolesByUserName(userName);
+  public User findUserByUserName(Long userId){
+    return userMapper.selectByPrimaryKey(userId);
   }
 
   /**
@@ -98,8 +92,8 @@ public class UserService {
    * @param userName .
    * @param loginDate .
    */
-  public boolean recordLoginDate(String userName, Date loginDate){
-    return userMapper.updateLoginDate(userName,loginDate) != 0;
+  public boolean recordLoginTime(String userName){
+    return userMapper.updateLoginDate(userName) != 0;
   }
 
   /**

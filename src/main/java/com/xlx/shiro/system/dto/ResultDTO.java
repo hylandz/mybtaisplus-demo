@@ -1,5 +1,6 @@
 package com.xlx.shiro.system.dto;
 
+import com.xlx.shiro.common.exception.CustomizeExceptionEnum;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -95,6 +96,15 @@ public class ResultDTO {
     return new ResultDTO(code,message,null);
   }
 
+  /**
+   * 枚举-异常
+   *
+   * @param errorCodeEnum 枚举,不需要自定义了
+   * @return
+   */
+  public static ResultDTO failed(CustomizeExceptionEnum errorCodeEnum) {
+    return failed(errorCodeEnum.getCode(), errorCodeEnum.getMessage());
+  }
 
 
 }

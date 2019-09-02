@@ -21,16 +21,13 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 
-    User selectUserByUserName(@Param("userName") String userName);
 
-    Set<String> selectPermissionsByUserName(@Param("userName") String userName);
-
-    Set<String> selectRolesByUserName(@Param("userName") String userName);
-
-    int updateLoginDate(@Param("userName") String userName, @Param("loginDate") Date loginDate);
+    int updateLoginDate(@Param("userName") String userName);
 
     List<User> selectUserByPage(@Param("offset") Integer offset,@Param("size") Integer size);
 
+
+    User selectUserByUserName(@Param("userName") String userName);
 
     int updatePassword(@Param("userId") Long userId,@Param("salt") String salt,@Param("newPwd") String newPwd);
 }

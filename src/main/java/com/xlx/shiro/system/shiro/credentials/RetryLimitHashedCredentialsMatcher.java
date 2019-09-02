@@ -7,6 +7,7 @@ import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
+import org.crazycake.shiro.RedisCache;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,6 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Slf4j
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
+
 
 	private Cache<String, AtomicInteger> passwordRetryCache;
 

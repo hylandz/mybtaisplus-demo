@@ -1,5 +1,6 @@
 package com.xlx.shiro.common.util;
 
+import com.xlx.shiro.system.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.crypto.RandomNumberGenerator;
@@ -53,6 +54,14 @@ public class ShiroUtil {
 		return SecurityUtils.getSubject();
 	}
 
+
+	/**
+	 * 获取当前登录用户
+	 * @return User
+	 */
+	public static User getCurrentUser(){
+		return (User) getSubject().getPrincipal();
+	}
 	/**
 	 * rememberMeCookie加密密钥
 	 * @param str 明文

@@ -1,6 +1,9 @@
 package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.entity.Role;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Set;
 
 public interface RoleMapper {
     int deleteByPrimaryKey(Long role_id);
@@ -14,4 +17,7 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+
+    Set<String> selectRoleKeyByUserName(@Param("userName") String userName);
 }

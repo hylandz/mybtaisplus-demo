@@ -40,14 +40,6 @@
         where user_name = #{userName,jdbcType=VARCHAR}
     </select>
 
-    <!--根据帐号获取该用户的权限集-->
-    <select id="selectPermissionsByUserName" resultType="java.lang.String">
-
-    </select>
-    <!--根据帐号获取该用户的角色集-->
-    <select id="selectRolesByUserName" resultType="java.lang.String">
-
-    </select>
 
     <!--用户分页-->
     <select id="selectUserByPage" resultMap="BaseResultMap">
@@ -251,10 +243,10 @@
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
     <!--登录成功,修改登录时间 -->
-    <update id="updateLoginDate" parameterType="com.xlx.shiro.system.entity.User">
+    <update id="updateLoginDate" parameterType="java.lang.String">
         update sys_user
-        set login_date = #{loginDate}
-        where user_name = #{userName}
+        set login_date = now()
+        where user_name = #{userName,jdbcType=VARCHAR}
     </update>
 
     <!--修改密码-->
