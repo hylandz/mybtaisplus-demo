@@ -1,35 +1,36 @@
 package com.xlx.shiro.common.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.xlx.shiro.common.listener.ShiroSessionListener;
+import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.shiro.credentials.RetryLimitHashedCredentialsMatcher;
-import com.xlx.shiro.system.shiro.filter.SysUserFilter;
+import com.xlx.shiro.system.shiro.filter.CustomUserFilter;
 import com.xlx.shiro.system.shiro.realm.UserRealm;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.SessionListener;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.PathMatchingFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.DelegatingFilterProxy;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,63 +39,108 @@ import java.util.Map;
  *
  * @author xielx on 2019/7/23
  */
+@Slf4j
 @Configuration
 public class ShiroConfig {
 
-	private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
+
+	@Value("${spring.redis.host}")
+	private String host;
+
+	@Value("${spring.redis.port}")
+	private int port;
+
+	@Value("${spring.redis.password}")
+	private String password;
+
+	@Value("${spring.redis.timeout}")
+	private int timeout;
+
+	@Value("${spring.redis.database}")
+	private int database;
+
 
 
 	/**
-	 * 参考Web.xml设置的shiro过滤器
+	 * shiro的Redis 缓存管理
 	 *
-	 * @return obj
+	 * @return RedisManager
 	 */
-	@Bean
-	public FilterRegistrationBean<Filter> shiroFilterRegistration() {
-		FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
-
-		DelegatingFilterProxy proxy = new DelegatingFilterProxy("shiroFilter");
-		proxy.setTargetFilterLifecycle(true);
-
-		registrationBean.setFilter(proxy);
-		registrationBean.setEnabled(true);
-		registrationBean.setAsyncSupported(true);
-		registrationBean.addUrlPatterns("/*");
-		registrationBean.setDispatcherTypes(DispatcherType.REQUEST);
-		return registrationBean;
+	private RedisManager redisManager() {
+		RedisManager redisManager = new RedisManager();
+		redisManager.setHost(host);
+		redisManager.setPort(port);
+		if (!StringUtils.isEmpty(password)) {
+			redisManager.setPassword(password);
+		}
+		redisManager.setTimeout(timeout);
+		redisManager.setDatabase(database);
+		return redisManager;
 	}
 
 
-	/**
-	 * 缓存管理器 CacheManager
-	 */
-	@Bean(name = "cacheManager")
-	public EhCacheManager cacheManager() {
-		logger.info("****cacheManager");
-		EhCacheManager ehCacheManager = new EhCacheManager();
-		ehCacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-
-		return ehCacheManager;
+	private RedisCacheManager cacheManager() {
+		RedisCacheManager redisCacheManager = new RedisCacheManager();
+		redisCacheManager.setRedisManager(redisManager());
+		return redisCacheManager;
 	}
 
 	/**
-	 * 自定义Realm
+	 * Shiro的Web过滤器
+	 *
+	 * @param securityManager 安全管理器
+	 * @return ShiroFilterFactoryBean
 	 */
-	@Bean(name = "userRealm")
-	public UserRealm userRealm(@Qualifier("credentialsMatcher") HashedCredentialsMatcher hashedCredentialsMatcher) {
-		logger.info("****userRealm");
-		UserRealm userRealm = new UserRealm();
-		//使用自定义的CredentialsMatcher
-		userRealm.setCredentialsMatcher(hashedCredentialsMatcher);
-		return userRealm;
+	@Bean(name = "shiroFilter")
+	public ShiroFilterFactoryBean shiroFilterFactory(SecurityManager securityManager) {
+
+		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+
+		//设置过滤器
+		Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+		filters.put("user", new CustomUserFilter());
+		shiroFilterFactoryBean.setFilters(filters);
+
+		//设置SecurityManager
+		shiroFilterFactoryBean.setSecurityManager(securityManager);
+		//登录url
+		shiroFilterFactoryBean.setLoginUrl("/login");
+		//登录成功后跳转url
+		shiroFilterFactoryBean.setSuccessUrl("/index");
+		//未授权跳转url
+		shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
+
+		//设置过滤链
+		Map<String, String> filterChainDefinitions = new LinkedHashMap<>();
+
+		// 不拦截
+		filterChainDefinitions.put("/css/**", "anon");
+		filterChainDefinitions.put("/js/**", "anon");
+		filterChainDefinitions.put("/fonts/**", "anon");
+		filterChainDefinitions.put("/img/**", "anon");
+		filterChainDefinitions.put("/druid/**", "anon");
+		filterChainDefinitions.put("/user/register", "anon");
+		filterChainDefinitions.put("/gifCode", "anon");
+		filterChainDefinitions.put("/actuator/**", "anon");
+		filterChainDefinitions.put("/test/**", "anon");
+
+		// 登出logout
+		filterChainDefinitions.put("/logout", "logout");
+
+		//认证通过才能访问
+		filterChainDefinitions.put("/**", "user,sysUser");
+		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitions);
+
+		return shiroFilterFactoryBean;
 	}
+
 
 	/**
 	 * 凭证匹配器 HashedCredentialsMatcher
 	 */
 	@Bean("credentialsMatcher")
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {
-		logger.info("****credentialsMatcher");
+		log.info("****credentialsMatcher");
 		//CacheManager
 		HashedCredentialsMatcher credentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager());
 		//密码匹配设置:采用的加密算法md5,迭代次数2,使用16进制编码存储密码
@@ -104,19 +150,52 @@ public class ShiroConfig {
 		return credentialsMatcher;
 	}
 
+	/**
+	 * 自定义Realm
+	 */
+	@Bean(name = "userRealm")
+	public UserRealm userRealm() {
+		log.info("****userRealm");
+		UserRealm userRealm = new UserRealm();
+		//使用自定义的CredentialsMatcher
+		userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+		return userRealm;
+	}
 
 	/**
-	 * 会话DAO SessionDAO
+	 * 安全管理器 SecurityManager
+	 *
+	 * @return obj
 	 */
-	/*@Bean(name = "sessionDAO")
-	public SessionDAO sessionDAO(JavaUuidSessionIdGenerator sessionIdGenerator) {
-		logger.info("****sessionDAO");
-		EnterpriseCacheSessionDAO enterpriseCacheSessionDAO = new EnterpriseCacheSessionDAO();
-		enterpriseCacheSessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");
-		//SessionIdGenerator
-		enterpriseCacheSessionDAO.setSessionIdGenerator(sessionIdGenerator);
-		return enterpriseCacheSessionDAO;
-	}*/
+	@Bean(name = "securityManager")
+	public SecurityManager securityManager() {
+		log.info("****securityManager");
+		DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+		// Realm
+		defaultWebSecurityManager.setRealm(userRealm());
+		//RememberMeManager
+		defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
+		//CacheManager
+		defaultWebSecurityManager.setCacheManager(cacheManager());
+		//SessionManager
+		defaultWebSecurityManager.setSessionManager(sessionManager());
+
+		return defaultWebSecurityManager;
+	}
+
+
+	/**
+	 * RedisSession的处理
+	 * sessionDAO的CRUD
+	 *
+	 * @return RedisSessionDAO
+	 */
+	@Bean
+	public RedisSessionDAO sessionDAO() {
+		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+		redisSessionDAO.setRedisManager(redisManager());
+		return redisSessionDAO;
+	}
 
 	/**
 	 * 会话Cookie模板 sessionIdCookie
@@ -124,7 +203,7 @@ public class ShiroConfig {
 	 */
 	/*@Bean
 	public Cookie sessionIdCookie() {
-		logger.info("****sessionIdCookie");
+		log.info("****sessionIdCookie");
 		SimpleCookie simpleCookie = new SimpleCookie("sessionIdCookie");
 		simpleCookie.setHttpOnly(true);
 		//单位:秒,此处设置浏览器关闭即失效
@@ -135,30 +214,16 @@ public class ShiroConfig {
 
 
 	/**
-	 * 会话ID生成器 SessionIdGenerator
+	 * 记住我 RememberMe
 	 *
-	 * @return obj
+	 * @return SimpleCookie
 	 */
-	/*@Bean(name = "sessionIdGenerator")
-	public JavaUuidSessionIdGenerator sessionIdGenerator() {
-		logger.info("****sessionIdGenerator");
-		return new JavaUuidSessionIdGenerator();
-	}*/
-
-
-	/**
-	 * 记住我 RememberMeCookie
-	 * cookie2
-	 *
-	 * @return I
-	 */
-	@Bean
-	public Cookie rememberMeCookie() {
-		logger.info("****rememberMeCookie");
-		SimpleCookie simpleCookie = new SimpleCookie("rememberMeCookie");
+	private SimpleCookie rememberMeCookie() {
+		log.info("****rememberMeCookie");
+		SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
 		simpleCookie.setHttpOnly(true);
-		//单位:秒;此处设置3天
-		simpleCookie.setMaxAge(3 * 24 * 60 * 60);
+		//过期时间,单位:秒;此处设置1天
+		simpleCookie.setMaxAge(24 * 60 * 60);
 		simpleCookie.setPath("/");
 		return simpleCookie;
 	}
@@ -169,14 +234,13 @@ public class ShiroConfig {
 	 *
 	 * @return obj
 	 */
-	@Bean(name = "rememberMeManager")
-	public CookieRememberMeManager rememberMeManager(Cookie rememberMeCookie) {
-		logger.info("****rememberMeManager");
+	private CookieRememberMeManager rememberMeManager() {
+		log.info("****rememberMeManager");
 		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-		//cookie加密的密钥
-		cookieRememberMeManager.setCipherKey(Base64.decode("c3ByaW5nYm9vdHNoaXJv"));
-		//RememberMeCookie
-		cookieRememberMeManager.setCookie(rememberMeCookie);
+		cookieRememberMeManager.setCookie(rememberMeCookie());
+		//rememberMe cookie加密的密钥
+		String rememberKey = ShiroUtil.generateCipherKeyKey("xlx_shiro_key");
+		cookieRememberMeManager.setCipherKey(Base64.decode(rememberKey));
 		return cookieRememberMeManager;
 	}
 
@@ -187,27 +251,28 @@ public class ShiroConfig {
 	 * @return obj
 	 */
 	@Bean(name = "sessionManager")
-	public DefaultWebSessionManager sessionManager(Cookie sessionIdCookie) {
-		logger.info("****sessionManager");
+	public DefaultWebSessionManager sessionManager() {
+		log.info("****sessionManager");
+
 		DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+		ArrayList<SessionListener> listeners = new ArrayList<>();
+		listeners.add(new ShiroSessionListener());
 		//设置全局session超时时间,单位/毫秒,此处30min
 		defaultWebSessionManager.setGlobalSessionTimeout(1800000);
-		defaultWebSessionManager.setDeleteInvalidSessions(true);
-		defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
-
+    //defaultWebSessionManager.setDeleteInvalidSessions(true);
+    //defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
 		//Quartz会话定时刷新
 		//defaultWebSessionManager.setSessionValidationScheduler(scheduler);
 		//SessionDAO
-		//defaultWebSessionManager.setSessionDAO(sessionDAO);
-		//SessionIdCookie
-		defaultWebSessionManager.setSessionIdCookieEnabled(true);
-		defaultWebSessionManager.setSessionIdCookie(sessionIdCookie);
+		defaultWebSessionManager.setSessionListeners(listeners);
+		defaultWebSessionManager.setSessionDAO(sessionDAO());
+		defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
 		return defaultWebSessionManager;
 	}
 
 	/*@Bean(name = "sessionValidationScheduler")
 	public QuartzSessionValidationScheduler sessionValidationScheduler(DefaultWebSessionManager sessionManager) {
-		logger.info("*****sessionValidationScheduler");
+		log.info("*****sessionValidationScheduler");
 		QuartzSessionValidationScheduler quartz = new QuartzSessionValidationScheduler();
 		//session刷新时间间隔,单位/毫秒,此处设置30min
 		quartz.setSessionValidationInterval(1800000);
@@ -215,28 +280,6 @@ public class ShiroConfig {
 		quartz.setSessionManager(sessionManager);
 		return quartz;
 	}*/
-
-	/**
-	 * 安全管理器 SecurityManager
-	 *
-	 * @return obj
-	 */
-	@Bean(name = "securityManager")
-	public SecurityManager securityManager(UserRealm userRealm, CookieRememberMeManager rememberMeManager,
-																				 EhCacheManager cacheManager, SessionManager sessionManager) {
-		logger.info("****securityManager");
-		DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-		// Realm
-		defaultWebSecurityManager.setRealm(userRealm);
-		//RememberMeManager
-		defaultWebSecurityManager.setRememberMeManager(rememberMeManager);
-		//CacheManager
-		defaultWebSecurityManager.setCacheManager(cacheManager);
-		//SessionManager
-		defaultWebSecurityManager.setSessionManager(sessionManager);
-
-		return defaultWebSecurityManager;
-	}
 
 
 	/**
@@ -247,7 +290,7 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public MethodInvokingFactoryBean methodInvokingFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
-		logger.info("****methodInvokingFactoryBean");
+		log.info("****methodInvokingFactoryBean");
 		MethodInvokingFactoryBean methodInvokingFactoryBean = new MethodInvokingFactoryBean();
 		methodInvokingFactoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
 		//SecurityManager
@@ -262,24 +305,12 @@ public class ShiroConfig {
 	 */
 	@Bean(name = "authcFilter")
 	public FormAuthenticationFilter formAuthenticationFilter() {
-		logger.info("****formAuthenticationFilter");
+		log.info("****formAuthenticationFilter");
 		FormAuthenticationFilter formFilter = new FormAuthenticationFilter();
 		formFilter.setUsernameParam("username");
 		formFilter.setPasswordParam("password");
 		formFilter.setRememberMeParam("rememberMe");
 		return formFilter;
-	}
-
-
-	/**
-	 * 自定义过滤器
-	 *
-	 * @return obj
-	 */
-	@Bean(name = "sysUserFilter")
-	public PathMatchingFilter sysUserFilter() {
-		logger.info("****sysUserFilter");
-		return new SysUserFilter();
 	}
 
 
@@ -290,54 +321,10 @@ public class ShiroConfig {
 	 */
 	@Bean
 	public ShiroDialect dialectForThymeleaf() {
-		logger.info("****dialectForThymeleaf");
+		log.info("****dialectForThymeleaf");
 		return new ShiroDialect();
 	}
 
-	/**
-	 * Shiro的Web过滤器 ShiroFilterFactoryBean
-	 *
-	 * @param securityManager 安全管理器
-	 * @return .
-	 */
-	@Bean(name = "shiroFilter")
-	public ShiroFilterFactoryBean shiroFilterFactory(@Qualifier("securityManager") SecurityManager securityManager) {
-		logger.info("***shiroFilterFactory");
-		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-		//SecurityManager
-		shiroFilterFactoryBean.setSecurityManager(securityManager);
-		//登录url
-		shiroFilterFactoryBean.setLoginUrl("/login");
-		//登录成功后跳转url
-		//未授权跳转url
-		shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
-
-
-		//设置过滤器
-		Map<String, Filter> filters = new LinkedHashMap<>();
-		filters.put("authc", formAuthenticationFilter());
-		filters.put("sysUser", sysUserFilter());
-		shiroFilterFactoryBean.setFilters(filters);
-
-		//设置过滤链
-		Map<String, String> filterChainDefinitions = new LinkedHashMap<>();
-		filterChainDefinitions.put("/favicon.ico**", "anon");
-		filterChainDefinitions.put("/ruoyi.png**", "anon");
-		filterChainDefinitions.put("/css/**", "anon");
-		filterChainDefinitions.put("/docs/**", "anon");
-		filterChainDefinitions.put("/fonts/**", "anon");
-		filterChainDefinitions.put("/img/**", "anon");
-		filterChainDefinitions.put("/ajax/**", "anon");
-		filterChainDefinitions.put("/js/**", "anon");
-		filterChainDefinitions.put("/ruoyi/**", "anon");
-
-		filterChainDefinitions.put("/login", "authc");
-		filterChainDefinitions.put("/logout", "logout");
-		filterChainDefinitions.put("/authenticated", "authc");
-		filterChainDefinitions.put("/**", "user,sysUser");
-		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitions);
-		return shiroFilterFactoryBean;
-	}
 
 	/**
 	 * Shiro的生命周期处理器 Lifecycle
@@ -363,8 +350,8 @@ public class ShiroConfig {
 	 * @return obj
 	 */
 	@Bean
-	public AuthorizationAttributeSourceAdvisor shiroAnnotation(SecurityManager securityManager) {
-		logger.info("***shiroAnnotation");
+	public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+		log.info("***shiroAnnotation");
 		AuthorizationAttributeSourceAdvisor attributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
 		//SecurityManager
 		attributeSourceAdvisor.setSecurityManager(securityManager);

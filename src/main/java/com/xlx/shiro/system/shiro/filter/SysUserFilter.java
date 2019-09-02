@@ -32,14 +32,14 @@ public class SysUserFilter extends PathMatchingFilter {
 
 	/**
 	 * path与请求路径匹配
-	 * @param path ?
-	 * @param request 请求路径
+	 * @param path /**
+	 * @param request 请求路径 /login ...
 	 * @return boolean
 	 */
 	@Override
 	protected boolean pathsMatch(String path, ServletRequest request) {
 		log.info("========PathMatchingFilter/pathsMatch方法================");
-		log.info("请求路径:[{}]-------->[{}]",path,WebUtils.toHttp(request).getRequestURI());
+		log.info("匹配路径:[{}]-------->请求路径:[{}]",path,WebUtils.toHttp(request).getRequestURI());
 		return super.pathsMatch(path,request);
 	}
 }

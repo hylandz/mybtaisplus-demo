@@ -1,11 +1,15 @@
 package com.xlx.shiro.common.util;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 /**
  * shiro的密码加密
@@ -48,10 +52,27 @@ public class ShiroUtil {
 	public static Subject getSubject(){
 		return SecurityUtils.getSubject();
 	}
+
+	/**
+	 * rememberMeCookie加密密钥
+	 * @param str 明文
+	 * @return String
+	 */
+	public static String generateCipherKeyKey(String str){
+		byte[] encryptBytes = str.getBytes(StandardCharsets.UTF_8);
+		String key = Base64.encodeToString(Arrays.copyOf(encryptBytes,16));
+		return key;
+	}
+
+
 	public static void main(String[] args) {
 		String num = getHexRandomNumber();
 		String en = encryptPassword("admin","adminmrbird");
 		System.out.println(num);
 		System.out.println(en);
+
+		System.out.println(generateCipherKeyKey("xlx_shiro_key"));
 	}
+
+
 }
