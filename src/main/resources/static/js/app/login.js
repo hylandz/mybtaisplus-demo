@@ -133,14 +133,14 @@ function register() {
         },
         dataType: "json",
         success: function (r) {
-            if (r.code === 0) {
+            if (r.code === 200) {
                 $MB.n_success("注册成功，请登录");
                 $(".two input[name='username']").val("");
                 $(".two input[name='password']").val("");
                 $(".two input[name='cpassword']").val("");
                 $('.form-toggle').trigger('click');
             } else {
-                $MB.n_warning(r.msg);
+                $MB.n_warning(r.message);
             }
         }
     });
