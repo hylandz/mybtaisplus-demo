@@ -2,13 +2,15 @@ package com.xlx.shiro.system.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 登录dto
  *
  * @author xielx on 2019/7/24
  */
 @Data
-public class LoginDTO {
+public class LoginDTO implements Serializable {
 
   // 登录账户
 	private String username;
@@ -20,7 +22,7 @@ public class LoginDTO {
 	private Boolean rememberMe = Boolean.FALSE;
 
 	// 验证码
-	private String captcha;
+	private String code;
 
 	@Override
 	public String toString() {
@@ -28,7 +30,7 @@ public class LoginDTO {
 									 "userName='" + username + '\'' +
 									 ", password='" + password + '\'' +
 									 ", rememberMe=" + rememberMe +
-									 ", captcha='" + captcha + '\'' +
+									 ", code='" + code + '\'' +
 									 '}';
 	}
 }

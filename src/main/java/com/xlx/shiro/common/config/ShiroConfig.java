@@ -25,6 +25,7 @@ import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,22 +42,22 @@ import java.util.Map;
 @Slf4j
 @Configuration
 public class ShiroConfig {
-
-
-	@Value("${spring.redis.host}")
+	
+	
+	/*@Value("${spring.redis.host:127.0.0.1}")
 	private String host;
-
-	@Value("${spring.redis.port}")
+	
+	@Value("${spring.redis.port:6379}")
 	private int port;
-
+	
 	@Value("${spring.redis.password}")
 	private String password;
-
-	@Value("${spring.redis.timeout}")
+	
+	@Value("${spring.redis.timeout:0}")
 	private int timeout;
-
-	@Value("${spring.redis.database}")
-	private int database;
+	
+	@Value("${spring.redis.database:0}")
+	private int database;*/
 
 
 
@@ -65,16 +66,27 @@ public class ShiroConfig {
 	 *
 	 * @return RedisManager
 	 */
+	@ConfigurationProperties(prefix = "spring.shiro")
 	private RedisManager redisManager() {
 		log.info("Initializing  *redisManager");
+		//log.info("host={},port={},password={},timeout={},database={}",host,port,password,timeout,database);
+		
 		RedisManager redisManager = new RedisManager();
-		redisManager.setHost(host);
+		/*redisManager.setHost(host);
 		redisManager.setPort(port);
-		if (!StringUtils.isEmpty(password)) {
+		if (StringUtils.isNotBlank(password)) {
 			redisManager.setPassword(password);
 		}
 		redisManager.setTimeout(timeout);
-		redisManager.setDatabase(database);
+		redisManager.setDatabase(database);*/
+		
+		redisManager.setHost("127.0.0.1");
+		redisManager.setPort(6379);
+		/*if (StringUtils.isNotBlank(password)) {
+			redisManager.setPassword(password);
+		}*/
+		redisManager.setTimeout(0);
+		redisManager.setDatabase(0);
 		return redisManager;
 	}
 
@@ -124,6 +136,7 @@ public class ShiroConfig {
 		filterChainDefinitions.put("/fonts/**", "anon");
 		filterChainDefinitions.put("/img/**", "anon");
 		filterChainDefinitions.put("/druid/**", "anon");
+		filterChainDefinitions.put("/login", "anon");
 		filterChainDefinitions.put("/user/register", "anon");
 		filterChainDefinitions.put("/gifCode", "anon");
 		filterChainDefinitions.put("/actuator/**", "anon");
@@ -203,20 +216,6 @@ public class ShiroConfig {
 		return redisSessionDAO;
 	}
 
-	/**
-	 * 会话Cookie模板 sessionIdCookie
-	 * cookie1
-	 */
-	/*@Bean
-	public Cookie sessionIdCookie() {
-		log.info("****sessionIdCookie");
-		SimpleCookie simpleCookie = new SimpleCookie("sessionIdCookie");
-		simpleCookie.setHttpOnly(true);
-		//单位:秒,此处设置浏览器关闭即失效
-		simpleCookie.setMaxAge(-1);
-		simpleCookie.setPath("/");
-		return simpleCookie;
-	}*/
 
 
 	/**
@@ -265,12 +264,10 @@ public class ShiroConfig {
 		listeners.add(new ShiroSessionListener());
 		//设置全局session超时时间,单位/毫秒,此处30min
 		defaultWebSessionManager.setGlobalSessionTimeout(1800000);
-    //defaultWebSessionManager.setDeleteInvalidSessions(true);
-    //defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
-		//Quartz会话定时刷新
-		//defaultWebSessionManager.setSessionValidationScheduler(scheduler);
 		//SessionDAO
 		defaultWebSessionManager.setSessionListeners(listeners);
+		//Shiro去掉URL中的JSESSIONID
+		defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
 		defaultWebSessionManager.setSessionDAO(sessionDAO());
 		defaultWebSessionManager.setSessionIdUrlRewritingEnabled(false);
 		return defaultWebSessionManager;
@@ -295,20 +292,6 @@ public class ShiroConfig {
 		return methodInvokingFactoryBean;
 	}
 
-	/**
-	 * 基于Form表单的身份验证过滤器 FormAuthenticationFilter
-	 *
-	 * @return obj
-	 */
-	/*@Bean(name = "authcFilter")
-	public FormAuthenticationFilter formAuthenticationFilter() {
-		log.info("Initializing *formAuthenticationFilter");
-		FormAuthenticationFilter formFilter = new FormAuthenticationFilter();
-		formFilter.setUsernameParam("username");
-		formFilter.setPasswordParam("password");
-		formFilter.setRememberMeParam("rememberMe");
-		return formFilter;
-	}*/
 
 
 	/**

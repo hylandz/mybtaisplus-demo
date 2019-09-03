@@ -79,10 +79,14 @@ function login() {
             if (r.code === 200) {
                 location.href = ctx + 'index';
             } else {
-                reloadCode();
-                $MB.n_warning(r.msg);
+                //reloadCode();
+                console.log('mag:' + r.message);
+                $MB.n_warning(r.message);
                 $loginButton.html("登录");
             }
+        },
+        error:function(r){
+            $MB.n_warning(r.message);
         }
     });
 }

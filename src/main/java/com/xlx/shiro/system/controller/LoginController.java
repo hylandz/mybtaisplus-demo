@@ -41,7 +41,7 @@ public class LoginController {
 		logger.info("登录:[{}]",loginDTO);
 		if (loginDTO == null){
 			return ResultDTO.failed("用户名或密码不能为空");
-		}else if (StringUtils.isBlank(loginDTO.getCaptcha())){
+		}else if (StringUtils.isBlank(loginDTO.getCode())){
 			return ResultDTO.failed(CustomizeExceptionEnum.CAPTCHA_CODE_NOT_NULL);
 		}
 		UsernamePasswordToken token = new UsernamePasswordToken(loginDTO.getUsername(),loginDTO.getPassword(),loginDTO.getRememberMe());

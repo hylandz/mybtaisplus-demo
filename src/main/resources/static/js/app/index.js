@@ -95,13 +95,13 @@ $(window).on("load", function () {
     };
     $.post(ctx + "menu/getUserMenu", {"userName": userName}, function (r) {
         if (r.code === 0) {
-            var data = r.msg;
+            var data = r.message;
             var $crollbarInner = $(".scrollbar-inner");
             document.getElementById("navigation").innerHTML = forTree(data.children);
             menuTree();
             $crollbarInner[0] && $crollbarInner.scrollbar().scrollLock()
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     })
 
@@ -111,7 +111,7 @@ $(window).on("load", function () {
         var a = $(this).val();
         $("body").attr("data-ma-theme", a);
         $.get(ctx + "user/theme", {"theme": a, "username": userName}, function (r) {
-            if (r.code === 0) $MB.n_success("主题更换成功，下次登录时生效！");
+            if (r.code === 200) $MB.n_success("主题更换成功，下次登录时生效！");
         });
     });
     // 修改个人信息

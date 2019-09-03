@@ -5,6 +5,8 @@ import lombok.Data;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
+
 /**
  * 统一操作结果
  *
@@ -12,7 +14,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 
 @Data
-public class ResultDTO {
+public class ResultDTO implements Serializable {
 
   private static final String SUCCESS = "OK";
   private static final String FAILURE = "ERROR";

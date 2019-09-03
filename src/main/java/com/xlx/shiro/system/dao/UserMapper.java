@@ -3,9 +3,7 @@ package com.xlx.shiro.system.dao;
 import com.xlx.shiro.system.entity.User;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Long userId);
