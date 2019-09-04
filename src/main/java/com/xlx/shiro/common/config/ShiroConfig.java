@@ -43,19 +43,19 @@ import java.util.Map;
 public class ShiroConfig {
 	
 	
-	/*@Value("${spring.redis.host:127.0.0.1}")
+	/*@Value("${spring.service.host:127.0.0.1}")
 	private String host;
 	
-	@Value("${spring.redis.port:6379}")
+	@Value("${spring.service.port:6379}")
 	private int port;
 	
-	@Value("${spring.redis.password}")
+	@Value("${spring.service.password}")
 	private String password;
 	
-	@Value("${spring.redis.timeout:0}")
+	@Value("${spring.service.timeout:0}")
 	private int timeout;
 	
-	@Value("${spring.redis.database:0}")
+	@Value("${spring.service.database:0}")
 	private int database;*/
 
 

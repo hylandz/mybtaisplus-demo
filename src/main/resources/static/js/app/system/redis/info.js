@@ -15,7 +15,7 @@ $(document).ready(function() {
                 load: function() {
                     var series = this.series[0];
                     rediskeysSizeInterval = setInterval(function() {
-                        $.getJSON(ctx + "redis/memoryInfo", function(data) {
+                        $.getJSON(ctx + "service/memoryInfo", function(data) {
                             var x = data.create_time,
                                 y = data.used_memory / 1024;
                             series.addPoint([ x, y ], true, true);
@@ -86,7 +86,7 @@ $(document).ready(function() {
                 load: function() {
                     var series = this.series[0];
                     redisMemoryInfoInterval = setInterval(function() {
-                        $.getJSON(ctx + "redis/keysSize", function(data) {
+                        $.getJSON(ctx + "service/keysSize", function(data) {
                             var x = data.create_time,
                                 y = data.dbSize;
                             series.addPoint([ x, y ], true, true);

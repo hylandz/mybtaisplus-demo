@@ -8,7 +8,7 @@ var $MB_Redis_Bash = function () {
         var historyIndex = 0;
         var command = "";
 
-        title.text(userName + "@" + osName + ": ~ (redis-cli)");
+        title.text(userName + "@" + osName + ": ~ (service-cli)");
         var date = new Date().toString();
         date = date.substr(0, date.indexOf("GMT") - 1);
         printf("Last login: " + date + " on febs, type `help` for help\n");
@@ -70,12 +70,12 @@ var $MB_Redis_Bash = function () {
             }
         }
 
-        // redis command
+        // service command
         function keys(args) {
             args = args.join("");
             if (!hasArgs(args)) {
                 errorArgs('keys');
-            } else $.get(ctx + "redis/keys", {
+            } else $.get(ctx + "service/keys", {
                 'arg': args
             }, function (r) {
                 console.log(r);
@@ -99,7 +99,7 @@ var $MB_Redis_Bash = function () {
             args = args.join("");
             if (!hasArgs(args)) {
                 errorArgs('get');
-            } else $.get(ctx + "redis/get", {
+            } else $.get(ctx + "service/get", {
                 'arg': args
             }, function (r) {
                 var data = r.msg;
@@ -115,7 +115,7 @@ var $MB_Redis_Bash = function () {
         function set(args) {
             if (!hasArgs(args.join(""))) {
                 errorArgs('set');
-            } else $.get(ctx + "redis/set", {
+            } else $.get(ctx + "service/set", {
                 'arg': args.join(",")
             }, function (r) {
                 printf(r.msg + "\n");
@@ -126,7 +126,7 @@ var $MB_Redis_Bash = function () {
         function del(args) {
             if (!hasArgs(args.join(""))) {
                 errorArgs('set');
-            } else $.get(ctx + "redis/del", {
+            } else $.get(ctx + "service/del", {
                 'arg': args.join(",")
             }, function (r) {
                 printf(r.msg + "\n");
@@ -138,7 +138,7 @@ var $MB_Redis_Bash = function () {
             if (!hasArgs(args.join(""))) {
                 errorArgs('exists');
             } else {
-                $.get(ctx + "redis/exists", {arg: args.join(",")}, function (r) {
+                $.get(ctx + "service/exists", {arg: args.join(",")}, function (r) {
                     var data = r.msg;
                     printf(data + "\n");
                     printc();
@@ -151,7 +151,7 @@ var $MB_Redis_Bash = function () {
             if (!hasArgs(args)) {
                 errorArgs('pttl');
             } else {
-                $.get(ctx + "redis/pttl", {arg: args}, function (r) {
+                $.get(ctx + "service/pttl", {arg: args}, function (r) {
                     var data = r.msg;
                     printf(data + "\n");
                     printc();
@@ -163,7 +163,7 @@ var $MB_Redis_Bash = function () {
             if (!hasArgs(args.join(""))) {
                 errorArgs('pexpire');
             } else {
-                $.get(ctx + "redis/pexpire", {arg: args.join(",")}, function (r) {
+                $.get(ctx + "service/pexpire", {arg: args.join(",")}, function (r) {
                     var data = r.msg;
                     printf(data + "\n");
                     printc();
@@ -238,7 +238,7 @@ var $MB_Redis_Bash = function () {
                 printf(" -------------------------------- \n");
                 printf(" clear    help    echo\n");
                 printf(" -------------------------------- \n");
-                printf(" |       redis  command         | \n");
+                printf(" |       service  command         | \n");
                 printf(" -------------------------------- \n");
                 printf(" keys         get         set \n");
                 printf(" del          exists        pttl\n");
@@ -261,7 +261,7 @@ var $MB_Redis_Bash = function () {
                 }
             }
             if (!isValid) {
-                printf("redis: command not found: `" + command + "`, type `help` for help.\n");
+                printf("service: command not found: `" + command + "`, type `help` for help.\n");
                 printc();
             }
             commandHistory.push(command);
