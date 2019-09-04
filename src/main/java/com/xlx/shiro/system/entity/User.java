@@ -76,4 +76,8 @@ public class User  implements Serializable {
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
+    
+    public Long getAuthCacheKey() {
+        return userId;
+    }
 }

@@ -71,6 +71,9 @@ public class UserRealm extends AuthorizingRealm {
 		logger.info("user:[{}]", user);
 		if (user == null) {
 			logger.error("occurred an UnauthenticatedException: the account number does not exist");
+			/**
+			 * 抛出UnauthenticatedException异常为啥捕捉不到?
+			 */
 			throw new UnknownAccountException("帐号或密码错误");
 		} else if (Boolean.TRUE.equals(user.getLocked())) {
 			logger.error("occurred an UnauthenticatedException: this account has been locked,please contact the administrator");

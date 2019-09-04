@@ -5,6 +5,7 @@ var $navigation = $("#navigation");
 var redisMemoryInfoInterval;
 var rediskeysSizeInterval;
 
+
 $(window).on("load", function () {
     // 加载loading
     setTimeout(function () {
@@ -94,7 +95,7 @@ $(window).on("load", function () {
         })
     };
     $.post(ctx + "menu/getUserMenu", {"userName": userName}, function (r) {
-        if (r.code === 0) {
+        if (r.code === 200) {
             var data = r.message;
             var $crollbarInner = $(".scrollbar-inner");
             document.getElementById("navigation").innerHTML = forTree(data.children);
@@ -105,7 +106,10 @@ $(window).on("load", function () {
         }
     })
 
-}), $(document).ready(function () {
+});
+
+
+$(document).ready(function () {
     // 主题切换
     $("body").on("change", ".theme-switch input:radio", function () {
         var a = $(this).val();

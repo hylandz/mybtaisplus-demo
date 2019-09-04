@@ -41,4 +41,6 @@ public class UserTest {
     User user = userService.findUserByUserName("admin");
     System.out.println(user);
   }
+  
+  
 }

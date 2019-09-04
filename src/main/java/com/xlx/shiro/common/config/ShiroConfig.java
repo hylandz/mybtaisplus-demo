@@ -7,7 +7,6 @@ import com.xlx.shiro.system.shiro.credentials.RetryLimitHashedCredentialsMatcher
 import com.xlx.shiro.system.shiro.filter.CustomUserFilter;
 import com.xlx.shiro.system.shiro.realm.UserRealm;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -23,11 +22,11 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.Filter;
 import java.util.ArrayList;
@@ -66,7 +65,6 @@ public class ShiroConfig {
 	 *
 	 * @return RedisManager
 	 */
-	@ConfigurationProperties(prefix = "spring.shiro")
 	private RedisManager redisManager() {
 		log.info("Initializing  *redisManager");
 		//log.info("host={},port={},password={},timeout={},database={}",host,port,password,timeout,database);
@@ -82,9 +80,6 @@ public class ShiroConfig {
 		
 		redisManager.setHost("127.0.0.1");
 		redisManager.setPort(6379);
-		/*if (StringUtils.isNotBlank(password)) {
-			redisManager.setPassword(password);
-		}*/
 		redisManager.setTimeout(0);
 		redisManager.setDatabase(0);
 		return redisManager;
@@ -160,7 +155,7 @@ public class ShiroConfig {
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {
 		log.info("Initializing  *credentialsMatcher");
 		//CacheManager
-		HashedCredentialsMatcher credentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager());
+		HashedCredentialsMatcher credentialsMatcher = new RetryLimitHashedCredentialsMatcher();
 		//密码匹配设置:采用的加密算法md5,迭代次数2,使用16进制编码存储密码
 		credentialsMatcher.setHashAlgorithmName("md5");
 		credentialsMatcher.setHashIterations(2);

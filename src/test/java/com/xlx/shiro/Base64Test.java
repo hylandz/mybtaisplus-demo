@@ -27,4 +27,16 @@ public class Base64Test {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void bitCalculate(){
+		int a = 10 >> 1;//a=10/2^1=5
+		int b = a++;//b=5,a=6
+		int c = ++a;//c=7,a=7
+		int d = b + a++;//d=5+7=12,a=8
+		System.out.println("a=" + a + ",b=" + b + ",c=" + c + ",d=" + d);
+		int i = 4;
+		int j = i++;
+		System.out.println(i + "," + j);
+	}
 }
