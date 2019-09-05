@@ -3,6 +3,7 @@ package com.xlx.shiro.system.shiro.filter;
 import com.alibaba.fastjson.JSON;
 import com.xlx.shiro.common.util.HttpUtil;
 import com.xlx.shiro.system.dto.ResultDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.UserFilter;
 import org.springframework.http.HttpStatus;
 
@@ -17,6 +18,7 @@ import java.io.PrintWriter;
  *
  * @author xielx on 2019/9/2
  */
+@Slf4j
 public class CustomUserFilter extends UserFilter {
 
 	/**
@@ -31,6 +33,7 @@ public class CustomUserFilter extends UserFilter {
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		//
 		if (HttpUtil.isAjaxRequest((HttpServletRequest) request)) {
+			log.info("OMG i found a AJAX request,be preparing to deal with...");
 			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 			httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
 			httpServletResponse.setContentType("application/json; charset=utf-8");

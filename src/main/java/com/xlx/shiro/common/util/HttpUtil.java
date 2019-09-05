@@ -28,7 +28,7 @@ public class HttpUtil {
 	 */
 	public static boolean isAjaxRequest(HttpServletRequest request) {
 
-		String header = request.getHeader("x-requested-with");
+		String header = request.getHeader("X-Requested-With");
 		if ("XMLHttpRequest".equals(header)) {
 			return true;
 		}

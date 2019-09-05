@@ -3,6 +3,7 @@ package com.xlx.shiro.system.dao;
 import com.xlx.shiro.system.entity.Menu;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Set;
 
 public interface MenuMapper {
@@ -20,4 +21,6 @@ public interface MenuMapper {
 
 
     Set<String> selectPermissionsByUserName(@Param("userName") String userName);
+    
+    List<Menu> selectMenuByUserName(@Param("userName") String userName);
 }

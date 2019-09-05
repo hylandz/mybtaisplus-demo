@@ -71,8 +71,8 @@ function login() {
         data: {
             "username": username,
             "password": password,
-            "code": code,
-            "rememberMe": rememberMe
+            "rememberMe": rememberMe,
+            "code": code
         },
         dataType: "json",
         success: function (r) {
@@ -80,7 +80,6 @@ function login() {
                 location.href = ctx + 'index';
             } else {
                 //reloadCode();
-                console.log('mag:' + r.message);
                 $MB.n_warning(r.message);
                 $loginButton.html("登录");
             }

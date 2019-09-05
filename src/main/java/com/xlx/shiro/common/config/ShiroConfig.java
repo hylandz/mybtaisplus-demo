@@ -43,7 +43,7 @@ import java.util.Map;
 public class ShiroConfig {
 	
 	
-	@Value("${spring.redis.host:127.0.0.1}")
+	/*@Value("${spring.redis.host:127.0.0.1}")
 	private String host;
 	
 	@Value("${spring.redis.port:6379}")
@@ -56,7 +56,7 @@ public class ShiroConfig {
 	private int timeout;
 	
 	@Value("${spring.redis.database:0}")
-	private int database;
+	private int database;*/
 
 
 
@@ -70,13 +70,21 @@ public class ShiroConfig {
 		//log.info("host={},port={},password={},timeout={},database={}",host,port,password,timeout,database);
 		
 		RedisManager redisManager = new RedisManager();
-		redisManager.setHost(host);
+		redisManager.setHost("127.0.0.1");
+		redisManager.setPort(6379);
+		/*if (StringUtils.isNotBlank(password)) {
+			redisManager.setPassword(password);
+		}*/
+		redisManager.setTimeout(0);
+		redisManager.setDatabase(0);
+		/*redisManager.setHost(host);
 		redisManager.setPort(port);
 		if (StringUtils.isNotBlank(password)) {
 			redisManager.setPassword(password);
 		}
 		redisManager.setTimeout(timeout);
-		redisManager.setDatabase(database);
+		redisManager.setDatabase(database);*/
+		
 		
 		return redisManager;
 	}

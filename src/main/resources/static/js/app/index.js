@@ -6,15 +6,23 @@ var redisMemoryInfoInterval;
 var rediskeysSizeInterval;
 
 
+/**
+ * 加载loading
+ */
 $(window).on("load", function () {
     // 加载loading
     setTimeout(function () {
         $(".page-loader").fadeOut();
     }, 500)
-}), $(document).ready(function () {
+});
+
+/**
+ * 设置主题色
+ */
+$(document).ready(function () {
     // 设置主题色
-    var theme_color = $MB.getThemeColor(theme);
-    var opacity_color = $MB.getThemeRGBA(theme, 0.1);
+    var theme_color = $MB.getThemeColor('green');
+    var opacity_color = $MB.getThemeRGBA('green', 0.1);
     var $head = $("head");
     $("body").attr("data-ma-theme", theme);
     $(".bg-" + theme).addClass("active").siblings().removeClass("active");
@@ -28,7 +36,12 @@ $(window).on("load", function () {
         .append("<style>.form-group__bar:before, .form-group__bar:after {background-color: " + theme_color + "}</style>")
         .append("<style>.daterangepicker td.active, .daterangepicker td.active:hover,.end-date {background-color: " + theme_color + " !important}</style>")
         .append("<style>.daterangepicker td.in-range {background-color:" + opacity_color + "}</style>");
-}), $(document).ready(function () {
+});
+
+/**
+ * 导航栏标签关闭
+ */
+$(document).ready(function () {
     function a(a) {
         a.requestFullscreen ? a.requestFullscreen() : a.mozRequestFullScreen ? a.mozRequestFullScreen() : a.webkitRequestFullscreen ? a.webkitRequestFullscreen() : a.msRequestFullscreen && a.msRequestFullscreen()
     }
@@ -47,7 +60,12 @@ $(window).on("load", function () {
                 break;
         }
     });
-}), $(document).ready(function () {
+});
+
+/**
+ * 菜单打开/合闭
+ */
+$(document).ready(function () {
     //使用递归处理菜单
     var str = "";
     var forTree = function (o) {
@@ -71,6 +89,9 @@ $(window).on("load", function () {
         return str;
     };
 
+    /**
+     *
+     */
     var menuTree = function () {
         $navigation.find("ul").each(function (index, element) {
             var ulContent = $(element).html();
@@ -94,9 +115,13 @@ $(window).on("load", function () {
             ul.hide(300);
         })
     };
-    $.post(ctx + "menu/getUserMenu", {"userName": userName}, function (r) {
-        if (r.code === 200) {
-            var data = r.message;
+
+    /**
+     * 获取登录用户的对应菜单
+     */
+    $.get(ctx + "menu/getUserMenu", {"userName": userName}, function (r) {
+            if (r.code === 200) {
+            var data = r.data;
             var $crollbarInner = $(".scrollbar-inner");
             document.getElementById("navigation").innerHTML = forTree(data.children);
             menuTree();
@@ -108,7 +133,9 @@ $(window).on("load", function () {
 
 });
 
-
+/**
+ * 主题切换
+ */
 $(document).ready(function () {
     // 主题切换
     $("body").on("change", ".theme-switch input:radio", function () {
@@ -154,7 +181,7 @@ function loadMain(obj) {
     // 加载内容
     var $name = $this.attr("name");
     $.post(ctx + $name, {}, function (r) {
-        if(r.code === 500){
+        if (r.code === 500) {
             $MB.n_danger(r.msg);
             return;
         }

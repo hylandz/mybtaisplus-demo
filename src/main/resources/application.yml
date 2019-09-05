@@ -60,8 +60,8 @@ spring:
   # thymeleaf模板
   thymeleaf:
     cache: false
-    model: HTML
     encoding: utf-8
+    mode: HTML
 
   # Spring-AOP
   aop:

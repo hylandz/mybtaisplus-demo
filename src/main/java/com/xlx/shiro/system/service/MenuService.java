@@ -1,12 +1,17 @@
 package com.xlx.shiro.system.service;
 
+import com.xlx.shiro.common.util.TreeUtil;
 import com.xlx.shiro.system.dao.MenuMapper;
+import com.xlx.shiro.system.dto.TreeDTO;
 import com.xlx.shiro.system.entity.Menu;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 资源
@@ -34,8 +39,19 @@ public class MenuService {
 	 * @param userName 登录账户
 	 * @return list
 	 */
-	public List<Menu> listMenusOfLoginer(String userName){
-
-		return  null;
+	public TreeDTO<Menu> listMenusOfLoginer(String userName){
+			List<Menu> menuList = this.menuMapper.selectMenuByUserName(userName);
+		
+		List<TreeDTO<Menu>> treeDTOList =	menuList.stream().map(menu -> {
+				TreeDTO<Menu> treeDTO = new TreeDTO<>();
+				treeDTO.setId(menu.getMenuId().toString());
+				treeDTO.setParentId(menu.getParentId().toString());
+				treeDTO.setText(menu.getMenuName());
+				treeDTO.setIcon(menu.getIcon());
+				treeDTO.setUrl(menu.getUrl());
+				return treeDTO;
+			}).collect(Collectors.toList());
+		
+		return TreeUtil.build(treeDTOList);
 	}
 }

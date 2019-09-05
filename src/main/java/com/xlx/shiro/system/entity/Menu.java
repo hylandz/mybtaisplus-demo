@@ -9,7 +9,7 @@ import java.util.Date;
 public class Menu implements Serializable {
     private Long menuId;
 
-    private String name;
+    private String menuName;
 
     private String icon;
 
@@ -46,12 +46,12 @@ public class Menu implements Serializable {
         this.menuId = menuId;
     }
 
-    public String getName() {
-        return name;
+    public String getMenuName() {
+        return menuName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
     public String getIcon() {
