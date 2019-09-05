@@ -7,6 +7,7 @@ import com.xlx.shiro.system.shiro.credentials.RetryLimitHashedCredentialsMatcher
 import com.xlx.shiro.system.shiro.filter.CustomUserFilter;
 import com.xlx.shiro.system.shiro.realm.UserRealm;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -22,11 +23,10 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.Filter;
 import java.util.ArrayList;
@@ -43,20 +43,20 @@ import java.util.Map;
 public class ShiroConfig {
 	
 	
-	/*@Value("${spring.service.host:127.0.0.1}")
+	@Value("${spring.redis.host:127.0.0.1}")
 	private String host;
 	
-	@Value("${spring.service.port:6379}")
+	@Value("${spring.redis.port:6379}")
 	private int port;
 	
-	@Value("${spring.service.password}")
+	@Value("${spring.redis.password}")
 	private String password;
 	
-	@Value("${spring.service.timeout:0}")
+	@Value("${spring.redis.timeout}")
 	private int timeout;
 	
-	@Value("${spring.service.database:0}")
-	private int database;*/
+	@Value("${spring.redis.database:0}")
+	private int database;
 
 
 
@@ -70,18 +70,14 @@ public class ShiroConfig {
 		//log.info("host={},port={},password={},timeout={},database={}",host,port,password,timeout,database);
 		
 		RedisManager redisManager = new RedisManager();
-		/*redisManager.setHost(host);
+		redisManager.setHost(host);
 		redisManager.setPort(port);
 		if (StringUtils.isNotBlank(password)) {
 			redisManager.setPassword(password);
 		}
 		redisManager.setTimeout(timeout);
-		redisManager.setDatabase(database);*/
+		redisManager.setDatabase(database);
 		
-		redisManager.setHost("127.0.0.1");
-		redisManager.setPort(6379);
-		redisManager.setTimeout(0);
-		redisManager.setDatabase(0);
 		return redisManager;
 	}
 
@@ -149,7 +145,7 @@ public class ShiroConfig {
 
 
 	/**
-	 * 凭证匹配器 HashedCredentialsMatcher
+	 * 自定义凭证匹配器 HashedCredentialsMatcher
 	 */
 	@Bean("credentialsMatcher")
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {

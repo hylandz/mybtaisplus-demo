@@ -126,7 +126,7 @@ public class StringRedisTemplateUtil {
 	/**
 	 * 获取ttl
 	 * @param key k
-	 * @param unit 时间单位
+	 * @param unit 指定时间单位
 	 * @return long
 	 */
 	public Long getExpire(String key,TimeUnit unit){

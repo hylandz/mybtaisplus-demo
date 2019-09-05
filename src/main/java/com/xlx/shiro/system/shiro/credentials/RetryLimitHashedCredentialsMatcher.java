@@ -20,7 +20,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
 
 	@Resource
-	private StringRedisTemplateUtil stringRedisTemplate;
+	private StringRedisTemplateUtil stringRedisTemplateUtil;
 
 
 	/**
@@ -31,20 +31,20 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 	@Override
 	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
 		String username = (String) token.getPrincipal();
-		String retryCount = stringRedisTemplate.get(username);
-		Long ttl = stringRedisTemplate.getExpire(username,TimeUnit.SECONDS);
+		String retryCount = stringRedisTemplateUtil.get(username);
+		Long ttl = stringRedisTemplateUtil.getExpire(username,TimeUnit.SECONDS);
 		if (retryCount == null){
 			retryCount = "0";
-			stringRedisTemplate.set(username,retryCount);
+			stringRedisTemplateUtil.set(username,retryCount);
 		}else if (ttl != null && ttl > 0){
 			throw new ExcessiveAttemptsException("帐号被锁,请10分钟后重试");
 		}
 		
-		Long t = stringRedisTemplate.increment(username);
-		if (t > 5){
+		Long times = stringRedisTemplateUtil.increment(username);
+		if (times > 5){
 			//连续尝试登录失败超过5次
 			log.error("*********帐号:[{}]被锁定,请10分钟后重试******",username);
-			stringRedisTemplate.expire(username,10L, TimeUnit.MINUTES);
+			stringRedisTemplateUtil.expire(username,10L, TimeUnit.MINUTES);
 			throw new ExcessiveAttemptsException("帐号被锁,请10分钟后重试");
 		}
 
@@ -53,7 +53,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
 		log.info("匹配结果:[{}]",matches);
 		if (matches){
-			stringRedisTemplate.delete(username);
+			stringRedisTemplateUtil.delete(username);
 		}
 
 		return matches;

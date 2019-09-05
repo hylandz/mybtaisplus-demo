@@ -38,25 +38,25 @@ import java.time.Duration;
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
 	
-	@Value("${spring.service.host}")
+	@Value("${spring.redis.host}")
 	private String host;
 	
-	@Value("${spring.service.port}")
+	@Value("${spring.redis.port}")
 	private int port;
 	
-	@Value("${spring.service.password}")
+	@Value("${spring.redis.password}")
 	private String password;
 	
-	@Value("${spring.service.timeout}")
+	@Value("${spring.redis.timeout}")
 	private int timeout;
 	
-	@Value("${spring.service.jedis.pool.max-idle}")
+	@Value("${spring.redis.jedis.pool.max-idle}")
 	private int maxIdle;
 	
-	@Value("${spring.service.jedis.pool.max-wait}")
+	@Value("${spring.redis.jedis.pool.max-wait}")
 	private int maxWait;
 	
-	@Value("${spring.service.database}")
+	@Value("${spring.redis.database}")
 	private int database;
 	
 	
