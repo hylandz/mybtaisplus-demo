@@ -14,12 +14,12 @@
 							(.csv) </a>
                         </ul>
                     </div>
-                    <div class="dropdown actions__item" shiro:hasAnyPermissions="user:add,user:delete,user:update">
+                    <div class="dropdown actions__item" shiro:hasAnyPermissions="system:user:add,delete,update">
                         <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#user-add" shiro:hasPermission="user:add">新增用户</a>
-                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateUser()" shiro:hasPermission="user:update">修改用户</a>
-                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteUsers()" shiro:hasPermission="user:delete">删除用户</a>
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#user-add" shiro:hasPermission="system:user:add">新增用户</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateUser()" shiro:hasPermission="system:user:update">修改用户</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteUsers()" shiro:hasPermission="system:user:delete">删除用户</a>
                         </div>
                     </div>
                 </div>
