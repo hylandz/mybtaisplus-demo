@@ -17,15 +17,14 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
-
-
+    
     int updateLoginDate(@Param("userName") String userName);
-
-    List<User> selectUserByPage(@Param("offset") Integer offset,@Param("size") Integer size);
-
-
+    
+    
+    
+    List<User> selectUserByPage(User user);
+    
     User selectUserByUserName(@Param("userName") String userName);
-
+    
     int updatePassword(@Param("userId") Long userId,@Param("salt") String salt,@Param("newPwd") String newPwd);
 }

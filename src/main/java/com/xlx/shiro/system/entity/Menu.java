@@ -29,15 +29,30 @@ public class Menu implements Serializable {
 
     private Date gmtModified;
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
+    public Menu(Long menuId, String menuName, String icon, String type, String url, Long parentId, String parentIds, String permission, Boolean available, Date gmtCreate, Date gmtModified) {
+        this.menuId = menuId;
+        this.menuName = menuName;
+        this.icon = icon;
+        this.type = type;
+        this.url = url;
+        this.parentId = parentId;
+        this.parentIds = parentIds;
+        this.permission = permission;
+        this.available = available;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
     public Menu() {
         super();
     }
-
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
+    }
+    
+    
     public Long getMenuId() {
         return menuId;
     }
@@ -51,7 +66,7 @@ public class Menu implements Serializable {
     }
 
     public void setMenuName(String menuName) {
-        this.menuName = menuName;
+        this.menuName = menuName == null ? null : menuName.trim();
     }
 
     public String getIcon() {
@@ -59,7 +74,7 @@ public class Menu implements Serializable {
     }
 
     public void setIcon(String icon) {
-        this.icon = icon;
+        this.icon = icon == null ? null : icon.trim();
     }
 
     public String getType() {
@@ -67,7 +82,7 @@ public class Menu implements Serializable {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type == null ? null : type.trim();
     }
 
     public String getUrl() {
@@ -75,7 +90,7 @@ public class Menu implements Serializable {
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.url = url == null ? null : url.trim();
     }
 
     public Long getParentId() {
@@ -91,7 +106,7 @@ public class Menu implements Serializable {
     }
 
     public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
+        this.parentIds = parentIds == null ? null : parentIds.trim();
     }
 
     public String getPermission() {
@@ -99,7 +114,7 @@ public class Menu implements Serializable {
     }
 
     public void setPermission(String permission) {
-        this.permission = permission;
+        this.permission = permission == null ? null : permission.trim();
     }
 
     public Boolean getAvailable() {

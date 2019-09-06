@@ -1,4 +1,8 @@
 var $MB = (function () {
+
+    /**
+     * bootstrap的分页方法
+     */
     var bootstrapTable_default = {
         method: 'get',
         striped: true,

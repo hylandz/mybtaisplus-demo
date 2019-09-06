@@ -179,10 +179,10 @@ function loadMain(obj) {
     $breadcrumb.html("").append(breadcrumnHtml);
 
     // 加载内容
-    var $name = $this.attr("name");
-    $.post(ctx + $name, {}, function (r) {
-        if (r.code === 500) {
-            $MB.n_danger(r.msg);
+    var $name = $this.attr("name");//url
+    $.get($name, {}, function (r) {
+        if (r.code === 400) {
+            $MB.n_danger(r.message);
             return;
         }
         if (r.indexOf('账户登录') !== -1) {

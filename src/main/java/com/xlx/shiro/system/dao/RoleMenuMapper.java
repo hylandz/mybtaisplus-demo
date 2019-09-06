@@ -2,7 +2,7 @@ package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.entity.RoleMenu;
 
-public interface RoleResourceMapper {
+public interface RoleMenuMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(RoleMenu record);

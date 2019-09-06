@@ -38,7 +38,7 @@
                  left JOIN sys_user u on u.user_id = ur.user_id
         where m.permission IS NOT NULL
           and m.available=1
-          and u.user_name = #{userNamr,jdbcType=VARCHAR};
+          and u.user_name = #{userName,jdbcType=VARCHAR};
     </select>
     <!--根据用户名查询对应的菜单-->
     <select id="selectMenuByUserName" resultType="com.xlx.shiro.system.entity.Menu">
@@ -50,7 +50,7 @@
         where m.type = 'menu'
           AND m.available = 1
           AND u.user_name = #{userName,jdbcType=VARCHAR}
-        ORDER BY m.parent_id;
+        ORDER BY m.menu_id;
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

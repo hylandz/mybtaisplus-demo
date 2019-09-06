@@ -21,15 +21,25 @@ public class Dept implements Serializable {
 
     private Date gmtModified;
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
+    public Dept(Long deptId, String deptName, Long parentId, String parentIds, Boolean available, Date gmtCreate, Date gmtModified) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+        this.parentId = parentId;
+        this.parentIds = parentIds;
+        this.available = available;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
     public Dept() {
         super();
     }
-
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
+    }
+    
     public Long getDeptId() {
         return deptId;
     }

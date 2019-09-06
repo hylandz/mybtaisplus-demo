@@ -95,15 +95,14 @@ public class UserService {
   public boolean recordLoginTime(String userName){
     return userMapper.updateLoginDate(userName) != 0;
   }
-
+  
   /**
    * 分页
-   * @param offset 偏移量
-   * @param size 笔数
+   * @param user User
    * @return list
    */
-  public List<User> listUserPage(Integer offset,Integer size){
-    return userMapper.selectUserByPage(offset,size);
+  public List<User> listUserByPage(User user){
+    return userMapper.selectUserByPage(user);
   }
 }
 

@@ -41,6 +41,7 @@ public class TreeUtil {
 		nodes.forEach(child -> {
 			//该节点的父id
 			String pid = child.getParentId();//假设child的爸爸id=1
+			//父节点id=0说明就是一个独立的顶层节点
 			if (pid == null || "0".equals(pid)){
 				topNodes.add(child);
 				return;

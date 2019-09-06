@@ -1,7 +1,7 @@
 package com.xlx.shiro.system.controller;
 
+import com.xlx.shiro.common.constant.UserConstant;
 import com.xlx.shiro.common.util.ShiroUtil;
-import com.xlx.shiro.system.common.Constants;
 import com.xlx.shiro.system.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +28,7 @@ public class IndexController {
 	@GetMapping("/index")
 	public String index(Model model){
 		User user = ShiroUtil.getCurrentUser();
-		model.addAttribute(Constants.CURRENT_USER,user);
+		model.addAttribute(UserConstant.CURRENT_USER,user);
 		return "index";
 	}
 
