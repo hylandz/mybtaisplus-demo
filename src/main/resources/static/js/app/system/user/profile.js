@@ -15,6 +15,10 @@ $(function () {
     });
     $(".default_avatars_list").find("img").each(function () {
         var $this = $(this);
+
+        /**
+         * 头像
+         */
         $this.on("click", function () {
             var target_src = $(this).attr("src");
             $.post(ctx + "user/changeAvatar", {"imgName": target_src}, function (r) {
@@ -33,6 +37,9 @@ $(function () {
     validateRule();
     createDeptTree();
 
+    /**
+     * 修改资料
+     */
     $("#update-profile .btn-save").click(function () {
         getDept();
         var validator = $userProfileForm.validate();
@@ -56,28 +63,34 @@ function refreshUserProfile() {
     });
 }
 
+/**
+ * 点击编辑时获取当前用户的数据
+ */
 function editUserProfile() {
     $.post(ctx + "user/getUserProfile", {"userId": userId}, function (r) {
-        if (r.code === 0) {
+        if (r.code === 200) {
             var $form = $('#update-profile');
             var $deptTree = $('#deptTree');
             $form.modal();
-            var user = r.msg;
+            var user = r.message;
             $form.find("input[name='username']").val(user.username).attr("readonly", true);
             $form.find("input[name='oldusername']").val(user.username);
             $form.find("input[name='userId']").val(user.userId);
             $form.find("input[name='email']").val(user.email);
-            $form.find("input[name='mobile']").val(user.mobile);
+            $form.find("input[name='mobile']").val(user.phone);
             $form.find("input[name='description']").val(user.description);
-            $("input:radio[value='" + user.ssex + "']").attr("checked", true);
+            $("input:radio[value='" + user.gender + "']").attr("checked", true);
             $deptTree.jstree().open_all();
             $deptTree.jstree('select_node', user.deptId, true);
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     });
 }
 
+/**
+ * 验证规则
+ */
 function validateRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
     validator = $userProfileForm.validate({
@@ -85,10 +98,10 @@ function validateRule() {
             email: {
                 email: true
             },
-            mobile: {
+            phone: {
                 checkPhone: true
             },
-            ssex: {
+            gender: {
                 required: true
             },
             description: {
@@ -104,12 +117,15 @@ function validateRule() {
         },
         messages: {
             email: icon + "邮箱格式不正确",
-            ssex: icon + "请选择性别",
+            gender: icon + "请选择性别",
             description: icon + "个人描述不能超过100个字符"
         }
     });
 }
 
+/**
+ * 
+ */
 function createDeptTree() {
     $.post(ctx + "dept/tree", {}, function (r) {
         if (r.code === 0) {

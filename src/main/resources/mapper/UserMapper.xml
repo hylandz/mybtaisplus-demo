@@ -44,7 +44,7 @@
 
 
   <!--用户分页-->
-  <select id="selectUserByPage" parameterType="com.xlx.shiro.system.entity.User" resultType="com.xlx.shiro.system.entity.User">
+  <select id="selectUserByPage" parameterType="com.xlx.shiro.system.entity.User" resultMap="BaseResultMap">
     SELECT u.user_id,
 
     u.avatar_name,
@@ -70,7 +70,7 @@
         and locked = #{locked,jdbcType="BIT"}
       </if>
     </where>
-    ORDER BY gmt_create desc;
+    ORDER BY gmt_create desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

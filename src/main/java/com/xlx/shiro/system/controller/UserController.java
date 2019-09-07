@@ -3,6 +3,7 @@ package com.xlx.shiro.system.controller;
 import com.xlx.shiro.common.constant.UserConstant;
 import com.xlx.shiro.common.entity.QueryParam;
 import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
 import com.xlx.shiro.system.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -31,11 +33,13 @@ public class UserController extends BaseController{
 	
 	
 	/**
-	 * 跳转user.html
+	 * 点击用户管理跳转
+	 * @param model user.html
 	 * @return str
 	 */
 	@GetMapping("/system/user")
 	public String userManage(Model model){
+		//????????
 		final User currentUser = ShiroUtil.getCurrentUser();
 		model.addAttribute(UserConstant.CURRENT_USER,currentUser);
 		return "system/user/user";
@@ -58,8 +62,42 @@ public class UserController extends BaseController{
 		//logger.info("userList={}",userList);
 			return super.selectByPageNumSize(param,() -> this.userService.listUserByPage(user));
 	}
-
-
-
+	
+	
+	/**
+	 * 验证原始密码
+	 * @return dto
+	 */
+	@ResponseBody
+	@GetMapping("/verify")
+	public ResultDTO verifyOriginPassword(String originPwd){
+	  if(this.userService.verifyPassword(originPwd)){
+	  	return ResultDTO.success();
+	  }
+	  return ResultDTO.failed();
+	}
+	
+	/**
+	 * 修改密码吗
+	 * @param newPwd 新密码
+	 * @return dto
+	 */
+	@ResponseBody
+	@PostMapping("/user/updatePassword")
+	public ResultDTO modifyPassword(String newPwd){
+		final User currentUser = ShiroUtil.getCurrentUser();
+		if (currentUser == null){
+			return ResultDTO.failed("session已过期,请重新登录");
+		}
+		
+		final Long userId = currentUser.getUserId();
+		if (this.userService.modifyPassword(userId,newPwd)){
+			return ResultDTO.success("修改成功");
+		}
+		
+		return ResultDTO.failed("修改失败");
+	}
+	
+	
 
 }

@@ -60,9 +60,11 @@ public class UserService {
     //明文加密后比较
     String encryptPwd = ShiroUtil.encryptPassword(originPwd,currentUser.getCredentialsSalt());
 
+    
     if (encryptPwd.equals(currentUser.getUserPassword())){
       return true;
     }
+  
     return false;
   }
 
