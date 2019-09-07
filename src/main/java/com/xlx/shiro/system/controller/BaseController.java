@@ -19,28 +19,30 @@ public class BaseController {
 	
 	/**
 	 * 获取分页的结果集与总记录数
+	 *
 	 * @param pageInfo mybatis分页对象
 	 * @return map
 	 */
-	private Map<String,Object> getDataTable(PageInfo<?> pageInfo){
-		Map<String,Object> dataMap = new HashMap<>();
+	private Map<String, Object> getDataTable(PageInfo<?> pageInfo) {
+		Map<String, Object> dataMap = new HashMap<>();
 		
 		// 分页的结果集
-		dataMap.put("rows",pageInfo.getList());
+		dataMap.put("rows", pageInfo.getList());
 		//数据总记录
-		dataMap.put("total",pageInfo.getTotal());
+		dataMap.put("total", pageInfo.getTotal());
 		return dataMap;
 	}
 	
 	/**
 	 * 分页查询
-	 * @param param 查询参数
+	 *
+	 * @param param    查询参数
 	 * @param supplier 函数式接口
 	 * @return map
 	 */
-	protected Map<String,Object> selectByPage(QueryParam param,Supplier<?> supplier){
+	protected Map<String, Object> selectByPageNumSize(QueryParam param, Supplier<?> supplier) {
 		//设置查询条件
-		PageHelper.startPage(param.getPageNum(),param.getPageSize());
+		PageHelper.startPage(param.getPageNum(), param.getPageSize());
 		//查询
 		final PageInfo<?> pageInfo = new PageInfo<>((List<?>) supplier.get());
 		//?

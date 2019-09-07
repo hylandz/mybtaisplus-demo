@@ -8,8 +8,8 @@ $(function () {
                 pageSize: params.limit,
                 pageNum: params.offset / params.limit + 1,
                 username: $userTableForm.find("input[name='username']").val().trim(),
-                ssex: $userTableForm.find("select[name='ssex']").val(),
-                status: $userTableForm.find("select[name='status']").val()
+                gender: $userTableForm.find("select[name='gender']").val(),
+                locked: $userTableForm.find("select[name='locked']").val()
             };
         },
         columns: [{
@@ -27,10 +27,10 @@ $(function () {
             field: 'email',
             title: '邮箱'
         }, {
-            field: 'mobile',
+            field: 'phone',
             title: '手机'
         }, {
-            field: 'ssex',
+            field: 'gender',
             title: '性别',
             formatter: function (value, row, index) {
                 if (value === '0') return '男';
@@ -41,7 +41,7 @@ $(function () {
             field: 'crateTime',
             title: '创建时间'
         }, {
-            field: 'status',
+            field: 'locked',
             title: '状态',
             formatter: function (value, row, index) {
                 if (value === '1') return '<span class="badge badge-success">有效</span>';

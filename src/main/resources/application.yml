@@ -98,6 +98,8 @@ pagehelper:
 
 # 自定义配置
 xlx:
+  #打印sql
+  showsql: true
   # shiro
   shiro:
     # shiro redis缓存时长，默认1800秒

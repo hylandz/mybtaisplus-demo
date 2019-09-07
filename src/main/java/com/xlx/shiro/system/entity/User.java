@@ -45,6 +45,16 @@ public class User implements Serializable {
     private Date gmtCreate; //创建时间
     
     private Date gmtModified; //修改时间
+    
+    public String getDeptName() {
+        return deptName;
+    }
+    
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+    
+    private String deptName;//部门名称
 
     public User(Long userId, Long deptId, String avatarName, String avatarUrl, String userName, String userReal, String userPassword, String salt, String token, Integer gender, Date birth, String mail, String phone, Boolean locked, String loginIp, Date loginDate, Date gmtCreate, Date gmtModified) {
         this.userId = userId;

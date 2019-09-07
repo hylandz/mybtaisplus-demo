@@ -29,6 +29,9 @@ var $MB = (function () {
         }
     };
 
+    /**
+     * 初始化数据表单
+     */
     function _initTable(id, settings) {
         var params = $.extend({}, bootstrapTable_default, settings);
         if (typeof params.url === 'undefined') {
@@ -319,7 +322,7 @@ var $MB = (function () {
     });
     
     return {
-        initTable: function (id, setting) {
+            initTable: function (id, setting) {
             _initTable(id, setting);
         },
         initTreeTable: function (id, setting) {

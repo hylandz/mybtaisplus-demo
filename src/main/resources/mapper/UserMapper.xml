@@ -44,9 +44,9 @@
 
 
   <!--用户分页-->
-  <select id="selectUserByPage" resultType="com.xlx.shiro.system.entity.User" resultMap="BaseResultMap">
+  <select id="selectUserByPage" parameterType="com.xlx.shiro.system.entity.User" resultType="com.xlx.shiro.system.entity.User">
     SELECT u.user_id,
-    d.dept_name,
+
     u.avatar_name,
     u.avatar_url,
     u.user_name,
@@ -55,7 +55,8 @@
     u.mail,
     u.phone,
     u.locked,
-    u.gmt_create
+    u.gmt_create,
+    d.dept_name as deptName
     FROM sys_user u
     LEFT JOIN sys_dept d ON u.dept_id = d.dept_id
     <where>
@@ -63,10 +64,10 @@
         uer_name = #{userName,jdbcType="VARCHAR"}
       </if>
       <if test="gender != null and gender != ''">
-        gender = #{gender,jdbcType="INTEGER"}
+        and gender = #{gender,jdbcType="INTEGER"}
       </if>
       <if test="locked != null and locked != ''">
-        locked = #{locked,jdbcType="BIT"}
+        and locked = #{locked,jdbcType="BIT"}
       </if>
     </where>
     ORDER BY gmt_create desc;

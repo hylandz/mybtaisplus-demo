@@ -8,9 +8,9 @@ $(function () {
     initRole();
     createDeptTree();
 
-    $("input[name='status']").change(function () {
+    $("input[name='locked']").change(function () {
         var checked = $(this).is(":checked");
-        var $status_label = $("#status");
+        var $status_label = $("#locked");
         if (checked) $status_label.html('可用');
         else $status_label.html('禁用');
     });
@@ -23,20 +23,20 @@ $(function () {
         if (flag) {
             if (name === "save") {
                 $.post(ctx + "user/add", $userAddForm.serialize(), function (r) {
-                    if (r.code === 0) {
+                    if (r.code === 200) {
                         closeModal();
-                        $MB.n_success(r.msg);
+                        $MB.n_success(r.message);
                         $MB.refreshTable("userTable");
-                    } else $MB.n_danger(r.msg);
+                    } else $MB.n_danger(r.message);
                 });
             }
             if (name === "update") {
                 $.post(ctx + "user/update", $userAddForm.serialize(), function (r) {
-                    if (r.code === 0) {
+                    if (r.code === 200) {
                         closeModal();
-                        $MB.n_success(r.msg);
+                        $MB.n_success(r.message);
                         $MB.refreshTable("userTable");
-                    } else $MB.n_danger(r.msg);
+                    } else $MB.n_danger(r.message);
                 });
             }
         }
@@ -113,11 +113,14 @@ function validateRule() {
             },
             roles: icon + "请选择用户角色",
             email: icon + "邮箱格式不正确",
-            ssex: icon + "请选择性别"
+            gender: icon + "请选择性别"
         }
     });
 }
 
+/**
+ *
+ */
 function initRole() {
     $.post(ctx + "role/list", {}, function (r) {
         var data = r.rows;
@@ -158,7 +161,7 @@ function createDeptTree() {
                 "plugins": ["wholerow", "checkbox"]
             });
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     })
 }

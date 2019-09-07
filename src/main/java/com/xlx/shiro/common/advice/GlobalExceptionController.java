@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author xielx on 2019/7/14
  */
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalExceptionController {
 
 
-  @ExceptionHandler(Exception.class)
+ // @ExceptionHandler(Exception.class)
   public ResultDTO errorHandler(HttpServletRequest request,Throwable t){
     HttpStatus status = getStatus(request);
     if (status.is4xxClientError()){
