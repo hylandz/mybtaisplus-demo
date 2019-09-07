@@ -1,5 +1,8 @@
 package com.xlx.shiro.system.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,22 +22,13 @@ public class LogError implements Serializable {
     private String message;
 
     private Date gmtCreate;
-
-    public LogError(Long id, String requestUri, String method, String userAgent, String ip, String ipLocation, String message, Date gmtCreate) {
-        this.id = id;
-        this.requestUri = requestUri;
-        this.method = method;
-        this.userAgent = userAgent;
-        this.ip = ip;
-        this.ipLocation = ipLocation;
-        this.message = message;
-        this.gmtCreate = gmtCreate;
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
-
-    public LogError() {
-        super();
-    }
-
+    
+    
     public Long getId() {
         return id;
     }

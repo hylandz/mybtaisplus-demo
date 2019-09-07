@@ -18,7 +18,6 @@ public interface RoleMapper {
 
     int updateByPrimaryKey(Role record);
     
-    
     Set<String> selectRoleKeyByUserName(@Param("userName") String userName);
-   
+    
 }

@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * sys_dept
+ */
 public class Dept implements Serializable {
     private Long deptId;
 
@@ -20,25 +23,12 @@ public class Dept implements Serializable {
     private Date gmtCreate;
 
     private Date gmtModified;
-
-    public Dept(Long deptId, String deptName, Long parentId, String parentIds, Boolean available, Date gmtCreate, Date gmtModified) {
-        this.deptId = deptId;
-        this.deptName = deptName;
-        this.parentId = parentId;
-        this.parentIds = parentIds;
-        this.available = available;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
-    }
-
-    public Dept() {
-        super();
-    }
     
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
+    
     
     public Long getDeptId() {
         return deptId;

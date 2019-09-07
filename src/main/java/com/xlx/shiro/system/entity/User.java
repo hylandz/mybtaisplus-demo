@@ -7,7 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 实体类:sys_user
+ * sys_user
+ * @author xielx on 2019年9月7日
  */
 public class User implements Serializable {
     private Long userId; //主键
@@ -27,9 +28,9 @@ public class User implements Serializable {
     private String salt; //盐值
     
     private String token; //cookie使用
-
+    
     private Integer gender; // 性别 1:男 0:女
-
+    
     private Date birth; // 出生年月
     
     private String mail; //邮箱
@@ -48,43 +49,11 @@ public class User implements Serializable {
     
     private String deptName;//部门名称
     
-    public String getDeptName() {
-        return deptName;
-    }
-    
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public User(Long userId, Long deptId, String avatarName, String avatarUrl, String userName, String userReal, String userPassword, String salt, String token, Integer gender, Date birth, String mail, String phone, Boolean locked, String loginIp, Date loginDate, Date gmtCreate, Date gmtModified) {
-        this.userId = userId;
-        this.deptId = deptId;
-        this.avatarName = avatarName;
-        this.avatarUrl = avatarUrl;
-        this.userName = userName;
-        this.userReal = userReal;
-        this.userPassword = userPassword;
-        this.salt = salt;
-        this.token = token;
-        this.gender = gender;
-        this.birth = birth;
-        this.mail = mail;
-        this.phone = phone;
-        this.locked = locked;
-        this.loginIp = loginIp;
-        this.loginDate = loginDate;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
-    }
-
-    public User() {
-        super();
-    }
-    
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
+    
     
     /**
      * 盐 = 用户名 + salt
@@ -101,6 +70,7 @@ public class User implements Serializable {
     public Long getAuthCacheKey() {
         return userId;
     }
+    
     public Long getUserId() {
         return userId;
     }
@@ -243,5 +213,13 @@ public class User implements Serializable {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+    
+    public String getDeptName() {
+        return deptName;
+    }
+    
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }

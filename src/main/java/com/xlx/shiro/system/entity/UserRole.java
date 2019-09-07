@@ -1,24 +1,26 @@
 package com.xlx.shiro.system.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 
+/**
+ * sys_user_role
+ */
 public class UserRole implements Serializable {
     private Long id;
 
     private Long userId;
 
     private Long roleId;
-
-    public UserRole(Long id, Long userId, Long roleId) {
-        this.id = id;
-        this.userId = userId;
-        this.roleId = roleId;
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
-
-    public UserRole() {
-        super();
-    }
-
+    
+    
     public Long getId() {
         return id;
     }

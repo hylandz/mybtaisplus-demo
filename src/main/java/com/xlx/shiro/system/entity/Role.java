@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * sys_role
+ */
 public class Role implements Serializable {
     private Long roleId;
 
@@ -18,25 +21,12 @@ public class Role implements Serializable {
     private Date gmtCreate;
 
     private Date gmtModified;
-
-    public Role(Long roleId, String roleKey, String roleName, Boolean available, Date gmtCreate, Date gmtModified) {
-        this.roleId = roleId;
-        this.roleKey = roleKey;
-        this.roleName = roleName;
-        this.available = available;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
-    }
-
-    public Role() {
-        super();
-    }
+    
     
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
-    
     
     public Long getRoleId() {
         return roleId;

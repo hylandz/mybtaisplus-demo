@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * sys_menu
+ */
 public class Menu implements Serializable {
     private Long menuId;
 
@@ -28,30 +31,11 @@ public class Menu implements Serializable {
     private Date gmtCreate;
 
     private Date gmtModified;
-
-    public Menu(Long menuId, String menuName, String icon, String type, String url, Long parentId, String parentIds, String permission, Boolean available, Date gmtCreate, Date gmtModified) {
-        this.menuId = menuId;
-        this.menuName = menuName;
-        this.icon = icon;
-        this.type = type;
-        this.url = url;
-        this.parentId = parentId;
-        this.parentIds = parentIds;
-        this.permission = permission;
-        this.available = available;
-        this.gmtCreate = gmtCreate;
-        this.gmtModified = gmtModified;
-    }
-
-    public Menu() {
-        super();
-    }
     
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
-    
     
     public Long getMenuId() {
         return menuId;

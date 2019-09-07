@@ -2,16 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xlx.shiro.system.dao.LogErrorMapper">
   <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.LogError">
-    <constructor>
-      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="request_uri" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="method" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="user_agent" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ip" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="ip_location" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="message" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="request_uri" jdbcType="VARCHAR" property="requestUri" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="ip_location" jdbcType="VARCHAR" property="ipLocation" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
   <sql id="Base_Column_List">
     id, request_uri, method, user_agent, ip, ip_location, message, gmt_create

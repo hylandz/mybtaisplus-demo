@@ -1,5 +1,8 @@
 package com.xlx.shiro.system.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 
 public class RoleMenu implements Serializable {
@@ -8,17 +11,13 @@ public class RoleMenu implements Serializable {
     private Long roleId;
 
     private Long menuId;
-
-    public RoleMenu(Long id, Long roleId, Long menuId) {
-        this.id = id;
-        this.roleId = roleId;
-        this.menuId = menuId;
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
-
-    public RoleMenu() {
-        super();
-    }
-
+    
+    
     public Long getId() {
         return id;
     }

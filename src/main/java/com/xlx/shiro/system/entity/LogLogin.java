@@ -1,5 +1,8 @@
 package com.xlx.shiro.system.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,21 +20,13 @@ public class LogLogin implements Serializable {
     private String message;
 
     private Date gmtCreate;
-
-    public LogLogin(Long id, String account, String ip, String browser, String os, String message, Date gmtCreate) {
-        this.id = id;
-        this.account = account;
-        this.ip = ip;
-        this.browser = browser;
-        this.os = os;
-        this.message = message;
-        this.gmtCreate = gmtCreate;
+    
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
     }
-
-    public LogLogin() {
-        super();
-    }
-
+    
     public Long getId() {
         return id;
     }

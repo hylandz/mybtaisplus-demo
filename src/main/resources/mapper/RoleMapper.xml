@@ -2,14 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xlx.shiro.system.dao.RoleMapper">
   <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.Role">
-    <constructor>
-      <idArg column="role_id" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="role_key" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="available" javaType="java.lang.Boolean" jdbcType="BIT" />
-      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-    </constructor>
+    <id column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="role_key" jdbcType="VARCHAR" property="roleKey" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="available" jdbcType="BIT" property="available" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
   <sql id="Base_Column_List">
     role_id, role_key, role_name, available, gmt_create, gmt_modified
@@ -29,11 +27,6 @@
            JOIN sys_user u ON u.user_id = ur.user_id
     where u.user_name = #{userName,jdbcType=VARCHAR};
   </select>
-
-
-  <!--根据用户名查询他的权限-->
-
-
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_role
