@@ -43,9 +43,12 @@ public class UserService {
    * @param newPwd 新密码
    * @return 0:fasle
    */
-  public Boolean modifyPassword(Long userId,String newPwd){
+  public Boolean modifyPassword(User user,String newPwd){
+    Long userId = user.getUserId();
     String slat = ShiroUtil.getHexRandomNumber();
-   return userMapper.updatePassword(userId,slat,newPwd) != 0;
+    user.setSalt(slat);
+    final String encryptPassword = ShiroUtil.encryptPassword(newPwd, user.getCredentialsSalt());
+    return userMapper.updatePassword(userId,slat,encryptPassword) != 0;
   }
 
   /**
@@ -61,7 +64,6 @@ public class UserService {
 
     //明文加密后比较
     String encryptPwd = ShiroUtil.encryptPassword(originPwd,currentUser.getCredentialsSalt());
-
     
     if (encryptPwd.equals(currentUser.getUserPassword())){
       return true;

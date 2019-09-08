@@ -7,7 +7,10 @@ import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
 import com.xlx.shiro.system.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -76,10 +79,10 @@ public class UserController extends BaseController {
 				return ResultDTO.success("更新个人信息成功");
 			}
 		} catch (Exception e) {
-			return ResultDTO.failed("更新个人信息失败!");
+			return ResultDTO.failed("更新个人信息失败,请联系网站管理员!");
 		}
 		
-		return ResultDTO.success("更新个人信息失败!");
+		return ResultDTO.success("更新个人信息失败,请联系网站管理员!");
 	}
 	
 	/**
@@ -97,12 +100,12 @@ public class UserController extends BaseController {
 			return ResultDTO.failed("session已过期,请重新登录");
 		}
 		
-		final Long userId = currentUser.getUserId();
-		if (this.userService.modifyPassword(userId, newPassword)) {
+		if (this.userService.modifyPassword(currentUser, newPassword)) {
+			ShiroUtil.getSubject().logout();
 			return ResultDTO.success("修改成功");
 		}
 		
-		return ResultDTO.failed("修改失败");
+		return ResultDTO.failed("修改失败,请联系网站管理员");
 	}
 	
 	/**
@@ -112,11 +115,11 @@ public class UserController extends BaseController {
 	 */
 	@PostMapping("/user/verify")
 	@ResponseBody
-	public ResultDTO verifyOriginPassword(String originPwd) {
+	public Boolean verifyOriginPassword(String originPwd) {
 		if (this.userService.verifyPassword(originPwd)) {
-			return ResultDTO.success();
+			return true;
 		}
-		return ResultDTO.failed();
+		return false;
 	}
 	
 	/**

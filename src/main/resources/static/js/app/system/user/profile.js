@@ -94,7 +94,7 @@ function editUserProfile() {
 }
 
 /**
- * 验证规则
+ * 验证规则-profile
  */
 function validateRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i>";
@@ -155,6 +155,9 @@ function createDeptTree() {
 
 }
 
+/**
+ * 表单元素name="deptId"赋值
+ */
 function getDept() {
     var ref = $('#deptTree').jstree(true);
     $("[name='deptId']").val(ref.get_selected()[0]);

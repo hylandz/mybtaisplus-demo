@@ -4,7 +4,11 @@ var $updatePasswordForm = $("#update-password-form");
 $(function () {
     validateUpdatePasswordRule();
 
+    /**
+     * 修改密码点击事件
+     */
     $("#update-password .btn-save").click(function () {
+        //验证
         validateUpdatePassword = $updatePasswordForm.validate();
         var flag = validateUpdatePassword.form();
         if (flag) {
@@ -26,8 +30,13 @@ $(function () {
 
 });
 
+
+/**
+ * 表单验证
+ */
 function validateUpdatePasswordRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
+    //验证原始密码
     validateUpdatePassword = $updatePasswordForm.validate({
         rules: {
             originPwd: {

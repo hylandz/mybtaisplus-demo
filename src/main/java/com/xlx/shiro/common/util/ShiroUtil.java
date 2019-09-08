@@ -76,7 +76,7 @@ public class ShiroUtil {
 
 	public static void main(String[] args) {
 		String num = getHexRandomNumber();
-		String en = encryptPassword("admin","adminmrbird");
+		String en = encryptPassword("admin","admin9ed024041c396fc281d30f7f8a53e640");
 		System.out.println(num);
 		System.out.println(en);
 
