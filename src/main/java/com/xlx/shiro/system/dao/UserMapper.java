@@ -1,5 +1,6 @@
 package com.xlx.shiro.system.dao;
 
+import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.entity.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,5 +27,7 @@ public interface UserMapper {
 	User selectUserByUserName(@Param("userName") String userName);
 	
 	int updatePassword(@Param("userId") Long userId, @Param("salt") String salt, @Param("newPwd") String newPwd);
+	
+	ProfileDTO selectProfileByUserId(Long userId);
 	
 }

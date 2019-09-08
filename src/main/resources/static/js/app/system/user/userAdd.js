@@ -85,7 +85,7 @@ function validateRule() {
                     }
                 }
             },
-            email: {
+            mail: {
                 email: true
             },
             roles: {
@@ -94,7 +94,7 @@ function validateRule() {
             mobile: {
                 checkPhone: true
             },
-            ssex: {
+            gender: {
                 required: true
             }
         },
@@ -119,7 +119,7 @@ function validateRule() {
 }
 
 /**
- *
+ * 角色选择
  */
 function initRole() {
     $.post(ctx + "role/list", {}, function (r) {
@@ -143,6 +143,10 @@ function initRole() {
     });
 }
 
+
+/**
+ * 部门选择
+ */
 function createDeptTree() {
     $.post(ctx + "dept/tree", {}, function (r) {
         if (r.code === 0) {

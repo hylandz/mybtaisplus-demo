@@ -1,8 +1,6 @@
 var $MB = (function () {
 
-    /**
-     * bootstrap的分页方法
-     */
+    //bootstrap的分页设置
     var bootstrapTable_default = {
         method: 'get',
         striped: true,
@@ -71,7 +69,7 @@ var $MB = (function () {
     }
 
     /*--------------------------------------
-        Bootstrap Notify Notifications
+        消息提示框:Bootstrap Notify Notifications
     ---------------------------------------*/
     function _notify(message, type) {
         $.notify({

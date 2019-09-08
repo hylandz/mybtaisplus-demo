@@ -18,6 +18,7 @@ $(function () {
         }
     });
 
+    //关闭
     $("#update-password .btn-close").click(function () {
         validateUpdatePassword.resetForm();
         $MB.closeAndRestModal("update-password");
@@ -29,15 +30,15 @@ function validateUpdatePasswordRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
     validateUpdatePassword = $updatePasswordForm.validate({
         rules: {
-            oldPassword: {
+            originPwd: {
                 required: true,
                 remote: {
-                    url: "user/checkPassword",
-                    type: "get",
+                    url: "user/verify",
+                    type: "post",
                     dataType: "json",
                     data: {
-                        password: function () {
-                            return $("input[name='oldPassword']").val().trim();
+                        originPwd: function () {
+                            return $("input[name='originPwd']").val().trim();
                         }
                     }
                 }
@@ -52,7 +53,7 @@ function validateUpdatePasswordRule() {
             }
         },
         messages: {
-            oldPassword: {
+            originPwd: {
                 required: icon + "请输入原密码",
                 remote: icon + "原密码错误"
             },

@@ -17,17 +17,17 @@ $(function () {
         var $this = $(this);
 
         /**
-         * 头像
+         * 个人信息的头像设置
          */
         $this.on("click", function () {
             var target_src = $(this).attr("src");
             $.post(ctx + "user/changeAvatar", {"imgName": target_src}, function (r) {
-                if (r.code === 0) {
+                if (r.code === 200) {
                     $("#close_update_avatar_button").trigger("click");
-                    $MB.n_success(r.msg);
+                    $MB.n_success(r.message);
                     refreshUserProfile();
                     $(".user__img").attr("src", ctx + target_src);
-                } else $MB.n_danger(r.msg);
+                } else $MB.n_danger(r.message);
             });
         });
     });
@@ -41,44 +41,49 @@ $(function () {
      * 修改资料
      */
     $("#update-profile .btn-save").click(function () {
+        //deptId
         getDept();
         var validator = $userProfileForm.validate();
         var flag = validator.form();
+        console.log('validate='+flag);
         if (flag) {
             $.post(ctx + "user/updateUserProfile", $userProfileForm.serialize(), function (r) {
-                if (r.code === 0) {
+                if (r.code === 200) {
                     $("#update-profile .btn-close").trigger("click");
-                    $MB.n_success(r.msg);
+                    $MB.n_success(r.message);
                     refreshUserProfile();
-                } else $MB.n_danger(r.msg);
+                } else $MB.n_danger(r.message);
             });
         }
     });
 
 });
 
+/**
+ * 修改资料后刷新个人信息
+ */
 function refreshUserProfile() {
-    $.post(ctx + "user/profile", function (r) {
-        $main_content.html("").append(r);
+    $.get(ctx + "user/profile", function (r) {
+        $main_content.html('').append(r);
     });
 }
 
 /**
- * 点击编辑时获取当前用户的数据
+ * 点击[编辑资料]时获取当前用户的数据
  */
 function editUserProfile() {
-    $.post(ctx + "user/getUserProfile", {"userId": userId}, function (r) {
+    $.get(ctx + "user/getUserProfile", {"userId": userId}, function (r) {
         if (r.code === 200) {
             var $form = $('#update-profile');
             var $deptTree = $('#deptTree');
             $form.modal();
-            var user = r.message;
-            $form.find("input[name='username']").val(user.username).attr("readonly", true);
-            $form.find("input[name='oldusername']").val(user.username);
+            var user = r.data;
+            $form.find("input[name='userName']").val(user.userName).attr("readonly", true);
+            $form.find("input[name='oldusername']").val(user.userName);
             $form.find("input[name='userId']").val(user.userId);
-            $form.find("input[name='email']").val(user.email);
-            $form.find("input[name='mobile']").val(user.phone);
-            $form.find("input[name='description']").val(user.description);
+            $form.find("input[name='mail']").val(user.mail);
+            $form.find("input[name='phone']").val(user.phone);
+            $form.find("input[name='description']").val('这个人很懒,什么也没留下');
             $("input:radio[value='" + user.gender + "']").attr("checked", true);
             $deptTree.jstree().open_all();
             $deptTree.jstree('select_node', user.deptId, true);
@@ -92,10 +97,10 @@ function editUserProfile() {
  * 验证规则
  */
 function validateRule() {
-    var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
+    var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i>";
     validator = $userProfileForm.validate({
         rules: {
-            email: {
+            mail: {
                 email: true
             },
             phone: {
@@ -116,7 +121,7 @@ function validateRule() {
             }
         },
         messages: {
-            email: icon + "邮箱格式不正确",
+            mail: icon + "邮箱格式不正确",
             gender: icon + "请选择性别",
             description: icon + "个人描述不能超过100个字符"
         }
@@ -124,12 +129,12 @@ function validateRule() {
 }
 
 /**
- * 
+ * 点击编辑资料时显示部门树结构
  */
 function createDeptTree() {
-    $.post(ctx + "dept/tree", {}, function (r) {
-        if (r.code === 0) {
-            var data = r.msg;
+    $.get("dept/tree", {}, function (r) {
+        if (r.code === 200) {
+            var data = r.data;
             $('#deptTree').jstree({
                 "core": {
                     'data': data.children,
@@ -144,7 +149,7 @@ function createDeptTree() {
                 "plugins": ["wholerow", "checkbox"]
             });
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     })
 

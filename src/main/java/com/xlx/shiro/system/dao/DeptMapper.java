@@ -2,6 +2,8 @@ package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.entity.Dept;
 
+import java.util.List;
+
 public interface DeptMapper {
     int deleteByPrimaryKey(Long deptId);
 
@@ -14,4 +16,6 @@ public interface DeptMapper {
     int updateByPrimaryKeySelective(Dept record);
 
     int updateByPrimaryKey(Dept record);
+    
+    List<Dept> selectAllDept();
 }

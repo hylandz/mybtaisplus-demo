@@ -62,15 +62,16 @@ spring:
     cache: false
     encoding: utf-8
     mode: HTML
-
   # Spring-AOP
   aop:
     proxy-target-class: true
-
   # Spring-Cache
   cache:
     type: redis
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 
 # 3.MyBatis
@@ -94,10 +95,12 @@ pagehelper:
   params: count=countSql
 
 #  日志配置
-#logging:
-#  level:
-#    com.xlx: info
-#    org.springframework: warn
+logging:
+  level:
+    com.xlx.shiro: debug
+    #打印sql语句
+    com.xlx.shiro.system.dao: debug
+    org.springframework: warn
 
 # 自定义配置
 xlx:

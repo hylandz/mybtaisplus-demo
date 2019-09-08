@@ -137,7 +137,7 @@ $(document).ready(function () {
  * 主题切换
  */
 $(document).ready(function () {
-    // 主题切换
+    // 右侧主题切换
     $("body").on("change", ".theme-switch input:radio", function () {
         var a = $(this).val();
         $("body").attr("data-ma-theme", a);
@@ -145,10 +145,14 @@ $(document).ready(function () {
             if (r.code === 200) $MB.n_success("主题更换成功，下次登录时生效！");
         });
     });
-    // 修改个人信息
+    //头像路径
     $(".user__img").attr("src", avatar);
+    /**
+     * 个人信息
+     */
     $("#user__profile").on('click', function () {
-        $.post(ctx + "user/profile", function (r) {
+        $.get(ctx + "user/profile", function (r) {
+            //r=返回的视图.html
             $breadcrumb.html("").append('<li class="breadcrumb-item">个人信息</li>');
             $main_content.html("").append(r);
         });

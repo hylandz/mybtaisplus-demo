@@ -3,7 +3,14 @@ package com.xlx.shiro.system.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xlx.shiro.common.entity.QueryParam;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +21,23 @@ import java.util.function.Supplier;
  *
  * @author xielx on 2019/9/6
  */
+@Slf4j
 public class BaseController {
 	
+	
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder){
+		
+		//将String类型做trim,再绑定
+		binder.registerCustomEditor(String.class,
+						new StringTrimmerEditor(true));
+		
+		//将Date类型参数格式化,再绑定
+		binder.registerCustomEditor(Date.class,
+						new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), false));
+		
+	}
 	
 	/**
 	 * 获取分页的结果集与总记录数
@@ -44,7 +66,12 @@ public class BaseController {
 		//设置查询条件
 		PageHelper.startPage(param.getPageNum(), param.getPageSize());
 		//查询
+		/*List<User> userList = this.userService.listUserByPage(user);
+		PageInfo<User> pageInfo = new PageInfo<>(userList);*/
+		
+		//只有紧跟在PageHelper.startPage方法后的第一个Mybatis的查询（Select）方法会被分页
 		final PageInfo<?> pageInfo = new PageInfo<>((List<?>) supplier.get());
+		
 		//?
 		PageHelper.clearPage();
 		return getDataTable(pageInfo);

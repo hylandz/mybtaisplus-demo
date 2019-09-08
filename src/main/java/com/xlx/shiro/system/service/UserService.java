@@ -2,8 +2,10 @@ package com.xlx.shiro.system.service;
 
 import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.dao.UserMapper;
+import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.entity.User;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,7 @@ public class UserService {
    * @param newPwd 新密码
    * @return 0:fasle
    */
-  public boolean modifyPassword(Long userId,String newPwd){
+  public Boolean modifyPassword(Long userId,String newPwd){
     String slat = ShiroUtil.getHexRandomNumber();
    return userMapper.updatePassword(userId,slat,newPwd) != 0;
   }
@@ -51,7 +53,7 @@ public class UserService {
    * @param originPwd 原始密码
    * @return 匹配:true
    */
-  public boolean verifyPassword(String originPwd){
+  public Boolean verifyPassword(String originPwd){
     User currentUser = (User) ShiroUtil.getSubject().getPrincipal();
     if (currentUser == null){
       return false;
@@ -94,7 +96,7 @@ public class UserService {
    * @param userName .
    * @param loginDate .
    */
-  public boolean recordLoginTime(String userName){
+  public Boolean recordLoginTime(String userName){
     return userMapper.updateLoginDate(userName) != 0;
   }
   
@@ -105,6 +107,26 @@ public class UserService {
    */
   public List<User> listUserByPage(User user){
     return userMapper.selectUserByPage(user);
+  }
+  
+  /**
+   * 个人信息
+   * @param userId 登录用户id
+   * @return
+   */
+  public ProfileDTO getProfile(Long userId){
+    return this.userMapper.selectProfileByUserId(userId);
+  }
+  
+  /**
+   * 修改profile
+   * @param profile
+   * @return
+   */
+  public Boolean editProfile(ProfileDTO profile){
+    User user = new User();
+    BeanUtils.copyProperties(profile,user);
+    return userMapper.updateByPrimaryKeySelective(user) != 0;
   }
 }
 

@@ -6,7 +6,7 @@
                 <div class="dataTables_buttons hidden-sm-down actions">
                     <span class="actions__item zmdi zmdi-search" onclick="search()" title="搜索" /> <span class="actions__item zmdi zmdi-refresh-alt" onclick="refresh()" title="刷新" />
                     <div class="dropdown actions__item">
-                        <i data-toggle="dropdown" class="zmdi zmdi-download"> </i>
+                        <i data-toggle="dropdown" class="zmdi zmdi-download" title="下载"> </i>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <a href="javascript:void(0)" class="dropdown-item" data-table-action="excel" onclick="exportUserExcel()">
 							Excel (.xlsx) </a>
@@ -14,12 +14,12 @@
 							(.csv) </a>
                         </ul>
                     </div>
-                    <div class="dropdown actions__item" shiro:hasAnyPermissions="system:user:add,delete,update">
+                    <div class="dropdown actions__item" shiro:hasAnyPermissions="system:user:create,remove,edit">
                         <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#user-add" shiro:hasPermission="system:user:add">新增用户</a>
-                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateUser()" shiro:hasPermission="system:user:update">修改用户</a>
-                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteUsers()" shiro:hasPermission="system:user:delete">删除用户</a>
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#user-add" shiro:hasPermission="system:user:create">新增用户</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateUser()" shiro:hasPermission="system:user:edit">修改用户</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteUsers()" shiro:hasPermission="system:user:remove">删除用户</a>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"> 用户名： </span>
                                     <div class="form-group">
-                                        <input type="text" name="username" class="form-control"> <i class="form-group__bar"></i>
+                                        <input type="text" name="userName" class="form-control"> <i class="form-group__bar"></i>
                                     </div>
                                 </div>
                             </div>
@@ -41,8 +41,8 @@
                                     <div class="form-group">
                                         <select class="form-control" name="gender">
                                             <option value="" selected>所有</option>
-                                            <option value="0">男</option>
-                                            <option value="1">女</option>
+                                            <option value="1">男</option>
+                                            <option value="0">女</option>
                                         </select>
                                     </div>
                                 </div>
@@ -53,8 +53,8 @@
                                     <div class="form-group">
                                         <select class="form-control" name="locked">
                                             <option value="" selected>所有</option>
-                                            <option value="0">锁定</option>
-                                            <option value="1">有效</option>
+                                            <option value="1">锁定</option>
+                                            <option value="0">有效</option>
                                         </select>
                                     </div>
                                 </div>
@@ -68,5 +68,5 @@
         </div>
     </div>
 </div>
-<script data-th-src="@{/js/app/system/user/user.js}"></script>
-<script data-th-src="@{/js/app/system/user/userEdit.js}"></script>
+<script data-th-src="@{js/app/system/user/user.js}"></script>
+<script data-th-src="@{js/app/system/user/userEdit.js}"></script>

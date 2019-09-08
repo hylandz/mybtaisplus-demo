@@ -19,17 +19,19 @@
     <div class="actions" style="margin-right: 1rem">
         <a href="javascript:void(0)" onclick="editUserProfile()" style="color: #707070 !important">编辑资料</a>
     </div>
+    <!--个人信息显示-->
     <div class="profile__info">
         <ul class="icon-list">
-            <li><i class="zmdi zmdi-account"></i> [[${user.username}]] -- [[${user.roleName}]]</li>
-            <li><i class="zmdi zmdi-male-female"></i> [[${user.ssex}]]</li>
+            <li><i class="zmdi zmdi-account"></i> [[${user.userName}?:'未知']] -- [[${user.roleName}?:'未知']]</li>
+            <li><i class="zmdi zmdi-male-female"></i> [[${user.gender} > 0 ? (${user.gender}==1 ? '男':'保密'):'女']]</li>
             <li><i class="zmdi zmdi-card-travel"></i> [[${#strings.defaultString(user.deptName,'无部门信息')}]]</li>
-            <li><i class="zmdi zmdi-phone"></i> [[${#strings.defaultString(user.mobile,'无电话信息')}]]</li>
-            <li id="profile__info_email"><i class="zmdi zmdi-email"></i><span> [[${#strings.defaultString(user.email,'无邮箱信息')}]]</span></li>
-            <li><i class="zmdi zmdi-comment-text"></i> <span>[[${#strings.defaultString(user.description,'暂无个人介绍')}]]</span></li>
+            <li><i class="zmdi zmdi-phone"></i> [[${#strings.defaultString(user.phone,'无电话信息')}]]</li>
+            <li id="profile__info_email"><i class="zmdi zmdi-email"></i><span> [[${#strings.defaultString(user.mail,'无邮箱信息')}]]</span></li>
+            <li><i class="zmdi zmdi-comment-text"></i> <span>[[${#strings.defaultString(user.description,'这和人很懒,什么也没留下')}]]</span></li>
         </ul>
     </div>
 </div>
+<!--编辑资料 -->
 <div class="modal fade" id="update-profile" data-keyboard="false" data-backdrop="static" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -45,7 +47,7 @@
                                   	  用户名：
                                 </span>
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control">
+                                    <input type="text" name="userName" class="form-control">
                                     <input type="text" hidden name="oldusername" class="form-control">
                                     <input type="text" hidden name="userId" class="form-control">
                                 </div>
@@ -60,17 +62,17 @@
                                  </span>
                                 <div class="form-group">
                                     <label class="custom-control custom-radio">
-                                        <input name="ssex" type="radio" value="0" class="custom-control-input">
+                                        <input name="gender" type="radio" value="1" class="custom-control-input">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">男</span>
                                     </label>
                                     <label class="custom-control custom-radio">
-                                        <input name="ssex" type="radio" value="1" class="custom-control-input">
+                                        <input name="gender" type="radio" value="0" class="custom-control-input">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">女</span>
                                     </label>
                                     <label class="custom-control custom-radio">
-                                        <input name="ssex" type="radio" value="2" class="custom-control-input">
+                                        <input name="gender" type="radio" value="2" class="custom-control-input">
                                         <span class="custom-control-indicator"></span>
                                         <span class="custom-control-description">保密</span>
                                     </label>
@@ -85,7 +87,7 @@
                                 	     电话：
                                 </span>
                                 <div class="form-group">
-                                    <input type="text" name="mobile" class="form-control">
+                                    <input type="text" name="phone" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +99,7 @@
                                 	     邮箱：
                                 </span>
                                 <div class="form-group">
-                                    <input type="text" name="email" class="form-control">
+                                    <input type="text" name="mail" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -123,6 +125,7 @@
                                 </span>
                                 <div class="form-group">
                                     <input type="text" name="description" class="form-control">
+
                                 </div>
                             </div>
                         </div>
@@ -137,6 +140,8 @@
         </div>
     </div>
 </div>
+
+<!--头像更换的模态框-->
 <div class="modal fade" id="default-avatars" data-keyboard="false" data-backdrop="static" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -175,7 +180,7 @@
     </div>
 </div>
 <script data-th-inline="javascript">
-var avatar = ctx + "img/avatar/" + [[${user.avatar}]];
+var avatar = ctx + "img/avatar/" + [[${user.avatarUrl} ?:'default.jpg']];
 var userId = [[${user.userId}]];
 </script>
 <script data-th-src="@{js/app/system/user/profile.js}"></script>

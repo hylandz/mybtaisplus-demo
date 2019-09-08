@@ -1,30 +1,33 @@
 $(function () {
     var $userTableForm = $(".user-table-form");
+    //前台页面参数
     var settings = {
         url: ctx + "user/list",
         pageSize: 10,
+        //请求参数
         queryParams: function (params) {
             return {
                 pageSize: params.limit,
                 pageNum: params.offset / params.limit + 1,
-                username: $userTableForm.find("input[name='username']").val().trim(),
+                userName: $userTableForm.find("input[name='userName']").val().trim(),
                 gender: $userTableForm.find("select[name='gender']").val(),
                 locked: $userTableForm.find("select[name='locked']").val()
             };
         },
+        //前台显示页面设置
         columns: [{
             checkbox: true
         }, {
             field: 'userId',
             visible: false
         }, {
-            field: 'username',
+            field: 'userName',
             title: '用户名'
         }, {
             field: 'deptName',
             title: '部门'
         }, {
-            field: 'email',
+            field: 'mail',
             title: '邮箱'
         }, {
             field: 'phone',
@@ -33,37 +36,47 @@ $(function () {
             field: 'gender',
             title: '性别',
             formatter: function (value, row, index) {
-                if (value === '1') return '男';
-                else if (value === '0') return '女';
+                if (value === 1) return '男';
+                else if (value === 0) return '女';
                 else return '保密';
             }
         }, {
-            field: 'crateTime',
+            field: 'gmtCreate',
             title: '创建时间'
         }, {
             field: 'locked',
             title: '状态',
             formatter: function (value, row, index) {
-                if (value === '0') return '<span class="badge badge-success">有效</span>';
-                if (value === '1') return '<span class="badge badge-warning">锁定</span>';
+                if (value === false){ return '<span class="badge badge-success">有效</span>';}
+                if (value === true){return '<span class="badge badge-warning">锁定</span>';}
             }
         }
 
         ]
     };
 
+    //表单初始化
     $MB.initTable('userTable', settings);
 });
 
+/**
+ * 条件查询
+ */
 function search() {
     $MB.refreshTable('userTable');
 }
 
+/**
+ * 刷新
+ */
 function refresh() {
     $(".user-table-form")[0].reset();
     $MB.refreshTable('userTable');
 }
 
+/**
+ * 删除用户
+ */
 function deleteUsers() {
     var selected = $("#userTable").bootstrapTable('getSelections');
     var selected_length = selected.length;
@@ -89,15 +102,19 @@ function deleteUsers() {
     }, function () {
         $.post(ctx + 'user/delete', {"ids": ids}, function (r) {
             if (r.code === 0) {
-                $MB.n_success(r.msg);
+                $MB.n_success(r.message);
                 refresh();
             } else {
-                $MB.n_danger(r.msg);
+                $MB.n_danger(r.message);
             }
         });
     });
 }
 
+
+/**
+ * 导出Excel格式
+ */
 function exportUserExcel() {
     $.post(ctx + "user/excel", $(".user-table-form").serialize(), function (r) {
         if (r.code === 0) {
@@ -108,6 +125,10 @@ function exportUserExcel() {
     });
 }
 
+
+/**
+ * 导出csv格式
+ */
 function exportUserCsv() {
     $.post(ctx + "user/csv", $(".user-table-form").serialize(), function (r) {
         if (r.code === 0) {
