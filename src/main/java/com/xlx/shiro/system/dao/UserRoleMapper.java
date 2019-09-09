@@ -1,6 +1,9 @@
 package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.entity.UserRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserRoleMapper {
     int deleteByPrimaryKey(Long id);
@@ -15,6 +18,6 @@ public interface UserRoleMapper {
 
     int updateByPrimaryKey(UserRole record);
     
-    
+    int insertBatch(@Param("userRoleList") List<UserRole> userRoleList);
     
 }

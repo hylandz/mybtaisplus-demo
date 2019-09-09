@@ -10,19 +10,20 @@ function updateUser() {
         return;
     }
     var userId = selected[0].userId;
-    $.post(ctx + "user/getUser", {"userId": userId}, function (r) {
-        if (r.code === 0) {
+    //点击修改用户时,数据显现
+    $.get("user/getUser", {"userId": userId}, function (r) {
+        if (r.code === 200) {
             var $form = $('#user-add');
             var $deptTree = $('#deptTree');
             $form.modal();
-            var user = r.msg;
+            var user = r.data;
             $form.find(".user_password").hide();
             $("#user-add-modal-title").html('修改用户');
-            $form.find("input[name='username']").val(user.username).attr("readonly", true);
-            $form.find("input[name='oldusername']").val(user.username);
+            $form.find("input[name='userName']").val(user.username).attr("readonly", true);
+            //$form.find("input[name='oldusername']").val(user.username);
             $form.find("input[name='userId']").val(user.userId);
-            $form.find("input[name='email']").val(user.email);
-            $form.find("input[name='mobile']").val(user.mobile);
+            $form.find("input[name='mail']").val(user.mail);
+            $form.find("input[name='phone']").val(user.phone);
             var roleArr = [];
             for (var i = 0; i < user.roleIds.length; i++) {
                 roleArr.push(user.roleIds[i]);

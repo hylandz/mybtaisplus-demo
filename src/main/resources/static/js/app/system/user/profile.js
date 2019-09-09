@@ -21,7 +21,7 @@ $(function () {
          */
         $this.on("click", function () {
             var target_src = $(this).attr("src");
-            $.post(ctx + "user/changeAvatar", {"imgName": target_src}, function (r) {
+            $.post(ctx + "user/changeAvatar", {"avatarUrl": target_src}, function (r) {
                 if (r.code === 200) {
                     $("#close_update_avatar_button").trigger("click");
                     $MB.n_success(r.message);
@@ -64,6 +64,7 @@ $(function () {
  */
 function refreshUserProfile() {
     $.get(ctx + "user/profile", function (r) {
+        //r=一个返回的html
         $main_content.html('').append(r);
     });
 }

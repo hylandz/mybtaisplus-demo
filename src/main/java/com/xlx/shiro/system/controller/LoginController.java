@@ -65,12 +65,5 @@ public class LoginController {
 
 	}
 
-
-	/**
-	 * 未授权
-	 */
-	@GetMapping("/unAuth")
-	public String unauthorized() {
-		return "/error/403";
-	}
+	
 }

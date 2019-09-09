@@ -36,4 +36,13 @@ public class IndexController {
 	public String login(){
 		return "login";
 	}
+	
+	
+	/**
+	 * 未授权
+	 */
+	@GetMapping("/unAuth")
+	public String unauthorized() {
+		return "error/403";
+	}
 }

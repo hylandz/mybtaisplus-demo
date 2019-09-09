@@ -183,7 +183,10 @@ function loadMain(obj) {
     $breadcrumb.html("").append(breadcrumnHtml);
 
     // 加载内容
-    var $name = $this.attr("name");//url
+    var $name = $this.attr("name");//菜单url
+    /**
+     * 点击左侧菜单url,进行访问
+     */
     $.get($name, {}, function (r) {
         if (r.code === 400) {
             $MB.n_danger(r.message);
@@ -195,6 +198,7 @@ function loadMain(obj) {
         }
         clearInterval(rediskeysSizeInterval);
         clearInterval(redisMemoryInfoInterval);
+        //r=user.html
         $main_content.html("").append(r);
     });
 }

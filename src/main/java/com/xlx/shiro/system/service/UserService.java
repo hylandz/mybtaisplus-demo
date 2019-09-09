@@ -4,14 +4,17 @@ import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.dao.UserMapper;
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.entity.User;
+import com.xlx.shiro.system.entity.UserRole;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * service:user
@@ -21,10 +24,13 @@ import java.util.Set;
 @Service
 public class UserService {
 
+  private static final Logger log = LoggerFactory.getLogger(UserService.class);
+  
   @Autowired
   private UserMapper userMapper;
 
-
+  @Autowired
+  private UserRoleService userRoleService;
   /**
    * 用户新增
    * @param user 用户
@@ -54,7 +60,7 @@ public class UserService {
   /**
    * 验证原始密码
    * @param originPwd 原始密码
-   * @return 匹配:true
+   * @return 正确:true
    */
   public Boolean verifyPassword(String originPwd){
     User currentUser = (User) ShiroUtil.getSubject().getPrincipal();
@@ -76,6 +82,7 @@ public class UserService {
    * 根据帐号获取用户
    * @param userName 登录帐号
    */
+  @Transactional(readOnly = true)
   public User findUserByUserName(String userName){
     if (StringUtils.isEmpty(userName)){
       return null;
@@ -83,16 +90,7 @@ public class UserService {
     return userMapper.selectUserByUserName(userName);
   }
 
-
-  /**
-   * 用户id查询用户
-   * @param userId 用户id
-   * @return User
-   */
-  public User findUserByUserName(Long userId){
-    return userMapper.selectByPrimaryKey(userId);
-  }
-
+  
   /**
    * 登录成功更新登录时间
    * @param userName .
@@ -107,6 +105,7 @@ public class UserService {
    * @param user User
    * @return list
    */
+  @Transactional(readOnly = true)
   public List<User> listUserByPage(User user){
     return userMapper.selectUserByPage(user);
   }
@@ -116,6 +115,7 @@ public class UserService {
    * @param userId 登录用户id
    * @return
    */
+  @Transactional(readOnly = true)
   public ProfileDTO getProfile(Long userId){
     return this.userMapper.selectProfileByUserId(userId);
   }
@@ -129,6 +129,68 @@ public class UserService {
     User user = new User();
     BeanUtils.copyProperties(profile,user);
     return userMapper.updateByPrimaryKeySelective(user) != 0;
+  }
+  
+  /**
+   * 更改头像
+   * @param avatarUrl 图片url
+   * @return boolean
+   */
+  public Boolean changAvatar(Long id,String url){
+    return userMapper.updateAvatarUrl(id,url) != 0;
+  }
+  
+  
+  /**
+   * 根据用户id查询用户
+   * @param userId 用户id
+   * @return user
+   */
+  public User findUserByPrimaryKey(Long userId){
+    if (userId == null){
+      return new User();
+    }
+    return userMapper.selectByPrimaryKey(userId);
+  }
+  
+  /**
+   * 用户新增
+   * tip:
+   *   用户新增涉及包含:用户新增+角色新增,应该满足事务的原子性
+   *   不能出现单方面的成功问题
+   * @param user User
+   * @return boolean
+   */
+  @Transactional(rollbackFor = Exception.class)
+  public Boolean saveUser(User user,Long[] roleIds){
+    if (user == null && roleIds.length == 0){
+      return false;
+    }
+    
+    user.setSalt(ShiroUtil.getHexRandomNumber());
+    user.setGmtCreate(new Date());
+    user.setAvatarName(User.DEFAULT_AVATAR_NAME + new Random().nextInt(10));
+    user.setAvatarUrl(User.DEFAULT_AVATAR_URL);
+    String encrypt = ShiroUtil.encryptPassword(user.getUserPassword(),user.getCredentialsSalt());
+    user.setUserPassword(encrypt);
+    this.userMapper.insertSelective(user);
+      //
+      List<UserRole> collection = setUserRoles(user, roleIds);
+      Boolean result = userRoleService.addByBatch(collection);
+      return result;
+  }
+  
+  private List<UserRole> setUserRoles(User user, Long[] roleIds){
+    long start = System.currentTimeMillis();
+    List<UserRole> collect = Arrays.stream(roleIds).map(roleId -> {
+      UserRole userRole = new UserRole();
+      userRole.setUserId(user.getUserId());
+      userRole.setRoleId(roleId);
+      return userRole;
+    }).collect(Collectors.toList());
+    long end = System.currentTimeMillis() - start;
+    log.info("stram cost time is : {}",end);
+    return  collect;
   }
 }
 

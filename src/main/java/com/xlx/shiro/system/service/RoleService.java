@@ -1,9 +1,11 @@
 package com.xlx.shiro.system.service;
 
 import com.xlx.shiro.system.dao.RoleMapper;
+import com.xlx.shiro.system.entity.Role;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,6 +28,14 @@ public class RoleService {
 	public Set<String> findRoleKey(String userName) {
 
 		return roleMapper.selectRoleKeyByUserName(userName);
+	}
+	
+	/**
+	 * 获取所有有效的角色
+	 * @return list
+	 */
+	public List<Role> findAllRoles(){
+		return roleMapper.selectAllRoles();
 	}
 
 }

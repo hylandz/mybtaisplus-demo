@@ -15,9 +15,9 @@ public class QueryParam implements Serializable {
 	
 	
 	//页数
-	private Integer pageNum;
+	private Integer pageNum = 1;
 	//笔数
-	private Integer pageSize;
+	private Integer pageSize = 10;
 	
 	
 	@Override

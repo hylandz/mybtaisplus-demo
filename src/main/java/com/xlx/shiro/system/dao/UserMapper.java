@@ -21,7 +21,10 @@ public interface UserMapper {
 	
 	int updateLoginDate(@Param("userName") String userName);
 	
-	
+	/****************************
+	 *         your method      *
+	 * **************************
+	 */
 	List<User> selectUserByPage(User user);
 	
 	User selectUserByUserName(@Param("userName") String userName);
@@ -29,5 +32,8 @@ public interface UserMapper {
 	int updatePassword(@Param("userId") Long userId, @Param("salt") String salt, @Param("newPwd") String newPwd);
 	
 	ProfileDTO selectProfileByUserId(Long userId);
+	
+	int updateAvatarUrl(@Param("userId") Long userId,@Param("avatarUrl") String avatarUrl);
+	
 	
 }

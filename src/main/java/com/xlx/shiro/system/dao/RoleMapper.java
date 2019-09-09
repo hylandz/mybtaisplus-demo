@@ -3,6 +3,7 @@ package com.xlx.shiro.system.dao;
 import com.xlx.shiro.system.entity.Role;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Set;
 
 public interface RoleMapper {
@@ -19,5 +20,7 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
     
     Set<String> selectRoleKeyByUserName(@Param("userName") String userName);
+    
+    List<Role> selectAllRoles();
     
 }

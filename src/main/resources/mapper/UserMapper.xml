@@ -317,4 +317,11 @@
         salt= #{salt,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+  <!--修改头像-->
+  <update id="updateAvatarUrl" parameterType="com.xlx.shiro.system.entity.User">
+    update sys_user
+    set avatar_url = #{avatarUrl,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
 </mapper>

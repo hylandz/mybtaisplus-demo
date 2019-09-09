@@ -4,25 +4,36 @@ var $rolesSelect = $userAddForm.find("select[name='rolesSelect']");
 var $roles = $userAddForm.find("input[name='roles']");
 
 $(function () {
+    //用户名
     validateRule();
+    //角色
     initRole();
+    //部门
     createDeptTree();
 
+    //用户locked
     $("input[name='locked']").change(function () {
         var checked = $(this).is(":checked");
         var $status_label = $("#locked");
-        if (checked) $status_label.html('可用');
-        else $status_label.html('禁用');
+        if (checked) $status_label.html('锁定账户');
+        else $status_label.html('不锁定账户');
     });
 
+    /**
+     * 新增+修改
+     */
     $("#user-add .btn-save").click(function () {
+        //按钮
         var name = $(this).attr("name");
+        //deptId
         getDept();
+        //校验
         var validator = $userAddForm.validate();
         var flag = validator.form();
         if (flag) {
+            //新增
             if (name === "save") {
-                $.post(ctx + "user/add", $userAddForm.serialize(), function (r) {
+                $.post(ctx + "user/create", $userAddForm.serialize(), function (r) {
                     if (r.code === 200) {
                         closeModal();
                         $MB.n_success(r.message);
@@ -30,6 +41,7 @@ $(function () {
                     } else $MB.n_danger(r.message);
                 });
             }
+            //修改
             if (name === "update") {
                 $.post(ctx + "user/update", $userAddForm.serialize(), function (r) {
                     if (r.code === 200) {
@@ -48,39 +60,40 @@ $(function () {
 
 });
 
+//关闭
 function closeModal() {
     $("#user-add-button").attr("name", "save");
     validator.resetForm();
     $rolesSelect.multipleSelect('setSelects', []);
     $rolesSelect.multipleSelect("refresh");
-    $userAddForm.find("input[name='username']").removeAttr("readonly");
+    $userAddForm.find("input[name='userName']").removeAttr("readonly");
     $userAddForm.find(".user_password").show();
-    $userAddForm.find("input[name='status']").prop("checked", true);
+    $userAddForm.find("input[name='locked']").prop("checked", true);
     $("#user-add-modal-title").html('新增用户');
-    $("#status").html('可用');
+    $("#locked").html('锁定账户');
     $MB.resetJsTree("deptTree");
     $MB.closeAndRestModal("user-add");
 
 }
 
+/**
+ * 表单校验-用户新增
+ */
 function validateRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
     validator = $userAddForm.validate({
         rules: {
-            username: {
+            userName: {
                 required: true,
                 minlength: 3,
                 maxlength: 10,
                 remote: {
-                    url: "user/checkUserName",
-                    type: "get",
+                    url: "user/verifyUserName",
+                    type: "post",
                     dataType: "json",
                     data: {
-                        username: function () {
-                            return $("input[name='username']").val().trim();
-                        },
-                        oldusername: function () {
-                            return $("input[name='oldusername']").val().trim();
+                        userName: function () {
+                            return $("input[name='userName']").val().trim();
                         }
                     }
                 }
@@ -91,7 +104,7 @@ function validateRule() {
             roles: {
                 required: true
             },
-            mobile: {
+            phone: {
                 checkPhone: true
             },
             gender: {
@@ -106,13 +119,13 @@ function validateRule() {
             }
         },
         messages: {
-            username: {
+            userName: {
                 required: icon + "请输入用户名",
                 minlength: icon + "用户名长度3到10个字符",
                 remote: icon + "用户名已经存在"
             },
             roles: icon + "请选择用户角色",
-            email: icon + "邮箱格式不正确",
+            mail: icon + "邮箱格式不正确",
             gender: icon + "请选择性别"
         }
     });
@@ -122,7 +135,7 @@ function validateRule() {
  * 角色选择
  */
 function initRole() {
-    $.post(ctx + "role/list", {}, function (r) {
+    $.get("role/list", {}, function (r) {
         var data = r.rows;
         var option = "";
         for (var i = 0; i < data.length; i++) {
@@ -148,9 +161,9 @@ function initRole() {
  * 部门选择
  */
 function createDeptTree() {
-    $.post(ctx + "dept/tree", {}, function (r) {
-        if (r.code === 0) {
-            var data = r.msg;
+    $.get("dept/tree", {}, function (r) {
+        if (r.code === 200) {
+            var data = r.data;
             $('#deptTree').jstree({
                 "core": {
                     'data': data.children,
@@ -170,6 +183,7 @@ function createDeptTree() {
     })
 }
 
+//deptId赋值
 function getDept() {
     var ref = $('#deptTree').jstree(true);
     $("[name='deptId']").val(ref.get_selected()[0]);

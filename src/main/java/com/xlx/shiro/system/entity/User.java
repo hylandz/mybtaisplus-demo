@@ -1,11 +1,13 @@
 package com.xlx.shiro.system.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * sys_user
@@ -13,6 +15,10 @@ import java.util.Date;
  * @author xielx on 2019年9月7日
  */
 public class User implements Serializable {
+	
+	public static final String DEFAULT_AVATAR_URL = "default.jpg";
+	
+	public static final String DEFAULT_AVATAR_NAME = "优雅的呼啦";
 	private Long userId; //主键
 	
 	private Long deptId; // 部门id
@@ -55,7 +61,9 @@ public class User implements Serializable {
 	
 	private String deptName;//部门名称
 	
-	//private String roleName;//角色名称
+	private String roleName;//角色名称
+	
+	
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this, ToStringStyle.JSON_STYLE);
@@ -229,4 +237,15 @@ public class User implements Serializable {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+	
+	public String getRoleName() {
+		return roleName;
+	}
+	
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	
+	
+	
 }

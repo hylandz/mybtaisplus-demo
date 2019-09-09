@@ -31,7 +31,7 @@ public class DeptController extends BaseController{
 	 */
 	@GetMapping("/dept/tree")
 	@ResponseBody
-	public ResultDTO deptTree(){
+	public ResultDTO getDeptTree(){
 		try{
 			final TreeDTO<Dept> treeDTO = deptService.listAllDepts();
 			return ResultDTO.success(treeDTO);
