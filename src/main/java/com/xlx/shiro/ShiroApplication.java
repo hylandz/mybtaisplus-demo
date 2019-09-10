@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @MapperScan("com.xlx.shiro.system.dao")
-@EnableCaching
 @EnableAsync
 public class ShiroApplication {
 

@@ -6,6 +6,7 @@ import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
+import com.xlx.shiro.system.entity.UserWithRole;
 import com.xlx.shiro.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,6 +31,8 @@ public class UserController extends BaseController {
 	@Resource
 	private UserService userService;
 	
+	
+	private static final String LOCKED_ON = "on";
 	/**
 	 * 点击用户管理跳转
 	 * 设置访问权限
@@ -40,7 +43,6 @@ public class UserController extends BaseController {
 	@GetMapping("/system/user")
 	@RequiresPermissions("system:user:view")
 	public String userManage(Model model) {
-		//????????
 		final User currentUser = ShiroUtil.getCurrentUser();
 		model.addAttribute(UserConstant.CURRENT_USER, currentUser);
 		return "system/user/user";
@@ -213,23 +215,15 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public ResultDTO createUser(User user,Long[] roles){
 	  logger.info("用户新增={}",user);
-		for (Long r :roles) {
-			System.out.println(r);
-		}
-		
-		if (userService.saveUser(user,roles)){
-			return ResultDTO.success("用户新增成功!");
-		}
-		
-		/*try{
+		logger.info("rolesIds={}",roles.length);
+		try{
 			if (userService.saveUser(user,roles)){
 				ResultDTO.success("用户新增成功!");
 			}
-			
 		}catch (Exception e){
+			logger.error("用户新增失败: {}",e.getMessage());
 			return ResultDTO.failed("用户新增失败,请联系网站管理员!");
-		}*/
-	  
+		}
 	  return ResultDTO.failed("用户新增失败,请联系网站管理员!");
 	}
 	
@@ -242,10 +236,26 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public ResultDTO getUser(@RequestParam(name = "userId") Long userId){
 		try{
-			final User user = userService.findUserByPrimaryKey(userId);
+			final User user = userService.findWithUserRole(userId);
 			return ResultDTO.success(user);
 		}catch (Exception e){
 			return ResultDTO.failed("查询用户信息失败!");
+		}
+	}
+	
+	@PostMapping("/user/edit")
+	@ResponseBody
+	public ResultDTO editUser(User user,Long[] rolesSelect,Boolean locked){
+		logger.info("user={}",user);
+		logger.info("locked={}",locked);
+		logger.info("重新选择过的角色:{}",rolesSelect.length);
+		
+		try{
+			userService.editUser(user,rolesSelect);
+			return ResultDTO.success("修改用户信息成功!",user);
+		}catch (Exception e){
+			logger.error("修改用户信息失败:{}",e.getMessage());
+			return ResultDTO.failed("修改用户信息失败!");
 		}
 	}
 }

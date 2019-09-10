@@ -21,6 +21,7 @@ public class ProfileDTO {
 	
 	private String roleName;
 	private String deptName;
+	private String roleIds;
 	private String description;
 	
 	

@@ -19,31 +19,32 @@ function updateUser() {
             var user = r.data;
             $form.find(".user_password").hide();
             $("#user-add-modal-title").html('修改用户');
-            $form.find("input[name='userName']").val(user.username).attr("readonly", true);
+            $form.find("input[name='userName']").val(user.userName).attr("readonly", true);
             //$form.find("input[name='oldusername']").val(user.username);
             $form.find("input[name='userId']").val(user.userId);
             $form.find("input[name='mail']").val(user.mail);
             $form.find("input[name='phone']").val(user.phone);
             var roleArr = [];
-            for (var i = 0; i < user.roleIds.length; i++) {
-                roleArr.push(user.roleIds[i]);
+            for (var i = 0; i < user.roleIdList.length; i++) {
+                roleArr.push(user.roleIdList[i]);
             }
             $form.find("select[name='rolesSelect']").multipleSelect('setSelects', roleArr);
             $form.find("input[name='roles']").val($form.find("select[name='rolesSelect']").val());
-            var $status = $form.find("input[name='status']");
-            if (user.status === '1') {
-                $status.prop("checked", true);
-                $status.parent().next().html('可用');
+            var $locked = $form.find("input[name='locked']");
+            console.log('用户锁定的:' + user.locked);
+            if (user.locked === true) {
+                $locked.prop("checked", true);
+                $locked.parent().next().html('用户锁定');
             } else {
-                $status.prop("checked", false);
-                $status.parent().next().html('禁用');
+                $locked.prop("checked", false);
+                $locked.parent().next().html('用户未锁定');
             }
-            $("input:radio[value='" + user.ssex + "']").prop("checked", true);
+            $("input:radio[value='" + user.gender + "']").prop("checked", true);
             $deptTree.jstree().open_all();
             $deptTree.jstree('select_node', user.deptId, true);
             $("#user-add-button").attr("name", "update");
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     });
 }

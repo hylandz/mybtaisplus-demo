@@ -12,13 +12,20 @@ $(function () {
         columns: [{
             checkbox: true
         }, {
-            field: 'roleName',
+            field: 'roleKey',
             title: '角色'
         }, {
-            field: 'remark',
+            field: 'roleName',
             title: '描述'
         }, {
-            field: 'createTime',
+            field: 'available',
+            title: '状态',
+            formatter: function (value, row, index) {
+                if (value === true){ return '<span class="badge badge-success">有效</span>';}
+                if (value === false){return '<span class="badge badge-warning">无效</span>';}
+            }
+        }, {
+            field: 'gmtCreate',
             title: '创建时间'
         }]
     };

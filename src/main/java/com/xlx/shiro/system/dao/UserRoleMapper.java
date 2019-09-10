@@ -18,6 +18,13 @@ public interface UserRoleMapper {
 
     int updateByPrimaryKey(UserRole record);
     
+    
+    
     int insertBatch(@Param("userRoleList") List<UserRole> userRoleList);
+    
+    int updateByBatch(@Param("userRoleList") List<UserRole> userRoleList);
+    int deleteByBatch(@Param("userIdList")List<Long> userIdList);
+    int deleteByUserId(@Param("userId") Long userId);
+    
     
 }

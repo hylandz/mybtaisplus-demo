@@ -18,12 +18,12 @@
 		                </a>
                         </ul>
                     </div>
-                    <div class="dropdown actions__item" shiro:hasAnyPermissions="role:add,role:delete,role:update">
+                    <div class="dropdown actions__item" shiro:hasAnyPermissions="system:role:add,system:role:delete,system:role:update">
                         <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#role-add" shiro:hasPermission="role:add">新增角色</a>
-                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateRole()" shiro:hasPermission="role:update">修改角色</a>
-                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteRoles()" shiro:hasPermission="role:delete">删除角色</a>
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#role-add" shiro:hasPermission="system:role:create">新增角色</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateRole()" shiro:hasPermission="system:role:edit">修改角色</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteRoles()" shiro:hasPermission="system:role:remove">删除角色</a>
                         </div>
                     </div>
                 </div>

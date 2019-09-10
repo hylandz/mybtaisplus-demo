@@ -2,6 +2,7 @@ package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.entity.User;
+import com.xlx.shiro.system.entity.UserWithRole;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -35,5 +36,5 @@ public interface UserMapper {
 	
 	int updateAvatarUrl(@Param("userId") Long userId,@Param("avatarUrl") String avatarUrl);
 	
-	
+	List<UserWithRole> selectUserById(@Param("userId") Long userId);
 }

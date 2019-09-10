@@ -20,13 +20,24 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
+  <!--批量删除-->
+  <delete id="deleteByBatch" parameterType="java.lang.Long">
+    delete from sys_user_role where user_id in
+    <foreach collection="userIdList" item="userId" open="(" separator="," close=")">
+      #{userId,jdbcType=BIGINT}
+    </foreach>
+  </delete>
+
+  <!--根据userId删除-->
+  <delete id="deleteByUserId" parameterType="java.lang.Long">
+    delete from sys_user_role
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
 
 
   <insert id="insert" parameterType="com.xlx.shiro.system.entity.UserRole">
-    insert into sys_user_role (id, user_id, role_id
-      )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}
-      )
+    insert into sys_user_role (id, user_id, role_id)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.UserRole">
     insert into sys_user_role
@@ -53,6 +64,8 @@
       </if>
     </trim>
   </insert>
+
+  <!--批量插入-->
   <insert id="insertBatch" parameterType="collection">
     insert into sys_user_role (user_id,role_id) values
     <foreach collection="userRoleList" item="userRole" index="index"  separator="," >
@@ -60,7 +73,6 @@
     </foreach>
   </insert>
 
-  <!--批量插入-->
   <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.UserRole">
     update sys_user_role
     <set>
@@ -79,4 +91,12 @@
       role_id = #{roleId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <!--批量修改-->
+  <update id="updateByBatch" parameterType="com.xlx.shiro.system.entity.UserRole">
+    update sys_user_role
+    set
+  </update>
+
+
 </mapper>

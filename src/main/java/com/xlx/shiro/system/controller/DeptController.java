@@ -25,6 +25,19 @@ public class DeptController extends BaseController{
 	@Resource
 	private DeptService deptService;
 	
+	
+	
+	/**
+	 * 部门管理页面
+	 * 设置访问权限
+	 * @return role.html
+	 */
+	@GetMapping("/system/dept")
+	public String deptManageIndex() {
+		return "system/dept/dept";
+	}
+	
+	
 	/**
 	 * 获取所有部门信息
 	 * @return 部门数
