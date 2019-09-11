@@ -22,4 +22,8 @@ public interface MenuMapper {
     Set<String> selectPermissionsByUserName(@Param("userName") String userName);
     
     List<Menu> selectMenuByUserName(@Param("userName") String userName);
+    
+    
+    List<Menu> selectAllMenus();
+    
 }

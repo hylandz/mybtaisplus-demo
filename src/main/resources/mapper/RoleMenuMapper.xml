@@ -19,6 +19,7 @@
     delete from sys_role_menu
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="com.xlx.shiro.system.entity.RoleMenu">
     insert into sys_role_menu (id, role_id, menu_id
       )
@@ -50,6 +51,21 @@
       </if>
     </trim>
   </insert>
+
+  <!--批量插入-->
+  <!--<insert id="insertByBatch" parameterType="com.xlx.shiro.system.entity.RoleMenu">
+    insert into sys_role_menu(role_id,menu_id) values
+    <foreach collection="roleMenuList" item="roleMenu" separator=",">
+      (#{roleId,jdbcType=BIGINT},#{menuId,jdbcType=BIGINT})
+    </foreach>
+  </insert>-->
+
+  <insert id="insertByBatch" parameterType="java.lang.Long">
+    insert into sys_role_menu(role_id,menu_id) values
+    <foreach collection="menuIdArray" item="menuId" separator=",">
+      (#{roleId,jdbcType=BIGINT},#{menuId,jdbcType=BIGINT})
+    </foreach>
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.RoleMenu">
     update sys_role_menu
     <set>
@@ -68,4 +84,5 @@
       menu_id = #{menuId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
 </mapper>

@@ -40,10 +40,10 @@
     <div data-th-include="system/user/updatePassword"></div>
 </body>
 <script th:inline="javascript">
-	var ctx = [[@{/}]];
+    var ctx = [[@{/}]];
 	var userName = [[${user.userName}]];
 	var theme = 'green';
-	var avatar = ctx + "img/avatar/" + [[${user.avatarUrl}?: 'default.jpg']];
+	var avatar = "img/avatar/" + [[${user.avatarUrl}]];
 </script>
 <script data-th-src="@{js/app/index.js}"></script>
 </html>

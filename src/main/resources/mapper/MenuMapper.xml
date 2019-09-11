@@ -18,9 +18,10 @@
     menu_id, menu_name, icon, type, url, parent_id, parent_ids, permission, available, 
     gmt_create, gmt_modified
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select
+    <include refid="Base_Column_List"/>
     from sys_menu
     where menu_id = #{menuId,jdbcType=BIGINT}
   </select>
@@ -48,6 +49,17 @@
       AND u.user_name = #{userName,jdbcType=VARCHAR}
     ORDER BY m.menu_id;
   </select>
+
+  <!--查询所有有效的菜单-->
+  <select id="selectAllMenus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where available =1
+    order by menu_id
+  </select>
+
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_menu

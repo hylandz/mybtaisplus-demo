@@ -29,6 +29,7 @@ public class IndexController {
 	public String index(Model model){
 		User user = ShiroUtil.getCurrentUser();
 		model.addAttribute(UserConstant.CURRENT_USER,user);
+		
 		return "index";
 	}
 

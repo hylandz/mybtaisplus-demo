@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 
 function reloadCode() {
-    $("#validateCodeImg").attr("src", ctx + "gifCode?data=" + new Date() + "");
+    $("#validateCodeImg").attr("src", "gifCode?data=" + new Date() + "");
 }
 
 /**
@@ -67,7 +67,7 @@ function login() {
     //ajax登录
     $.ajax({
         type: "post",
-        url: ctx + "login",
+        url: "login",
         data: {
             "username": username,
             "password": password,
@@ -77,7 +77,7 @@ function login() {
         dataType: "json",
         success: function (r) {
             if (r.code === 200) {
-                location.href = ctx + 'index';
+                location.href = 'index';
             } else {
                 //reloadCode();
                 $MB.n_warning(r.message);
@@ -125,7 +125,7 @@ function register() {
     //ajax注册
     $.ajax({
         type: "post",
-        url: ctx + "user/regist",
+        url: "user/regist",
         data: {
             "username": username,
             "password": password

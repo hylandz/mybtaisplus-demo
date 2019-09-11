@@ -2,7 +2,7 @@ $(function () {
     var $userTableForm = $(".user-table-form");
     //前台页面参数
     var settings = {
-        url: ctx + "user/list",
+        url: "user/list",
         pageSize: 10,
         //请求参数
         queryParams: function (params) {
@@ -89,7 +89,7 @@ function deleteUsers() {
     for (var i = 0; i < selected_length; i++) {
         ids += selected[i].userId;
         if (i !== (selected_length - 1)) ids += ",";
-        if (userName === selected[i].username) contain = true;
+            if (userName === selected[i].userName) contain = true;
     }
     if (contain) {
         $MB.n_warning('勾选用户中包含当前登录用户，无法删除！');
@@ -100,8 +100,8 @@ function deleteUsers() {
         text: "确定删除选中用户？",
         confirmButtonText: "确定删除"
     }, function () {
-        $.post(ctx + 'user/delete', {"ids": ids}, function (r) {
-            if (r.code === 0) {
+        $.post('user/remove', {"ids": ids}, function (r) {
+            if (r.code === 200) {
                 $MB.n_success(r.message);
                 refresh();
             } else {
@@ -116,7 +116,7 @@ function deleteUsers() {
  * 导出Excel格式
  */
 function exportUserExcel() {
-    $.post(ctx + "user/excel", $(".user-table-form").serialize(), function (r) {
+    $.post("user/excel", $(".user-table-form").serialize(), function (r) {
         if (r.code === 0) {
             window.location.href = "common/download?fileName=" + r.msg + "&delete=" + true;
         } else {
@@ -130,7 +130,7 @@ function exportUserExcel() {
  * 导出csv格式
  */
 function exportUserCsv() {
-    $.post(ctx + "user/csv", $(".user-table-form").serialize(), function (r) {
+    $.post("user/csv", $(".user-table-form").serialize(), function (r) {
         if (r.code === 0) {
             window.location.href = "common/download?fileName=" + r.msg + "&delete=" + true;
         } else {

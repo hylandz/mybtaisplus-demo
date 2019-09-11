@@ -119,7 +119,7 @@ $(document).ready(function () {
     /**
      * 获取登录用户的对应菜单
      */
-    $.get(ctx + "menu/getUserMenu", {"userName": userName}, function (r) {
+    $.get("menu/getUserMenu", {"userName": userName}, function (r) {
             if (r.code === 200) {
             var data = r.data;
             var $crollbarInner = $(".scrollbar-inner");
@@ -141,17 +141,17 @@ $(document).ready(function () {
     $("body").on("change", ".theme-switch input:radio", function () {
         var a = $(this).val();
         $("body").attr("data-ma-theme", a);
-        $.get(ctx + "user/theme", {"theme": a, "username": userName}, function (r) {
+        $.get("user/theme", {"theme": a, "username": userName}, function (r) {
             if (r.code === 200) $MB.n_success("主题更换成功，下次登录时生效！");
         });
     });
-    //头像路径
+    //头像路径(进入index.html时)
     $(".user__img").attr("src", avatar);
     /**
-     * 个人信息
+     * 点击左侧个人信息
      */
     $("#user__profile").on('click', function () {
-        $.get(ctx + "user/profile", function (r) {
+        $.get("user/profile", function (r) {
             //r=返回的视图.html
             $breadcrumb.html("").append('<li class="breadcrumb-item">个人信息</li>');
             $main_content.html("").append(r);

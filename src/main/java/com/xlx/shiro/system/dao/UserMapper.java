@@ -37,4 +37,6 @@ public interface UserMapper {
 	int updateAvatarUrl(@Param("userId") Long userId,@Param("avatarUrl") String avatarUrl);
 	
 	List<UserWithRole> selectUserById(@Param("userId") Long userId);
+	
+	int deleteByBatch(@Param("ids") Long[] ids);
 }

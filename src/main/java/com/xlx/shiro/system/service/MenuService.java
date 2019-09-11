@@ -54,4 +54,26 @@ public class MenuService {
 		
 		return TreeUtil.build(treeDTOList);
 	}
+	
+	/**
+	 * 获取所有菜单排序
+	 * @return tree
+	 */
+	@Transactional(rollbackFor = Exception.class,readOnly = true)
+	public TreeDTO<Menu> findMenus(){
+		//菜单数据
+		List<Menu> menuList = menuMapper.selectAllMenus();
+		
+		//排序菜单
+		List<TreeDTO<Menu>> treeDTOList = new ArrayList<>();
+		menuList.stream().forEach(menu -> {
+			TreeDTO<Menu> tree = new TreeDTO<>();
+			tree.setId(menu.getMenuId().toString());
+			tree.setParentId(menu.getParentId().toString());
+			tree.setText(menu.getMenuName());
+			treeDTOList.add(tree);
+		});
+		
+		return TreeUtil.build(treeDTOList);
+	}
 }

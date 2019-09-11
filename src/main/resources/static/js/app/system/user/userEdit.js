@@ -31,7 +31,6 @@ function updateUser() {
             $form.find("select[name='rolesSelect']").multipleSelect('setSelects', roleArr);
             $form.find("input[name='roles']").val($form.find("select[name='rolesSelect']").val());
             var $locked = $form.find("input[name='locked']");
-            console.log('用户锁定的:' + user.locked);
             if (user.locked === true) {
                 $locked.prop("checked", true);
                 $locked.parent().next().html('用户锁定');

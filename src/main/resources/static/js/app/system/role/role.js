@@ -13,10 +13,10 @@ $(function () {
             checkbox: true
         }, {
             field: 'roleKey',
-            title: '角色'
+            title: '角色关键字'
         }, {
             field: 'roleName',
-            title: '描述'
+            title: '角色名称'
         }, {
             field: 'available',
             title: '状态',

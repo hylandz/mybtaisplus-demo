@@ -1,6 +1,7 @@
 package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.entity.Role;
+import com.xlx.shiro.system.entity.RoleWithMenu;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,5 +23,12 @@ public interface RoleMapper {
     Set<String> selectRoleKeyByUserName(@Param("userName") String userName);
     
     List<Role> selectAllRoles();
+    
+    
+    Role selectRoleKey(@Param("roleKey") String roleKey);
+    
+    int deleteByBatch(@Param("roleId") Long roleId);
+    
+    List<RoleWithMenu> selectRole(@Param("roleId") Long roleId);
     
 }

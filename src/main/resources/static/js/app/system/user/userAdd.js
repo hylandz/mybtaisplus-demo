@@ -14,10 +14,13 @@ $(function () {
     //用户locked
     $("input[name='locked']").change(function () {
         var checked = $(this).is(":checked");
-        console.log('锁定:' + checked);
+        $('#locked').val(checked);
         var $status_label = $("#lockedTip");
-        if (checked) $status_label.html('锁定账户');
-        else $status_label.html('不锁定账户');
+        if (checked) {
+            $status_label.html('锁定账户');
+        } else{
+            $status_label.html('不锁定账户');
+        }
     });
 
     /**
@@ -34,7 +37,7 @@ $(function () {
         if (flag) {
             //新增
             if (name === "save") {
-                $.post(ctx + "user/create", $userAddForm.serialize(), function (r) {
+                $.post("user/create", $userAddForm.serialize(), function (r) {
                     if (r.code === 200) {
                         closeModal();
                         $MB.n_success(r.message);
@@ -44,7 +47,7 @@ $(function () {
             }
             //修改
             if (name === "update") {
-                $.post(ctx + "user/edit", $userAddForm.serialize(), function (r) {
+                $.post("user/edit", $userAddForm.serialize(), function (r) {
                     if (r.code === 200) {
                         closeModal();
                         $MB.n_success(r.message);

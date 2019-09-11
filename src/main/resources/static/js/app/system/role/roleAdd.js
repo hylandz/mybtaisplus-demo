@@ -5,6 +5,9 @@ $(function () {
     validateRule();
     createMenuTree();
 
+    /**
+     * 新增/修改
+     */
     $("#role-add .btn-save").click(function () {
         var name = $(this).attr("name");
         getMenu();
@@ -12,21 +15,21 @@ $(function () {
         var flag = validator.form();
         if (flag) {
             if (name === "save") {
-                $.post(ctx + "role/add", $roleAddForm.serialize(), function (r) {
-                    if (r.code === 0) {
+                $.post(ctx + "role/create", $roleAddForm.serialize(), function (r) {
+                    if (r.code === 200) {
                         closeModal();
-                        $MB.n_success(r.msg);
+                        $MB.n_success(r.message);
                         $MB.refreshTable("roleTable");
-                    } else $MB.n_danger(r.msg);
+                    } else $MB.n_danger(r.message);
                 });
             }
             if (name === "update") {
-                $.post(ctx + "role/update", $roleAddForm.serialize(), function (r) {
-                    if (r.code === 0) {
+                $.post("role/edit", $roleAddForm.serialize(), function (r) {
+                    if (r.code === 200) {
                         closeModal();
-                        $MB.n_success(r.msg);
+                        $MB.n_success(r.message);
                         $MB.refreshTable("roleTable");
-                    } else $MB.n_danger(r.msg);
+                    } else $MB.n_danger(r.message);
                 });
             }
         }
@@ -46,29 +49,29 @@ function closeModal() {
     $MB.closeAndRestModal("role-add");
 }
 
+/**
+ * 校验
+ */
 function validateRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
     validator = $roleAddForm.validate({
         rules: {
-            roleName: {
+            roleKey: {
                 required: true,
                 minlength: 3,
                 maxlength: 10,
                 remote: {
-                    url: "role/checkRoleName",
+                    url: "role/checkRoleKey",
                     type: "get",
                     dataType: "json",
                     data: {
-                        roleName: function () {
-                            return $("input[name='roleName']").val().trim();
-                        },
-                        oldRoleName: function () {
-                            return $("input[name='oldRoleName']").val().trim();
+                        roleKey: function () {
+                            return $("input[name='roleKey']").val().trim();
                         }
                     }
                 }
             },
-            remark: {
+            roleName: {
                 maxlength: 50
             },
             menuId: {
@@ -76,21 +79,24 @@ function validateRule() {
             }
         },
         messages: {
-            roleName: {
-                required: icon + "请输入角色名称",
+            roleKey: {
+                required: icon + "请输入角色关键字",
                 minlength: icon + "角色名称长度3到10个字符",
-                remote: icon + "该角色名已经存在"
+                remote: icon + "该角色关键字已经存在"
             },
-            remark: icon + "角色描述不能超过50个字符",
+            roleName: icon + "角色描述不能超过50个字符",
             menuId: icon + "请选择相应菜单权限"
         }
     });
 }
 
+/**
+ * 菜单
+ */
 function createMenuTree() {
-    $.post(ctx + "menu/menuButtonTree", {}, function (r) {
-        if (r.code === 0) {
-            var data = r.msg;
+    $.get( "menu/menuButtonTree", {}, function (r) {
+        if (r.code === 200) {
+            var data = r.data;
             $('#menuTree').jstree({
                 "core": {
                     'data': data.children
@@ -104,7 +110,7 @@ function createMenuTree() {
                 "plugins": ["wholerow", "checkbox"]
             });
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     })
 

@@ -44,4 +44,22 @@ public class MenuController {
 		
 	}
 	
+	/**
+	 * 获取菜单树
+	 * @return tree
+	 */
+	@GetMapping("/menu/menuButtonTree")
+	@ResponseBody
+	public ResultDTO getMenuButtonTree(){
+		try{
+			TreeDTO<Menu> menus = menuService.findMenus();
+			return ResultDTO.success(menus);
+		}catch (Exception e){
+			log.error("getMenuButtonTree()失败--->{}",e.getMessage());
+			return ResultDTO.failed("获取菜单树失败,请联系管理员!");
+		}
+		
+	}
+	
+	
 }

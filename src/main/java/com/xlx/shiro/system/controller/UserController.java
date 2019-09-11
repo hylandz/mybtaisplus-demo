@@ -6,7 +6,6 @@ import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
-import com.xlx.shiro.system.entity.UserWithRole;
 import com.xlx.shiro.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,7 +31,6 @@ public class UserController extends BaseController {
 	private UserService userService;
 	
 	
-	private static final String LOCKED_ON = "on";
 	/**
 	 * 点击用户管理跳转
 	 * 设置访问权限
@@ -43,7 +41,7 @@ public class UserController extends BaseController {
 	@GetMapping("/system/user")
 	@RequiresPermissions("system:user:view")
 	public String userManage(Model model) {
-		final User currentUser = ShiroUtil.getCurrentUser();
+		User currentUser = ShiroUtil.getCurrentUser();
 		model.addAttribute(UserConstant.CURRENT_USER, currentUser);
 		return "system/user/user";
 	}
@@ -132,7 +130,7 @@ public class UserController extends BaseController {
 		if (currentUser == null) {
 			return "redirect:/login";
 		}
-		final ProfileDTO profile = this.userService.getProfile(currentUser.getUserId());
+		ProfileDTO profile = this.userService.getProfile(currentUser.getUserId());
 		model.addAttribute(UserConstant.CURRENT_USER, profile);
 		return "system/user/profile";
 	}
@@ -193,16 +191,13 @@ public class UserController extends BaseController {
 	/**
 	 * 验证新增用户的用户名
 	 * @param userName 用户名
-	 * @return 相同:
+	 * @return null:不同
 	 */
 	@PostMapping("/user/verifyUserName")
 	@ResponseBody
 	public Boolean verifyUserName(String userName) {
-		final User currentUser = ShiroUtil.getCurrentUser();
-		if (currentUser == null) {
-			return false;
-		}
-		return (StringUtils.isNotEmpty(userName) && !userName.equals(currentUser.getUserName()));
+		final User user = userService.findUserByUserName(userName);
+		return user == null;
 	}
 	
 	/**
@@ -218,7 +213,7 @@ public class UserController extends BaseController {
 		logger.info("rolesIds={}",roles.length);
 		try{
 			if (userService.saveUser(user,roles)){
-				ResultDTO.success("用户新增成功!");
+				return ResultDTO.success("用户新增成功!");
 			}
 		}catch (Exception e){
 			logger.error("用户新增失败: {}",e.getMessage());
@@ -243,6 +238,13 @@ public class UserController extends BaseController {
 		}
 	}
 	
+	/**
+	 * 用户修改
+	 * @param user User
+	 * @param rolesSelect 角色
+	 * @param locked 锁定
+	 * @return dto
+	 */
 	@PostMapping("/user/edit")
 	@ResponseBody
 	public ResultDTO editUser(User user,Long[] rolesSelect,Boolean locked){
@@ -255,7 +257,25 @@ public class UserController extends BaseController {
 			return ResultDTO.success("修改用户信息成功!",user);
 		}catch (Exception e){
 			logger.error("修改用户信息失败:{}",e.getMessage());
-			return ResultDTO.failed("修改用户信息失败!");
+			return ResultDTO.failed("修改用户信息失败,请联系网站管理员!");
+		}
+	}
+	
+	/**
+	 * 删除用户+用户角色
+	 * @param ids 用户id
+	 * @return dto
+	 */
+	@PostMapping("/user/remove")
+	@ResponseBody
+	public ResultDTO removeUser(@RequestParam(name = "ids") Long[] ids){
+		logger.info("ids={}",ids.length);
+		try{
+			userService.deleteUserByBatch(ids);
+			return ResultDTO.success("删除用户成功!");
+		}catch (Exception e){
+			logger.error("删除用户失败:{}",e.getMessage());
+			return ResultDTO.failed("删除用户失败,请联系网站管理员!");
 		}
 	}
 }

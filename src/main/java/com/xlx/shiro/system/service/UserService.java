@@ -265,5 +265,23 @@ public class UserService {
 		log.info("editUser ->the effectRows of inserting userRole is: {}",i);
 		return (i != 0 && i1!= 0 && i2!= 0);
 	}
+	
+	/**
+	 * 批量删除用户
+	 * @param ids
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deleteUserByBatch(Long[] ids){
+		if (ids.length == 0){
+			return false;
+		}
+		final int i = userMapper.deleteByBatch(ids);
+		log.info("删除用户--> effectRows:{}",i);
+		//
+		final int i1 = userRoleMapper.deleteByBatch(Arrays.asList(ids));
+		log.info("删除用户角色--> effectRows:{}",i1);
+		return i != 0 && i1 != 0;
+	}
+	
 }
 

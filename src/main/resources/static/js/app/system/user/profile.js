@@ -1,7 +1,7 @@
 var validator;
 var $userProfileForm = $("#update-profile-form");
 $(function () {
-    $(".profile__img").find("img").attr("src", avatar);
+   $(".profile__img").find("img").attr("src", avatar);
     $("#update-profile").bind('hide.bs.modal', function () {
         $(".modal-backdrop").remove();
     });
@@ -21,12 +21,16 @@ $(function () {
          */
         $this.on("click", function () {
             var target_src = $(this).attr("src");
-            $.post(ctx + "user/changeAvatar", {"avatarUrl": target_src}, function (r) {
+            console.log('target_src:' + target_src);
+            $.post("user/changeAvatar", {"avatarUrl": target_src}, function (r) {
                 if (r.code === 200) {
                     $("#close_update_avatar_button").trigger("click");
                     $MB.n_success(r.message);
+
+                    //修改成功后刷新profile.html页面显示修改后的头像
                     refreshUserProfile();
-                    $(".user__img").attr("src", ctx + target_src);
+                    //aside.html设置头像
+                    $(".user__img").attr("src", target_src);
                 } else $MB.n_danger(r.message);
             });
         });
@@ -45,9 +49,8 @@ $(function () {
         getDept();
         var validator = $userProfileForm.validate();
         var flag = validator.form();
-        console.log('validate='+flag);
         if (flag) {
-            $.post(ctx + "user/updateUserProfile", $userProfileForm.serialize(), function (r) {
+            $.post("user/updateUserProfile", $userProfileForm.serialize(), function (r) {
                 if (r.code === 200) {
                     $("#update-profile .btn-close").trigger("click");
                     $MB.n_success(r.message);
@@ -63,7 +66,7 @@ $(function () {
  * 修改资料后刷新个人信息
  */
 function refreshUserProfile() {
-    $.get(ctx + "user/profile", function (r) {
+    $.get("user/profile", function (r) {
         //r=一个返回的html
         $main_content.html('').append(r);
     });
@@ -73,7 +76,7 @@ function refreshUserProfile() {
  * 点击[编辑资料]时获取当前用户的数据
  */
 function editUserProfile() {
-    $.get(ctx + "user/getUserProfile", {"userId": userId}, function (r) {
+    $.get("user/getUserProfile", {"userId": userId}, function (r) {
         if (r.code === 200) {
             var $form = $('#update-profile');
             var $deptTree = $('#deptTree');
