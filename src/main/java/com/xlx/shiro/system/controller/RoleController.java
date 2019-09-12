@@ -126,4 +126,20 @@ public class RoleController extends BaseController{
 			return ResultDTO.failed("获取角色信息失败，请联系网站管理员");
 		}
 	}
+	
+	
+	/**
+	 * 角色删除
+	 * @param ids 角色id
+	 * @return dto
+	 */
+	@PostMapping("/role/remove")
+	@ResponseBody
+	public ResultDTO deleteBatch(Long[] ids){
+		if (roleService.deleteBatch(ids)){
+			return ResultDTO.success("删除成功!");
+		}else {
+			return ResultDTO.failed("删除失败!");
+		}
+	}
 }

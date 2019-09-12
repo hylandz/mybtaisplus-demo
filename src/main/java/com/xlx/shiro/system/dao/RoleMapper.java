@@ -27,7 +27,7 @@ public interface RoleMapper {
     
     Role selectRoleKey(@Param("roleKey") String roleKey);
     
-    int deleteByBatch(@Param("roleId") Long roleId);
+    int deleteByBatch(@Param("roleArray") Long[] roleArray);
     
     List<RoleWithMenu> selectRole(@Param("roleId") Long roleId);
     

@@ -3,8 +3,6 @@ package com.xlx.shiro.system.dao;
 import com.xlx.shiro.system.entity.RoleMenu;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 public interface RoleMenuMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -20,5 +18,7 @@ public interface RoleMenuMapper {
     
     
     int insertByBatch(@Param("roleId") Long roleId, @Param("menuIdArray") Long[] menuIdArray);
+    int deleteByBatch(@Param("roleIdArray") Long[] roleIdArray);
+    int deleteByRoleId(@Param("roleId") Long roleId);
     
 }

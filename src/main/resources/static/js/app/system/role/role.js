@@ -59,12 +59,12 @@ function deleteRoles() {
         text: "删除选中角色将导致该角色对应账户失去相应的权限，确定删除？",
         confirmButtonText: "确定删除"
     }, function () {
-        $.post(ctx + 'role/delete', {"ids": ids}, function (r) {
-            if (r.code === 0) {
-                $MB.n_success(r.msg);
+        $.post('role/remove', {"ids": ids}, function (r) {
+            if (r.code === 200) {
+                $MB.n_success(r.message);
                 refresh();
             } else {
-                $MB.n_danger(r.msg);
+                $MB.n_danger(r.message);
             }
         });
     });

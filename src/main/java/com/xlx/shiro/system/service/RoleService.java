@@ -1,5 +1,6 @@
 package com.xlx.shiro.system.service;
 
+import com.xlx.shiro.common.exception.CustomizeException;
 import com.xlx.shiro.system.dao.RoleMapper;
 import com.xlx.shiro.system.dao.RoleMenuMapper;
 import com.xlx.shiro.system.dto.TreeDTO;
@@ -54,14 +55,14 @@ public class RoleService {
 	/**
 	 * 新增角色时验证role_key是否重复
 	 * @param roleKey 角色关键字
-	 * @return false:重复,true:ok
+	 * @return null:ok
 	 */
 	public boolean verifyRoleKey(String roleKey){
 		if (StringUtils.isEmpty(roleKey)){
 			return false;
 		}
 		Role role = roleMapper.selectRoleKey(roleKey);
-		return !Objects.equals(roleKey, role.getRoleKey());
+		return role == null;
 	}
 	
 	
@@ -76,6 +77,7 @@ public class RoleService {
 		if (role == null || menuId.length == 0){
 			return false;
 		}
+		role.setAvailable(true);
 		role.setGmtCreate(new Date());
 		//role新增
 		int i = roleMapper.insertSelective(role);
@@ -122,12 +124,35 @@ public class RoleService {
 		int i = roleMapper.updateByPrimaryKeySelective(role);
 		log.info("修改角色 effectRows --->{}",i);
 		//删除原先的角色菜单
-		int i1 = roleMenuMapper.deleteByPrimaryKey(role.getRoleId());
+		int i1 = roleMenuMapper.deleteByRoleId(role.getRoleId());
 		log.info("修改角色 effectRows --->{}",i1);
 		//新增修改过的角色菜单
 		int i2 = roleMenuMapper.insertByBatch(role.getRoleId(), menuId);
 		log.info("修改角色 effectRows --->{}",i2);
 		
 		return i*i1*i2 != 0;
+	}
+	
+	/**
+	 * 批量删除
+	 * 角色id + 角色菜单id
+	 * @param roleId
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public boolean deleteBatch(Long[] roleId) {
+		if (roleId.length == 0){
+			return false;
+		}
+		try {
+			//删除role
+			int i = roleMapper.deleteByBatch(roleId);
+			//删除roleMenu
+			int i1 = roleMenuMapper.deleteByBatch(roleId);
+			return i * i1 != 0;
+		} catch (Exception e) {
+			throw new CustomizeException(e.getMessage());
+		}
+		
 	}
 }
