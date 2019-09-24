@@ -17,12 +17,20 @@
 		                	</a>
                         </ul>
                     </div>
-                    <div class="dropdown actions__item" shiro:hasAnyPermissions="dept:add,dept:delete,dept:update">
+                    <!--<div class="dropdown actions__item" shiro:hasAnyPermissions="dept:add,dept:delete,dept:update">
                         <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#dept-add" shiro:hasPermission="dept:add">新增部门</a>
                             <a href="javascript:void(0)" class="dropdown-item" onclick="updateDept()" shiro:hasPermission="dept:update">修改部门</a>
                             <a href="javascript:void(0)" class="dropdown-item" onclick="deleteDepts();" shiro:hasPermission="dept:delete">删除部门</a>
+                        </div>
+                    </div>-->
+                    <div class="dropdown actions__item" >
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#dept-add" >新增部门</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateDept()" >修改部门</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteDepts();" >删除部门</a>
                         </div>
                     </div>
                 </div>

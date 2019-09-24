@@ -25,9 +25,25 @@
     select
     <include refid="Base_Column_List" />
     from sys_dept
+    <where>
+      <if test="deptName != null and deptName != ''">
+        dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+    </where>
     order by gmt_create desc
   </select>
 
+  <select id="selectDeptTree" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_dept
+    <where>
+      <if test="deptName != null and deptName != ''">
+        dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by gmt_create desc
+  </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_dept

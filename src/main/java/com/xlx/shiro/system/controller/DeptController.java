@@ -1,5 +1,6 @@
 package com.xlx.shiro.system.controller;
 
+import com.xlx.shiro.common.entity.QueryParam;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.dto.TreeDTO;
 import com.xlx.shiro.system.entity.Dept;
@@ -8,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * dept
@@ -52,5 +55,16 @@ public class DeptController extends BaseController{
 			log.error("error:get data of dept from database failed:{}",e.getMessage());
 			return ResultDTO.failed("获取部门信息失败");
 		}
+	}
+	
+	/**
+	 * 部门首页
+	 * @param deptName 部门名称
+	 * @return list
+	 */
+	@GetMapping("/dept/list")
+	@ResponseBody
+	public List<Dept> listDept(@RequestParam("deptName") String deptName){
+		return deptService.findAllDepts(deptName);
 	}
 }

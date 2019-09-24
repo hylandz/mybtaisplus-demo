@@ -6,7 +6,7 @@ function initTreeTable() {
     var setting = {
         id: 'deptId',
         code: 'deptId',
-        url: ctx + 'dept/list',
+        url: 'dept/list',
         expandAll: true,
         expandColumn: "2",
         ajaxParams: {
@@ -27,7 +27,7 @@ function initTreeTable() {
             },
             {
                 title: '创建时间',
-                field: 'createTime'
+                field: 'gmtCreate'
             }
         ]
     };

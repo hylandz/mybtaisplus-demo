@@ -54,9 +54,10 @@ public class RoleController extends BaseController{
 	 */
 	@GetMapping("/role/list")
 	@ResponseBody
-	public Map<String,Object> listAllRoles(QueryParam param){
+	public Map<String,Object> listAllRoles(QueryParam param,
+	                                       @RequestParam(name = "roleName",required = false) String roleName){
 		log.info("roleParam={}",param);
-		return super.selectByPageNumSize(param,() -> roleService.findAllRoles());
+		return super.selectByPageNumSize(param,() -> roleService.findAllRoles(roleName));
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package com.xlx.shiro.system.dao;
 
 import com.xlx.shiro.system.entity.Dept;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface DeptMapper {
 
     int updateByPrimaryKey(Dept record);
     
-    List<Dept> selectAllDept();
+    List<Dept> selectAllDept(@Param("deptName") String deptName);
+    List<Dept> selectDeptTree();
 }

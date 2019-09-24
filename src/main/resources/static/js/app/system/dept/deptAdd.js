@@ -61,9 +61,6 @@ function validateRule() {
                     data: {
                         deptName: function () {
                             return $("input[name='deptName']").val().trim();
-                        },
-                        oldDeptName: function () {
-                            return $("input[name='oldDeptName']").val().trim();
                         }
                     }
                 }

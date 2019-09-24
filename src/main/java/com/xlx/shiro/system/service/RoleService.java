@@ -48,8 +48,8 @@ public class RoleService {
 	 * 获取所有有效的角色
 	 * @return list
 	 */
-	public List<Role> findAllRoles(){
-		return roleMapper.selectAllRoles();
+	public List<Role> findAllRoles(String roleName){
+		return roleMapper.selectAllRoles(roleName);
 	}
 	
 	/**

@@ -22,7 +22,7 @@ public interface RoleMapper {
     
     Set<String> selectRoleKeyByUserName(@Param("userName") String userName);
     
-    List<Role> selectAllRoles();
+    List<Role> selectAllRoles(@Param("roleName")String roleName);
     
     
     Role selectRoleKey(@Param("roleKey") String roleKey);

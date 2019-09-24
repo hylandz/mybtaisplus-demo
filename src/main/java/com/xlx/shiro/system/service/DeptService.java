@@ -7,6 +7,7 @@ import com.xlx.shiro.system.entity.Dept;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class DeptService {
 	 */
 	public TreeDTO<Dept> listAllDepts() {
 		List<TreeDTO<Dept>> treeDTOList = new ArrayList<>();
-		List<Dept> deptList = this.deptMapper.selectAllDept();
+		List<Dept> deptList = this.deptMapper.selectDeptTree();
 		
 		//封装deptList
 		deptList.forEach(dept -> {
@@ -47,5 +48,9 @@ public class DeptService {
 		return TreeUtil.build(treeDTOList);
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
+	public List<Dept> findAllDepts(String deptName){
+	  return deptMapper.selectAllDept(deptName);
+	}
 	
 }

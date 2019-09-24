@@ -33,6 +33,11 @@
     select
     <include refid="Base_Column_List"/>
     from sys_role
+    <where>
+      <if test="roleName != null and roleName != ''">
+        role_name = #{role_name,jdbcType=VARCHAR}
+      </if>
+    </where>
     order by gmt_create desc
   </select>
 

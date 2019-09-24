@@ -227,7 +227,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 class FastJsonRedisSerializer<T> implements RedisSerializer<T>{
 	
 	// 默认编码
-	private static final Charset DEFAULT_CHASRSET = Charset.forName("UTF-8");
+	private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 	
 	// 参数对象
 	private Class<T> clazz;
@@ -245,7 +245,7 @@ class FastJsonRedisSerializer<T> implements RedisSerializer<T>{
 	 */
 	@Override
 	public byte[] serialize(T t) throws SerializationException {
-		return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHASRSET);
+		return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
 	}
 	
 	/**
@@ -260,7 +260,7 @@ class FastJsonRedisSerializer<T> implements RedisSerializer<T>{
 			return null;
 		}
 		
-		String str = new String(bytes,DEFAULT_CHASRSET);
+		String str = new String(bytes,DEFAULT_CHARSET);
 		return JSON.parseObject(str,clazz);
 	}
 }
