@@ -283,5 +283,24 @@ public class UserService {
 		return i != 0 && i1 != 0;
 	}
 	
+	
+	/**
+	 * 注册用户
+	 * @param user 注册帐号
+	 * @return true:注册成功
+	 */
+	public Boolean registerUser(User user){
+		if (user != null){
+			String salt = ShiroUtil.getHexRandomNumber();
+			user.setSalt(salt);
+			String password = ShiroUtil.encryptPassword(user.getUserPassword(), user.getCredentialsSalt());
+			user.setUserPassword(password);
+			user.setGmtModified(new Date());
+			user.setLocked(Boolean.FALSE);
+			int i = userMapper.insertSelective(user);
+			return i != 0;
+		}
+		return false;
+	}
 }
 

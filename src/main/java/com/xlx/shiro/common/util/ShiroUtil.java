@@ -36,12 +36,12 @@ public class ShiroUtil {
 
 	/**
 	 * 密码加密
-	 * @param pwd 明文密码
+	 * @param plain 明文密码
 	 * @param credentialsSalt 盐(userName + salt)
 	 * @return 16进制编码存储密码
 	 */
-	public static String encryptPassword(String pwd,String credentialsSalt){
-		SimpleHash simpleHash = new SimpleHash(algorithmName,pwd, ByteSource.Util.bytes(credentialsSalt),hashIterations);
+	public static String encryptPassword(String plain,String credentialsSalt){
+		SimpleHash simpleHash = new SimpleHash(algorithmName,plain, ByteSource.Util.bytes(credentialsSalt),hashIterations);
 		return simpleHash.toHex();
 	}
 

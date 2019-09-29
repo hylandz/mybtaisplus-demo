@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="edge" />
-    <title>FEBS权限管理系统</title>
+    <title>SSM-Shiro权限管理系统</title>
     <link rel="shortcut icon" type="image/png" th:href="@{/img/favicon.ico}" />
     <link rel="stylesheet" th:href="@{css/login.css}" type="text/css">
     <link rel="stylesheet" th:href="@{css/iCheck/minimal/green.css}" type="text/css">
@@ -57,15 +57,15 @@
             <div class="form-content">
                 <div class="form-group">
                     <label>用户名</label>
-                    <input type="text" name="username" />
+                    <input type="text" name="userName" />
                 </div>
                 <div class="form-group">
                     <label>密码</label>
-                    <input type="password" name="password" />
+                    <input type="password" name="userPassword" />
                 </div>
                 <div class="form-group">
                     <label>确认密码</label>
-                    <input type="password" name="cpassword" />
+                    <input type="password" name="confirmPwd" />
                 </div>
                 <div class="form-group">
                     <button onclick="register()">注册</button>

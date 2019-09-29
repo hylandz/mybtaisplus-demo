@@ -94,9 +94,9 @@ function login() {
  * 注册事件
  */
 function register() {
-    var username = $(".two input[name='username']").val().trim();
-    var password = $(".two input[name='password']").val().trim();
-    var cpassword = $(".two input[name='cpassword']").val().trim();
+    var username = $(".two input[name='userName']").val().trim();
+    var password = $(".two input[name='userPassword']").val().trim();
+    var confirmPwd = $(".two input[name='confirmPwd']").val().trim();
 
     //校验
     if (username === "") {
@@ -113,11 +113,11 @@ function register() {
         $MB.n_warning("密码不能为空！");
         return;
     }
-    if (cpassword === "") {
+    if (confirmPwd === "") {
         $MB.n_warning("请再次输入密码！");
         return;
     }
-    if (cpassword !== password) {
+    if (confirmPwd !== password) {
         $MB.n_warning("两次密码输入不一致！");
         return;
     }
@@ -125,18 +125,18 @@ function register() {
     //ajax注册
     $.ajax({
         type: "post",
-        url: "user/regist",
+        url: "register",
         data: {
-            "username": username,
-            "password": password
+            "userName": username,
+            "userPassword": password
         },
         dataType: "json",
         success: function (r) {
             if (r.code === 200) {
                 $MB.n_success("注册成功，请登录");
-                $(".two input[name='username']").val("");
-                $(".two input[name='password']").val("");
-                $(".two input[name='cpassword']").val("");
+                $(".two input[name='userName']").val("");
+                $(".two input[name='userPassword']").val("");
+                $(".two input[name='confirmPwd']").val("");
                 $('.form-toggle').trigger('click');
             } else {
                 $MB.n_warning(r.message);

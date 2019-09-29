@@ -2,6 +2,10 @@ $(function () {
     initTreeTable();
 });
 
+
+/**
+ * 初始化页面
+ */
 function initTreeTable() {
     var $menuTableForm = $(".menu-table-form");
     var setting = {
@@ -41,8 +45,8 @@ function initTreeTable() {
                 title: '类型',
                 field: 'type',
                 formatter: function (item, index) {
-                    if (item.type === '0') return '<span class="badge badge-success">菜单</span>';
-                    if (item.type === '1') return '<span class="badge badge-warning">按钮</span>';
+                    if (item.type === 'menu') return '<span class="badge badge-success">菜单</span>';
+                    if (item.type === 'button') return '<span class="badge badge-warning">按钮</span>';
                 }
 
             },
@@ -55,14 +59,14 @@ function initTreeTable() {
             },
             {
                 title: '权限标识',
-                field: 'perms',
+                field: 'permission',
                 formatter: function (item, index) {
                     return item.perms === 'null' ? '' : item.perms;
                 }
             },
             {
                 title: '创建时间',
-                field: 'createTime'
+                field: 'gmtCreate'
             }
         ]
     };
@@ -96,11 +100,11 @@ function deleteMenus() {
         confirmButtonText: "确定删除"
     }, function () {
         $.post(ctx + 'menu/delete', {"ids": ids_arr}, function (r) {
-            if (r.code === 0) {
-                $MB.n_success(r.msg);
+            if (r.code === 200) {
+                $MB.n_success(r.message);
                 refresh();
             } else {
-                $MB.n_danger(r.msg);
+                $MB.n_danger(r.message);
             }
         });
     });
