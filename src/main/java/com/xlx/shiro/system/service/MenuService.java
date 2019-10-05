@@ -1,14 +1,18 @@
 package com.xlx.shiro.system.service;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.xlx.shiro.common.util.TreeUtil;
 import com.xlx.shiro.system.dao.MenuMapper;
+import com.xlx.shiro.system.dao.RoleMenuMapper;
 import com.xlx.shiro.system.dto.TreeDTO;
 import com.xlx.shiro.system.entity.Menu;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +28,8 @@ public class MenuService {
 	@Resource
 	private MenuMapper menuMapper;
 
+	@Resource
+	private RoleMenuMapper roleMenuMapper;
 
 	/**
 	 * 根据帐号获取该用户的权限集
@@ -62,7 +68,7 @@ public class MenuService {
 	@Transactional(rollbackFor = Exception.class,readOnly = true)
 	public TreeDTO<Menu> findMenus(){
 		//菜单数据
-		List<Menu> menuList = menuMapper.selectAllMenus();
+		List<Menu> menuList = menuMapper.selectAllMenus(null,null);
 		
 		//排序菜单
 		List<TreeDTO<Menu>> treeDTOList = new ArrayList<>();
@@ -75,5 +81,48 @@ public class MenuService {
 		});
 		
 		return TreeUtil.build(treeDTOList);
+	}
+	
+	/**
+	 * 获取所有菜单
+	 * @param menuName 菜单名
+	 * @param type 菜单类型
+	 * @return list
+	 */
+	@Transactional(rollbackFor = Exception.class,readOnly = true)
+	public List<Menu> getAllMenus(String menuName,String type){
+		
+		return menuMapper.selectAllMenus(menuName, type);
+	}
+	
+	/**
+	 * 新增菜单
+	 * @param menu 菜单
+	 * @return true:成功
+	 */
+	public Boolean saveMenu(Menu menu){
+		menu.setGmtCreate(new Date());
+		menu.setAvailable(Boolean.TRUE);
+		int i = menuMapper.insertSelective(menu);
+		return i != 0;
+	}
+	
+	/**
+	 * 修改菜单
+	 * @param menu 菜单
+	 * @return true:修改成功
+	 */
+	public Boolean updateMenu(Menu menu){
+		int i = menuMapper.updateByPrimaryKeySelective(menu);
+		return i != 0;
+	}
+	
+	/**
+	 * 删除菜单
+	 * @return true:删除成功
+	 */
+	public Boolean deleteMenu(){
+	
+		return false;
 	}
 }

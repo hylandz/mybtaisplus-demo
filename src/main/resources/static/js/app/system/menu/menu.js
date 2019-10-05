@@ -4,14 +4,14 @@ $(function () {
 
 
 /**
- * 初始化页面
+ * 初始化菜单页面
  */
 function initTreeTable() {
     var $menuTableForm = $(".menu-table-form");
     var setting = {
         id: 'menuId',
         code: 'menuId',
-        url: ctx + 'menu/list',
+        url: 'menu/list',
         expandAll: true,
         expandColumn: "2",
         ajaxParams: {
@@ -61,7 +61,7 @@ function initTreeTable() {
                 title: '权限标识',
                 field: 'permission',
                 formatter: function (item, index) {
-                    return item.perms === 'null' ? '' : item.perms;
+                    return item.permission === 'null' ? '' : item.permission;
                 }
             },
             {
@@ -84,6 +84,9 @@ function refresh() {
     $MB.refreshJsTree("menuTree", createMenuTree());
 }
 
+/**
+ * 删除菜单
+ */
 function deleteMenus() {
     var ids = $("#menuTable").bootstrapTreeTable("getSelections");
     var ids_arr = "";

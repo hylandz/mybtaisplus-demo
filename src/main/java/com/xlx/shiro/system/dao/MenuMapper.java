@@ -24,6 +24,6 @@ public interface MenuMapper {
     List<Menu> selectMenuByUserName(@Param("userName") String userName);
     
     
-    List<Menu> selectAllMenus();
+    List<Menu> selectAllMenus(@Param("menuName") String menuName,@Param("type") String type);
     
 }

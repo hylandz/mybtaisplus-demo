@@ -35,6 +35,12 @@
         where role_id = #{roleId,jdbcType=BIGINT}
     </delete>
 
+<!--根据menuId删除相关的数据-->
+    <delete id="deleteByMenuId" parameterType="java.lang.Long">
+        delete
+        from sys_role_menu where menu_id =#{menuId,jdbcType=BIGINT}
+    </delete>
+
     <insert id="insert" parameterType="com.xlx.shiro.system.entity.RoleMenu">
         insert into sys_role_menu (id, role_id, menu_id)
         values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})

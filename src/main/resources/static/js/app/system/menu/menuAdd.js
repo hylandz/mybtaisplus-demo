@@ -56,21 +56,21 @@ $(function () {
         var flag = validator.form();
         if (flag) {
             if (name === "save") {
-                $.post(ctx + "menu/add", $menuAddForm.serialize(), function (r) {
-                    if (r.code === 0) {
+                $.post( "menu/add", $menuAddForm.serialize(), function (r) {
+                    if (r.code === 200) {
                         refresh();
                         closeModal();
-                        $MB.n_success(r.msg);
-                    } else $MB.n_danger(r.msg);
+                        $MB.n_success(r.message);
+                    } else $MB.n_danger(r.message);
                 });
             }
             if (name === "update") {
                 $.post(ctx + "menu/update", $menuAddForm.serialize(), function (r) {
-                    if (r.code === 0) {
+                    if (r.code === 200) {
                         refresh();
                         closeModal();
-                        $MB.n_success(r.msg);
-                    } else $MB.n_danger(r.msg);
+                        $MB.n_success(r.message);
+                    } else $MB.n_danger(r.message);
                 });
             }
         }
@@ -95,6 +95,10 @@ function closeModal() {
 
 }
 
+
+/**
+ * 验证菜单是否重复
+ */
 function validateRule() {
     var icon = "<i class='zmdi zmdi-close-circle zmdi-hc-fw'></i> ";
     validator = $menuAddForm.validate({

@@ -38,12 +38,20 @@
 		                </a>
                         </ul>
                     </div>
-                    <div class="dropdown actions__item" shiro:hasAnyPermissions="menu:add,menu:delete,menu:update">
+                    <!--<div class="dropdown actions__item" shiro:hasAnyPermissions="menu:add,menu:delete,menu:update">
                         <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#menu-add" shiro:hasPermission="menu:add">新增</a>
                             <a href="javascript:void(0)" class="dropdown-item" onclick="updateMenu()" shiro:hasPermission="menu:update">修改</a>
                             <a href="javascript:void(0)" class="dropdown-item" onclick="deleteMenus()" shiro:hasPermission="menu:delete">删除</a>
+                        </div>
+                    </div>-->
+                    <div class="dropdown actions__item">
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#menu-add">新增</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateMenu()">修改</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteMenus()">删除</a>
                         </div>
                     </div>
                 </div>

@@ -21,4 +21,5 @@ public interface RoleMenuMapper {
     int deleteByBatch(@Param("roleIdArray") Long[] roleIdArray);
     int deleteByRoleId(@Param("roleId") Long roleId);
     
+    int deleteByMenuId(@Param("menuId") Long menuId);
 }
