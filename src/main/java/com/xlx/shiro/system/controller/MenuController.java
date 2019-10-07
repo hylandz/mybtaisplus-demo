@@ -78,6 +78,23 @@ public class MenuController {
 	}
 	
 	/**
+	 * 获取菜单树
+	 * @return tree
+	 */
+	@GetMapping("/menu/tree")
+	@ResponseBody
+	public ResultDTO getMenuTree(){
+		try{
+			TreeDTO<Menu> menu = menuService.getMenuTrees();
+			return ResultDTO.success(menu);
+		}catch (Exception e){
+			log.error("获取菜单树失败:{}",e.getMessage());
+			return ResultDTO.success("获取菜单树失败");
+		}
+		
+	}
+	
+	/**
 	 * 获取菜单集合
 	 * @param menuName 菜单名
 	 * @param type 类型

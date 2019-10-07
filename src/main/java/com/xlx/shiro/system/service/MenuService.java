@@ -72,6 +72,24 @@ public class MenuService {
 		
 		//排序菜单
 		List<TreeDTO<Menu>> treeDTOList = new ArrayList<>();
+		buildTrees(treeDTOList,menuList);
+		return TreeUtil.build(treeDTOList);
+	}
+	
+	
+	@Transactional(rollbackFor = Exception.class,readOnly = true)
+	public TreeDTO<Menu> getMenuTrees(){
+		//菜单数据
+		List<Menu> menuList = menuMapper.selectMenuTrees();
+		
+		//排序菜单
+		List<TreeDTO<Menu>> treeDTOList = new ArrayList<>();
+		buildTrees(treeDTOList,menuList);
+		return TreeUtil.build(treeDTOList);
+	}
+	
+	
+	private void buildTrees(List<TreeDTO<Menu>> treeDTOList,List<Menu> menuList){
 		menuList.stream().forEach(menu -> {
 			TreeDTO<Menu> tree = new TreeDTO<>();
 			tree.setId(menu.getMenuId().toString());
@@ -79,10 +97,7 @@ public class MenuService {
 			tree.setText(menu.getMenuName());
 			treeDTOList.add(tree);
 		});
-		
-		return TreeUtil.build(treeDTOList);
 	}
-	
 	/**
 	 * 获取所有菜单
 	 * @param menuName 菜单名

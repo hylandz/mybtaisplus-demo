@@ -44,7 +44,7 @@ $(function () {
     });
 
     $("#menu-add .btn-save").click(function () {
-        $menuPermsListRow.find("input[name='perms']").val(
+        $menuPermsListRow.find("input[name='permission']").val(
             $menuPermsListRow.find(".autocomplete-input").val()
         );
         $menuUrlListRow.find("input[name='url']").val(
@@ -65,7 +65,7 @@ $(function () {
                 });
             }
             if (name === "update") {
-                $.post(ctx + "menu/update", $menuAddForm.serialize(), function (r) {
+                $.post( "menu/update", $menuAddForm.serialize(), function (r) {
                     if (r.code === 200) {
                         refresh();
                         closeModal();

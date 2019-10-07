@@ -65,6 +65,15 @@
         order by menu_id
     </select>
 
+    <!--菜单树-->
+    <select id="selectMenuTrees" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where available =1
+        and type = 'menu'
+        order by gmt_create
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
