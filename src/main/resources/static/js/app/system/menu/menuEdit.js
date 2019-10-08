@@ -10,25 +10,25 @@ function updateMenu() {
         return;
     }
     var menuId = selected[0].id;
-    $.post(ctx + "menu/getMenu", {"menuId": menuId}, function (r) {
-        if (r.code === 0) {
+    $.post("menu/getMenu", {"menuId": menuId}, function (r) {
+        if (r.code === 200) {
             var $form = $('#menu-add');
             var $menuTree = $('#menuTree');
             $form.modal();
-            var menu = r.msg;
+            var menu = r.data;
             $("#menu-add-modal-title").html('修改菜单/按钮');
             $("input:radio[value='" + menu.type + "']").trigger("click");
             $form.find("input[name='menuName']").val(menu.menuName);
             $form.find("input[name='oldMenuName']").val(menu.menuName);
             $form.find("input[name='menuId']").val(menu.menuId);
             $form.find("input[name='icon']").val(menu.icon);
-            $('#menu-perms-list').find(".autocomplete-input").val(menu.perms == null ? "" : menu.perms);
+            $('#menu-perms-list').find(".autocomplete-input").val(menu.permission == null ? "" : menu.permission);
             $('#menu-url-list').find(".autocomplete-input").val(menu.url == null ? "" : menu.url);
             $menuTree.jstree('select_node', menu.parentId, true);
             $menuTree.jstree('disable_node', menu.menuId);
             $("#menu-add-button").attr("name", "update");
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     });
 }

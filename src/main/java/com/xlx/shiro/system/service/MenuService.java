@@ -76,7 +76,10 @@ public class MenuService {
 		return TreeUtil.build(treeDTOList);
 	}
 	
-	
+	/**
+	 * 获取菜单树
+	 * @return Tree 菜单类型:type='menu'
+	 */
 	@Transactional(rollbackFor = Exception.class,readOnly = true)
 	public TreeDTO<Menu> getMenuTrees(){
 		//菜单数据

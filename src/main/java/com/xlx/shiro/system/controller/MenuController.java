@@ -89,7 +89,7 @@ public class MenuController {
 			return ResultDTO.success(menu);
 		}catch (Exception e){
 			log.error("获取菜单树失败:{}",e.getMessage());
-			return ResultDTO.success("获取菜单树失败");
+			return ResultDTO.failed("获取菜单树失败");
 		}
 		
 	}

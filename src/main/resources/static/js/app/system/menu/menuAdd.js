@@ -16,7 +16,7 @@ $(function () {
 
     $menuAddForm.find("input[name='type']").change(function () {
         var $value = $menuAddForm.find("input[name='type']:checked").val();
-        if ($value === "0") {
+        if ($value === 'menu') {
             $menuName.parent().prev().text("菜单名称：");
             $menuUrlListRow.show();
             $menuIconListRow.show();
@@ -43,8 +43,12 @@ $(function () {
         $icon.val(icon);
     });
 
+
+    /**
+     * 菜单新增点击事件
+     */
     $("#menu-add .btn-save").click(function () {
-        $menuPermsListRow.find("input[name='permission']").val(
+        $menuPermsListRow.find("input[name='perms']").val(
             $menuPermsListRow.find(".autocomplete-input").val()
         );
         $menuUrlListRow.find("input[name='url']").val(
@@ -115,9 +119,6 @@ function validateRule() {
                         menuName: function () {
                             return $("input[name='menuName']").val().trim();
                         },
-                        oldMenuName: function () {
-                            return $("input[name='oldMenuName']").val().trim();
-                        },
                         type: function () {
                             return $("input[name='type']").val();
                         }
@@ -135,10 +136,14 @@ function validateRule() {
     });
 }
 
+
+/**
+ * 显示菜单树
+ */
 function createMenuTree() {
-    $.post(ctx + "menu/tree", {}, function (r) {
-        if (r.code === 0) {
-            var data = r.msg;
+    $.get("menu/tree", {}, function (r) {
+        if (r.code === 200) {
+            var data = r.data;
             $('#menuTree').jstree({
                 "core": {
                     'data': data.children,
@@ -153,12 +158,15 @@ function createMenuTree() {
                 "plugins": ["wholerow", "checkbox"]
             });
         } else {
-            $MB.n_danger(r.msg);
+            $MB.n_danger(r.message);
         }
     })
 
 }
 
+/**
+ * 菜单父id
+ */
 function getMenu() {
     var ref = $('#menuTree').jstree(true);
     $("[name='parentId']").val(ref.get_checked()[0]);
