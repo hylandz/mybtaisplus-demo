@@ -35,12 +35,22 @@
         where role_id = #{roleId,jdbcType=BIGINT}
     </delete>
 
-<!--根据menuId删除相关的数据-->
-    <delete id="deleteByMenuId" parameterType="java.lang.Long">
+    <!--根据menuId删除相关的数据-->
+    <delete id="deleteBatchByMenuId" parameterType="java.lang.Long">
         delete
-        from sys_role_menu where menu_id =#{menuId,jdbcType=BIGINT}
+        from sys_role_menu where menu_id in
+        <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+            #{menuId,jdbcType=BIGINT}
+        </foreach>
     </delete>
 
+
+    <!--根据menuId批量删除相关的数据-->
+    <delete id="deleteByMenuId" parameterType="java.lang.Long">
+        delete
+        from sys_role_menu
+        where menu_id = #{menuId,jdbcType=BIGINT}
+    </delete>
     <insert id="insert" parameterType="com.xlx.shiro.system.entity.RoleMenu">
         insert into sys_role_menu (id, role_id, menu_id)
         values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})

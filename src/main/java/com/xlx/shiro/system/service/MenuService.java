@@ -118,7 +118,7 @@ public class MenuService {
 	 * @param menu 菜单
 	 * @return true:成功
 	 */
-	public Boolean saveMenu(Menu menu){
+	public Boolean insertMenu(Menu menu){
 		menu.setGmtCreate(new Date());
 		menu.setAvailable(Boolean.TRUE);
 		int i = menuMapper.insertSelective(menu);
@@ -142,5 +142,54 @@ public class MenuService {
 	public Boolean deleteMenu(){
 	
 		return false;
+	}
+	
+	/**
+	 * 获取menu
+	 * @param menuId id
+	 * @return Menu
+	 */
+	public Menu findMenu(Long menuId){
+		return menuMapper.selectByPrimaryKey(menuId);
+	}
+	
+	
+	/**
+	 * 新增菜单
+	 * @param menu 菜单
+	 * @return true:成功
+	 */
+	public Boolean createMenu(Menu menu){
+		return menuMapper.insertSelective(menu) != 0;
+	}
+	
+	/**
+	 * 修改菜单
+	 * @param menu
+	 * @return
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean modifyMenu(Menu menu){
+		menu.setAvailable(Boolean.TRUE);
+		menu.setGmtModified(new Date());
+		return menuMapper.updateByPrimaryKeySelective(menu) != 0;
+	}
+	
+	
+	/**
+	 * 删除菜单
+	 * 删除角色菜单
+	 * @param menuIds 菜单id
+	 * @return true:成功
+	 */
+	public Boolean removeMenu(Long[] menuIds){
+		if (menuIds.length == 0){
+			return false;
+		}
+		
+		int i = menuMapper.deleteBatch(menuIds);
+		int i1 = roleMenuMapper.deleteBatchByMenuId(menuIds);
+		
+		return true;
 	}
 }

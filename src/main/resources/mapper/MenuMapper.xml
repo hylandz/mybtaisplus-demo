@@ -80,6 +80,16 @@
         from sys_menu
         where menu_id = #{menuId,jdbcType=BIGINT}
     </delete>
+
+    <!--批量删除-->
+    <delete id="deleteBatch" parameterType="java.lang.Long">
+        delete
+        from sys_menu
+        where menu_id in
+        <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+            #{menuId,jdbcType=BIGINT}
+        </foreach>
+    </delete>
     <insert id="insert" parameterType="com.xlx.shiro.system.entity.Menu">
         insert into sys_menu (menu_id, menu_name, icon,
                               type, url, parent_id,
