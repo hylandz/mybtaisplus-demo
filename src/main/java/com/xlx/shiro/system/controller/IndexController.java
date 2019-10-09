@@ -46,4 +46,9 @@ public class IndexController {
 	public String unauthorized() {
 		return "error/403";
 	}
+	
+	@GetMapping("/403")
+	public String forbid() {
+		return "403";
+	}
 }

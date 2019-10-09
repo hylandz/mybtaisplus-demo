@@ -46,6 +46,7 @@ public class UserController extends BaseController {
 		return "system/user/user";
 	}
 	
+	
 	/**
 	 * 分页查询
 	 * 设置访问权限
@@ -278,4 +279,6 @@ public class UserController extends BaseController {
 			return ResultDTO.failed("删除用户失败,请联系网站管理员!");
 		}
 	}
+	
+	
 }

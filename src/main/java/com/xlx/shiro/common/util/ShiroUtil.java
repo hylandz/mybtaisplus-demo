@@ -54,6 +54,7 @@ public class ShiroUtil {
 		return SecurityUtils.getSubject();
 	}
 
+	
 
 	/**
 	 * 获取当前登录用户
