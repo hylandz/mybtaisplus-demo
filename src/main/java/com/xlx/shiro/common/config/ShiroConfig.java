@@ -136,7 +136,7 @@ public class ShiroConfig {
 		filterChainDefinitions.put("/img/**", "anon");
 		filterChainDefinitions.put("/druid/**", "anon");
 		filterChainDefinitions.put("/login", "anon");
-		filterChainDefinitions.put("/user/register", "anon");
+		filterChainDefinitions.put("/register", "anon");
 		filterChainDefinitions.put("/gifCode", "anon");
 		filterChainDefinitions.put("/actuator/**", "anon");
 		filterChainDefinitions.put("/test/**", "anon");
