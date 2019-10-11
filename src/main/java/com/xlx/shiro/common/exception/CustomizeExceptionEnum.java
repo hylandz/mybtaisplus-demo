@@ -10,6 +10,7 @@ public enum CustomizeExceptionEnum implements ICustomizeException{
   LOCKED_ACCOUNT_ERROR(1003,"帐号被锁,请联系管理员"),
   CAPTCHA_CODE_NOT_NULL(1004,"验证码不能为空"),
   CAPTCHA_CODE_ERROR(1005,"验证码错误"),
+  REGISTER_ERROR(1006,"注册失败"),
   ;
 
 

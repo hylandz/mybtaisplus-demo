@@ -107,24 +107,6 @@ public class LoginController extends BaseController {
 		
 	}
 	
-	/**
-	 * 注册
-	 * @param user User
-	 * @return dto
-	 */
-	@PostMapping("/register")
-	@ResponseBody
-	public ResultDTO register(User user) {
-		logger.info("注册参数:{}",user);
-		try {
-			Boolean flag = userService.registerUser(user);
-			return ResultDTO.success("注册成功");
-		} catch (Exception e) {
-			logger.error("{} 注册失败: {}", DateUtil.formatString(new Date()), e.getMessage());
-			return ResultDTO.failed("注册失败!");
-		}
-		
-	}
 	
 	
 	/**

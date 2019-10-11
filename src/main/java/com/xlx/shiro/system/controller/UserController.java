@@ -2,6 +2,7 @@ package com.xlx.shiro.system.controller;
 
 import com.xlx.shiro.common.constant.UserConstant;
 import com.xlx.shiro.common.entity.QueryParam;
+import com.xlx.shiro.common.exception.CustomizeExceptionEnum;
 import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
@@ -192,7 +193,7 @@ public class UserController extends BaseController {
 	/**
 	 * 验证新增用户的用户名
 	 * @param userName 用户名
-	 * @return null:不同
+	 * @return true:可以
 	 */
 	@PostMapping("/user/verifyUserName")
 	@ResponseBody
@@ -277,6 +278,17 @@ public class UserController extends BaseController {
 		}catch (Exception e){
 			logger.error("删除用户失败:{}",e.getMessage());
 			return ResultDTO.failed("删除用户失败,请联系网站管理员!");
+		}
+	}
+	
+	@PostMapping("/register")
+	@ResponseBody
+	public ResultDTO registerAccount(User user){
+		logger.info("注册用户:{}",user);
+		if(userService.registerUser(user)){
+			return ResultDTO.success("注册成功");
+		}else {
+			return ResultDTO.failed(CustomizeExceptionEnum.REGISTER_ERROR);
 		}
 	}
 	

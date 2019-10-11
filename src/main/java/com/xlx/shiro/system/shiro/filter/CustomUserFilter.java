@@ -33,7 +33,7 @@ public class CustomUserFilter extends UserFilter {
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		//
 		if (HttpUtil.isAjaxRequest((HttpServletRequest) request)) {
-			log.info("OMG i found a AJAX request,be preparing to deal with...");
+			log.info("onAccessDenied:拦截到AJAX请求~~");
 			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 			httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
 			httpServletResponse.setContentType("application/json; charset=utf-8");

@@ -39,7 +39,7 @@
                 <div class="form-group" style="display:inline-block">
                     <label>验证码</label>
                     <input type="text" name="code" style="width:50%; display:inline-block" />
-                    <img data-th-src="@{gifCode}" id="validateCodeImg" onclick="reloadCode()" style="display:inline-block" />
+                    <img data-th-src="@{/gifCode}" id="validateCodeImg" onclick="reloadCode()" style="display:inline-block" />
                 </div>
                 <div class="form-group" style="margin: 0px;">
                     <p>
@@ -57,11 +57,11 @@
             <div class="form-content">
                 <div class="form-group">
                     <label>用户名</label>
-                    <input type="text" name="userName" />
+                    <input type="text" name="userName"  placeholder="字母数字组合,不超过10位" autocomplete="off"/>
                 </div>
                 <div class="form-group">
                     <label>密码</label>
-                    <input type="password" name="userPassword" />
+                    <input type="password" name="userPassword" placeholder="数字和字母组合,至少3位"/>
                 </div>
                 <div class="form-group">
                     <label>确认密码</label>

@@ -32,6 +32,19 @@ $(document).ready(function () {
         }, 200);
     });
 
+
+    //离焦校验新注册的用户名
+    var obj = $(".two input[name='userName']");
+    obj.on("blur",function () {
+       $.post("user/verifyUserName",{userName : obj.val().trim()},function (data) {
+           console.log('checkName:' + data);
+           if (data){
+               $MB.n_success("用户名可用");
+           }else {
+               $MB.n_success("用户名不可用");
+           }
+       })
+    });
 });
 
 
@@ -79,7 +92,7 @@ function login() {
             if (r.code === 200) {
                 location.href = 'index';
             } else {
-                //reloadCode();
+                reloadCode();
                 $MB.n_warning(r.message);
                 $loginButton.html("登录");
             }
@@ -102,8 +115,8 @@ function register() {
     if (username === "") {
         $MB.n_warning("用户名不能为空！");
         return;
-    } else if (username.length > 10) {
-        $MB.n_warning("用户名长度不能超过10个字符！");
+    } else if (username.length < 3 || username.length > 10 ) {
+        $MB.n_warning("用户名长度不能超过3~10个字符！");
         return;
     } else if (username.length < 3) {
         $MB.n_warning("用户名长度不能少于3个字符！");
