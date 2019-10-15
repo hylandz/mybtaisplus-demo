@@ -22,7 +22,7 @@ spring:
 #mybatis-plus:
 #  mapper-locations: classpath:/mapper/*Mapper.xml
 #  #实体扫描，多个package用逗号或者分号分隔
-#  typeAliasesPackage: com.xlx.ssmshiro.entity
+#  typeAliasesPackage: com.xlx.ssmpshiro.system.entity
 #  typeEnumsPackage:
 #  global-config:
 #    # 数据库相关配置
