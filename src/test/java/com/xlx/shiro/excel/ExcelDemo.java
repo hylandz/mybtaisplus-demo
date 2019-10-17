@@ -1,4 +1,4 @@
-package com.xlx.shiro.common.util;
+package com.xlx.shiro.excel;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
  *
  * @author xielx on 2019/7/7
  */
-public class ExcelUtil {
+public class ExcelDemo {
 
 
   /**

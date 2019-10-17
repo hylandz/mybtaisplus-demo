@@ -189,6 +189,14 @@
             <version>0.9.1</version>
         </dependency>
 
+
+        <!--  持久化验证的API-->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
         <!--poi 文档导入导出-->
         <dependency>
             <groupId>org.apache.poi</groupId>

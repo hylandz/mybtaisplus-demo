@@ -1,4 +1,4 @@
-package com.xlx.shiro.common.util;
+package com.xlx.shiro.common.util.poi;
 
 import com.xlx.shiro.common.constant.POIConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 
 /**
  * Apache POI SXSS相关API的简易封装
+ * 工作簿,sheet工作表,单元格 行对象实例化,excel下载
  *
  * @author xielx at 2019/10/17 22:02
  */
@@ -50,7 +51,7 @@ public class POIUtil {
     }
     
     /**
-     * 创建sheet单元
+     * 创建sheet工作表
      *
      * @param workbook  工作簿
      * @param sheetName 单元名称

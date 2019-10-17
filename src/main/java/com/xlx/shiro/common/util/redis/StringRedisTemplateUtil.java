@@ -1,4 +1,4 @@
-package com.xlx.shiro.common.util;
+package com.xlx.shiro.common.util.redis;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;

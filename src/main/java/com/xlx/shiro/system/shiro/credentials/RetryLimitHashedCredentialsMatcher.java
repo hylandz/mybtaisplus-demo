@@ -1,6 +1,6 @@
 package com.xlx.shiro.system.shiro.credentials;
 
-import com.xlx.shiro.common.util.StringRedisTemplateUtil;
+import com.xlx.shiro.common.util.redis.StringRedisTemplateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

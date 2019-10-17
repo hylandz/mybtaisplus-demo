@@ -1,6 +1,5 @@
-package com.xlx.shiro;
+package com.xlx.shiro.excel;
 
-import com.xlx.shiro.common.util.ExcelUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +40,7 @@ public class ExportExcelTest{
       exFile.createNewFile();
     }
     System.out.println("文件路径:" + exFile.getAbsolutePath());
-    HSSFWorkbook workbook = ExcelUtil.getHHSFWorkBook(sheetName,title,dept,null);
+    HSSFWorkbook workbook = ExcelDemo.getHHSFWorkBook(sheetName,title,dept,null);
 
     OutputStream out = new FileOutputStream(exFile);
     workbook.write(out);
