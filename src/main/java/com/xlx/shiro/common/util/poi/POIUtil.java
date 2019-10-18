@@ -36,7 +36,7 @@ public class POIUtil {
      * 创建SXSSFWorkbook工作簿,默认
      * @return SXSSFWorkbook
      */
-    private static SXSSFWorkbook newSXSSFWorkbook() {
+    static SXSSFWorkbook newSXSSFWorkbook() {
         return new SXSSFWorkbook(DEFAULT_ROW_ACCESS_WINDOW_SIZE);
     }
     
@@ -50,6 +50,7 @@ public class POIUtil {
         return new SXSSFWorkbook(rowAccessWindowSize);
     }
     
+    
     /**
      * 创建sheet工作表
      *
@@ -57,7 +58,7 @@ public class POIUtil {
      * @param sheetName 单元名称
      * @return SXSSFSheet
      */
-    private static SXSSFSheet newSXSSFSheet(SXSSFWorkbook workbook, String sheetName) {
+     static SXSSFSheet newSXSSFSheet(SXSSFWorkbook workbook, String sheetName) {
         return workbook.createSheet(sheetName);
     }
     
@@ -68,7 +69,7 @@ public class POIUtil {
      * @param rownum 行位置
      * @return SXSSFRow
      */
-    private static SXSSFRow newSXSSFRow(SXSSFSheet sheet, int rownum) {
+     static SXSSFRow newSXSSFRow(SXSSFSheet sheet, int rownum) {
         return sheet.createRow(rownum);
     }
     
@@ -79,17 +80,17 @@ public class POIUtil {
      * @param column 列位置
      * @return SXSSFCell
      */
-    private static SXSSFCell nweSXSSFCell(SXSSFRow row, int column) {
+     static SXSSFCell nweSXSSFCell(SXSSFRow row, int column) {
         return row.createCell(column);
     }
     
     /**
-     * 设置单元格宽度
+     * 设置单元格(列)宽度
      *
      * @param sheet 单元对象
      * @param index 单元格索引
      * @param width 宽度,-1为自适应
-     * @param value 填充的内容
+     * @param value 填充的内容(宽度通过填充内容计算)
      */
     static void setColumnWidth(SXSSFSheet sheet, int index, int width, String value) {
         // 自动

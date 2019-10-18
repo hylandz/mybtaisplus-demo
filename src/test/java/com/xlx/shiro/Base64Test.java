@@ -39,4 +39,15 @@ public class Base64Test {
 		int j = i++;
 		System.out.println(i + "," + j);
 	}
+	
+	
+	@Test
+	public void testPhoneRepace(){
+		String  phone = "17350852927";
+		String replace = "****";
+		StringBuilder builder = new StringBuilder(phone);
+		builder.replace(3,7,replace);
+		//phone = phone.substring(0,3) + replace + phone.substring(7);
+		System.out.println(builder.toString());// 173****2927
+	}
 }

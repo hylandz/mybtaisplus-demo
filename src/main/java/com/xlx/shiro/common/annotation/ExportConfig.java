@@ -16,8 +16,8 @@ import java.lang.annotation.Target;
 public @interface ExportConfig {
     
     /**
-     *
-     * @return
+     * 默认使用实体类属性名
+     * @return String
      */
     String value() default "field";
     

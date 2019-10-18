@@ -1,14 +1,17 @@
 package com.xlx.shiro.common.util.poi;
 
 /**
- * 导出pojo类
+ * 导出POI类,excel的列封装
+ * 用户名(username) | 年龄(age) | 性别(sex)
  *
  * @author xielx at 2019/10/17 23:41
  */
 public class ExportItem {
     
-    private String field; // 属性名
-    private String display; // 显示名
+    private String field; // excel的列名(实体类属性)
+   
+    // 注解类属性
+    private String display; // excel的列名(value值)
     private short width; // 宽度
     private String convert; // 数据转换
     private short color; // 颜色

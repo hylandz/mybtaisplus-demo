@@ -16,7 +16,7 @@ public class DateUtil {
    * @return yyyy/MM/dd HH:mm:ss
    */
   public static String formatString(Date date){
-    return new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(date);
+    return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
   }
 
 }
