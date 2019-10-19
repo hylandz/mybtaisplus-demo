@@ -1,26 +1,23 @@
 package com.xlx.shiro.common.util.poi;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.xlx.shiro.common.annotation.ExportConfig;
 import com.xlx.shiro.common.handler.IExportHandler;
 import com.xlx.shiro.common.util.poi.convert.IExportConvert;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * excel工具类
@@ -92,17 +89,55 @@ public class ExcelUtil {
         this(aClass, null);
     }
     
+    /**
+     * excel下载
+     *
+     * @param data     表单数据对象集合
+     * @param sheetName sheet名
+     * @param out      输出流
+     * @return true:下载成功
+     */
+    public boolean toExcel(List<?> data, String sheetName,OutputStream out){
+        return toExcel(data, sheetName, new IExportHandler() {
+            @Override
+            public CellStyle headCellStyle(SXSSFWorkbook workbook) {
+                CellStyle cellStyle = workbook.createCellStyle();
+                cellStyle.setFillBackgroundColor((short) 12);
+                cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);// 填充模式
+                cellStyle.setBorderTop(BorderStyle.THIN);// 上边框为细边框
+                cellStyle.setBorderRight(BorderStyle.THIN);// 右边框为细边框
+                cellStyle.setBorderBottom(BorderStyle.THIN);// 下边框为细边框
+                cellStyle.setBorderLeft(BorderStyle.THIN);// 左边框为细边框
+                cellStyle.setAlignment(HorizontalAlignment.CENTER); //对齐
+                cellStyle.setFillForegroundColor(HSSFColor.HSSFColorPredefined.GREEN.getIndex());
+                cellStyle.setFillBackgroundColor(HSSFColor.HSSFColorPredefined.GREEN.getIndex());
+    
+                Font font = workbook.createFont();
+                font.setFontHeightInPoints((short) 12);// 字体大小
+                font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex());
+                // 应用标题字体到标题样式
+                cellStyle.setFont(font);
+                return cellStyle;
+            }
+    
+            @Override
+            public String exportFileName(String name) {
+                return String.format("导出-%s-%s",sheetName,System.currentTimeMillis());
+            }
+        },out);
+    }
+    
     
     /**
      * excel下载
      *
      * @param data     表单数据对象集合
-     * @param fileName excel文件名
+     * @param sheetName sheet名
      * @param handler  转换器
      * @param out      输出流
      * @return true:下载成功
      */
-    private Boolean toExcel(List<?> data, String fileName, IExportHandler handler, OutputStream out) {
+    private Boolean toExcel(List<?> data, String sheetName, IExportHandler handler, OutputStream out) {
         requireBuilderParams();
         if (data == null || data.isEmpty()) {
             return false;
@@ -136,13 +171,13 @@ public class ExcelUtil {
         // 2.创建工作簿,
         SXSSFWorkbook workbook = POIUtil.newSXSSFWorkbook();
         // sheet数量(类似分页)
-        double sheetNum = Math.ceil(data.size()) / maxRecordPerSheet;
+        double sheetNum = Math.ceil(data.size() / maxRecordPerSheet);
         
         int index = 0;
         while (index <= (sheetNum == 0.0 ? sheetNum : sheetNum - 1)) {
             
             // 2.1创建表头(excel表的标题)
-            SXSSFSheet sheet = POIUtil.newSXSSFSheet(workbook, fileName + (index == 0 ? "" : "_" + index));
+            SXSSFSheet sheet = POIUtil.newSXSSFSheet(workbook, sheetName + (index == 0 ? "" : "_" + index));
             SXSSFRow row = POIUtil.newSXSSFRow(sheet, 0);
             for (int i = 0; i < exportItemList.size(); i++) {
                 SXSSFCell cell = POIUtil.nweSXSSFCell(row, i);
@@ -166,7 +201,7 @@ public class ExcelUtil {
             Font font = workbook.createFont();
             style.setFont(font);
             
-            // 2.2数据填充
+            // 2.2数据填充(横向)
             if (!data.isEmpty()) {
                 int startNo = index * maxRecordPerSheet;
                 int endNo = Math.min(startNo + maxRecordPerSheet, data.size());
@@ -175,15 +210,16 @@ public class ExcelUtil {
                 while (i < endNo) {
                     bodyRow = POIUtil.newSXSSFRow(sheet, i + 1 - startNo);
                     for (int j = 0; j < exportItemList.size(); j++) {
-                        // 处理设置了replace注解的值
                         String replace = exportItemList.get(j).getReplace();
                         try {
-                            cellVal = BeanUtils.getProperty(data.get(i), exportItemList.get(i).getField());
+                            // getProperty(bean,name):获取bean属性里对应的name(field)的值
+                            cellVal = BeanUtils.getProperty(data.get(i), exportItemList.get(j).getField());
                         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                             log.error("getProperty()失败:{}", cellVal);
                         }
-                        
-                        if (!"".equals(replace) && regexPhone(cellVal)) {
+    
+                        // 处理设置了replace注解的值
+                        if (!"".equals(replace)) {
                             // cellVal = cellVal.substring(0,3) + replace + cellVal.substring(7);
                             cellVal = new StringBuilder(cellVal).replace(3, 7, replace).toString();
                         }
@@ -191,19 +227,27 @@ public class ExcelUtil {
                         // 处理convert注解
                         String convert = exportItemList.get(j).getConvert();
                         if (!"".equals(convert)) {
-                            convertCellValue(cellVal, convert);
+                            cellVal = convertCellValue(cellVal, convert);
                         }
                         
                         // 设置数据单元格宽度
                         POIUtil.setColumnWidth(sheet,j,exportItemList.get(j).getWidth(),cellVal);
                         bodyCell = POIUtil.nweSXSSFCell(bodyRow, j);
-                        bodyCell.setCellValue("".equals(cellVal) ? null : cellVal);
+                        bodyCell.setCellValue(Objects.equals("",cellVal) ? null : cellVal);
                         bodyCell.setCellStyle(style);
                     }
                     i++;
                 }
             }
             index++;
+        }
+    
+        // 下载Excel
+        try {
+            POIUtil.writeFromLocalBrowser(workbook,response,handler.exportFileName(sheetName),out);
+        } catch (IOException e) {
+            log.error("下载excel文件失败:{}",e.getMessage());
+            return false;
         }
         return true;
     }
@@ -223,17 +267,17 @@ public class ExcelUtil {
         
         // 性别转换
         String proto = format.substring(0, 1);
+        
         if ("s".equalsIgnoreCase(proto)) {
-            // s:1=男,2=女
+            // s:1=男,0=女
             String[] split = format.split(":")[1].split(",");
             for (String s : split) {
                 String[] split1 = s.split("=");
                 if (split1[0].equals(entityVal)) {
                     return split1[1];
                 }
-                
-                return "保密";
             }
+            return "保密";
         }
         
         // 时间处理

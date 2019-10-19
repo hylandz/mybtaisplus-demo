@@ -30,7 +30,7 @@ public class ExportExcelTest{
     //导出excel存放路径
     File excelPath = new File("D:\\profile");
     if (!excelPath.exists()){
-      excelPath.mkdirs();
+      excelPath.mkdir();
     }
 
     //创建一个excel文件

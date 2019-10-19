@@ -4,6 +4,7 @@ import com.xlx.shiro.common.constant.UserConstant;
 import com.xlx.shiro.common.entity.QueryParam;
 import com.xlx.shiro.common.exception.CustomizeExceptionEnum;
 import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.common.util.poi.FileUtil;
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
@@ -17,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -281,6 +284,12 @@ public class UserController extends BaseController {
 		}
 	}
 	
+	
+	/**
+	 * 注册
+	 * @param user 新账户
+	 * @return result
+	 */
 	@PostMapping("/register")
 	@ResponseBody
 	public ResultDTO registerAccount(User user){
@@ -293,4 +302,21 @@ public class UserController extends BaseController {
 	}
 	
 	
+	/**
+	 * 本地导出Excel
+	 * @param user 导出数据
+	 * @return result
+	 */
+	@PostMapping("/user/excel")
+	@ResponseBody
+	public ResultDTO downLoadExcel(User user, HttpServletResponse response){
+		List<User> userList = userService.listUserByPage(user);
+		try{
+			return FileUtil.createExcel("用户数据",userList,User.class,response);
+		}catch (Exception e){
+			logger.error("导出用户excel失败:{}",e.getMessage());
+			return ResultDTO.failed("导出用户excel失败,请联系网站管理员!");
+		}
+		
+	}
 }

@@ -1,8 +1,10 @@
 package com.xlx.shiro.common.util.poi;
 
 /**
- * 导出POI类,excel的列封装
- * 用户名(username) | 年龄(age) | 性别(sex)
+ * 导出POI类,excel的单列封装
+ * 如:
+ *   '@ExportConfig(value = "昵称")'
+ *    private String avatarName;
  *
  * @author xielx at 2019/10/17 23:41
  */

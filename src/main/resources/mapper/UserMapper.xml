@@ -47,6 +47,7 @@
         u.avatar_name,
         u.avatar_url,
         u.user_name,
+        u.user_real,
         u.gender,
         u.birth,
         u.mail,
@@ -77,6 +78,7 @@
                u.avatar_name,
                u.avatar_url,
                u.user_name,
+               u.user_real,
                u.gender,
                u.phone,
                u.mail,
@@ -95,10 +97,12 @@
                u.avatar_name,
                u.avatar_url,
                u.user_name,
+               u.user_real,
                u.gender,
                u.phone,
                u.mail,
                u.locked,
+               u.login_ip,
                ur.role_id as roleId
         FROM sys_user u
                  LEFT JOIN sys_user_role ur ON u.user_id = ur.user_id

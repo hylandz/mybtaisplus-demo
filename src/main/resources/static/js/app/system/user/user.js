@@ -117,10 +117,11 @@ function deleteUsers() {
  */
 function exportUserExcel() {
     $.post("user/excel", $(".user-table-form").serialize(), function (r) {
-        if (r.code === 0) {
-            window.location.href = "common/download?fileName=" + r.msg + "&delete=" + true;
+        if (r.code === 200) {
+            $MB.n_success(r.message);
+            //window.location.href = "common/download?fileName=" + r.message + "&delete=" + true;
         } else {
-            $MB.n_warning(r.msg);
+            $MB.n_warning(r.message);
         }
     });
 }

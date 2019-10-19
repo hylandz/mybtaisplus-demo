@@ -59,21 +59,21 @@ public class User implements Serializable {
     private String token; //cookie使用
     
     @Column(name = "gender")
-    @ExportConfig(value = "性别",convert = "")
+    @ExportConfig(value = "性别",convert = "s:1=男,0=女")
     private Integer gender; // 性别 1:男 2:女
     
     @Column(name = "birth")
-    @ExportConfig(value = "出生年月")
+   // @ExportConfig(value = "出生年月")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birth; // 出生年月
     
     
     @Column(name = "mail")
-    @ExportConfig(value = "出生年月")
+    @ExportConfig(value = "邮箱")
     private String mail; //邮箱
     
     @Column(name = "phone")
-    @ExportConfig(value = "出生年月")
+    @ExportConfig(value = "电话",replace = "****")
     private String phone; //电话
     
     @Column(name = "locked")
@@ -88,7 +88,7 @@ public class User implements Serializable {
     private Date loginDate; //最后登录时间
     
     @Column(name = "gmt_create")
-    @ExportConfig(value = "创建时间")
+    @ExportConfig(value = "创建时间",convert = "c:com.xlx.shiro.common.util.poi.convert.TimeConvertImpl")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtCreate; //创建时间
     

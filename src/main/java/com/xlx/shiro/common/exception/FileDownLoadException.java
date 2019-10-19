@@ -6,7 +6,7 @@ package com.xlx.shiro.common.exception;
  * @author xielx at 2019/10/17 23:22
  */
 public class FileDownLoadException extends Exception {
-
+    
 
     public FileDownLoadException(String message){
         super(message);

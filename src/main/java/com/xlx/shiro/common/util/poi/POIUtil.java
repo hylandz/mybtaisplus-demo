@@ -110,10 +110,10 @@ public class POIUtil {
      * @param fileName 文件名
      * @param out 输出流
      */
-    static void writeFromLocalBrowser(SXSSFWorkbook workbook, HttpServletResponse response, String fileName, OutputStream out) {
+    static void writeFromLocalBrowser(SXSSFWorkbook workbook, HttpServletResponse response, String fileName, OutputStream out) throws IOException {
         // ?
         ZipSecureFile.setMinInflateRatio(0L);
-        try {
+        
             // 文件名字符编码
             String encode = URLEncoder.encode(String.format("%s%s", fileName, POIConstant.XLSX_SUFFIX), "UTF-8");
             // response对象不为空,响应到浏览器下载
@@ -126,9 +126,7 @@ public class POIUtil {
                 out.flush();
                 out.close();
             }
-        } catch (IOException e) {
-            log.error("getOutputStream失败:{}", e.getMessage());
-        }
+        
     }
     
     /**
