@@ -4,6 +4,7 @@
     <diskstore path="D:\\ehcache"/>
 
 
+    <!--登录限制-->
     <cache name="passwordRetryCache"
            maxEntriesLocalHeap="1000"
            eternal="false"

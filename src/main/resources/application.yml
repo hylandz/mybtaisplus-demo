@@ -2,7 +2,7 @@
 server:
   port: 8887
 
-#spring配置
+# spring配置
 spring:
   #thymeleaf模板
   thymeleaf:
@@ -10,15 +10,15 @@ spring:
     encoding: UTF-8
     cache: false
 
-  #jdbc配置
-#  datasource:
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/springbootdb?useUnicode=true&characterEncoding=utf8
-#    username: mango
-#    password: root5.7.22
+  # jdbc配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootdb?useUnicode=true&characterEncoding=utf8
+    username: mango
+    password: root5.7.22
 
-#mybatis-plus
+# mybatis-plus
 #mybatis-plus:
 #  mapper-locations: classpath:/mapper/*Mapper.xml
 #  #实体扫描，多个package用逗号或者分号分隔
@@ -39,6 +39,7 @@ spring:
 #      logic-delete-value: 0
 #      logic-not-delete-value: 1
 #      db-type: mysql
+#
 #    #刷新mapper 调试神器
 #    refresh: true
 #  # 原生配置
@@ -46,9 +47,36 @@ spring:
 #    map-underscore-to-camel-case: true
 #    cache-enabled: false
 
+# 自定义配置
+ssmp:
+  shiro:
+    # shiro redis缓存时长，默认1800秒
+    expireIn: 1800
+    # session 超时时间，默认1800000毫秒
+    sessionTimeout: 1800000
+    # rememberMe cookie有效时长，默认86400秒，即一天
+    cookieTimeout: 86400
+    # 免认证的路径配置，如静态资源，druid监控页面，注册页面，验证码请求等
+    anonUrl: /css/**,/js/**,/fonts/**,/img/**,/druid/**,/user/regist,/gifCode,/,/actuator/**,/test/**
+    # 登录 url
+    loginUrl: /login
+    # 登录成功后跳转的 url
+    successUrl: /index
+    # 登出 url
+    logoutUrl: /logout
+    # 未授权跳转 url
+    unauthorizedUrl: /403
 
-# 日志配置
-logging:
-  level:
-    com.xlx.ssmshiro: debug
-    org.springframework: warn
+    # 密码加密
+    crypto:
+      algorithmName: md5
+      hashIterations: 2
+
+  #验证码
+  validateCode:
+    # 宽度，默认 146px
+    width: 146
+    # 高度，默认 33px
+    height: 33
+    # 验证码字符个数，默认4个字符
+    length: 4
