@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author xielx on 2019/9/4
  */
 @Component
-public class StringRedisTemplateUtil {
+public class StringRedisTemplateUtils {
 	
 	@Resource
 	private  StringRedisTemplate stringRedisTemplate;

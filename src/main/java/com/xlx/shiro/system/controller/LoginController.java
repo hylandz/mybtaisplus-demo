@@ -1,13 +1,11 @@
 package com.xlx.shiro.system.controller;
 
 import com.xlx.shiro.common.exception.CustomizeExceptionEnum;
-import com.xlx.shiro.common.util.DateUtil;
-import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.common.util.ShiroUtils;
 import com.xlx.shiro.common.util.vcode.Captcha;
 import com.xlx.shiro.common.util.vcode.GifCaptcha;
 import com.xlx.shiro.system.dto.LoginDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
-import com.xlx.shiro.system.entity.User;
 import com.xlx.shiro.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
@@ -15,7 +13,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +23,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 
 /**
@@ -90,7 +86,7 @@ public class LoginController extends BaseController {
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(loginDTO.getUsername(), loginDTO.getPassword(), loginDTO.getRememberMe());
 		
-		Subject subject = ShiroUtil.getSubject();
+		Subject subject = ShiroUtils.getSubject();
 		try {
 			subject.login(token);
 			this.userService.recordLoginTime(loginDTO.getUsername());

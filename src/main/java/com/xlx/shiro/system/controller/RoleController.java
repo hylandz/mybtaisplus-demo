@@ -1,17 +1,12 @@
 package com.xlx.shiro.system.controller;
 
-import com.xlx.shiro.common.constant.UserConstant;
 import com.xlx.shiro.common.entity.QueryParam;
-import com.xlx.shiro.common.util.ShiroUtil;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.Role;
-import com.xlx.shiro.system.entity.User;
 import com.xlx.shiro.system.service.RoleService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -2,12 +2,11 @@ package com.xlx.shiro.common.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.xlx.shiro.common.listener.ShiroSessionListener;
-import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.common.util.ShiroUtils;
 import com.xlx.shiro.system.shiro.credentials.RetryLimitHashedCredentialsMatcher;
 import com.xlx.shiro.system.shiro.filter.CustomUserFilter;
 import com.xlx.shiro.system.shiro.realm.UserRealm;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -23,7 +22,6 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -243,7 +241,7 @@ public class ShiroConfig {
 		CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
 		cookieRememberMeManager.setCookie(rememberMeCookie());
 		//rememberMe cookie加密的密钥
-		String rememberKey = ShiroUtil.generateCipherKeyKey("xlx_shiro_key");
+		String rememberKey = ShiroUtils.generateCipherKeyKey("xlx_shiro_key");
 		cookieRememberMeManager.setCipherKey(Base64.decode(rememberKey));
 		return cookieRememberMeManager;
 	}

@@ -3,7 +3,7 @@ package com.xlx.shiro.system.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xlx.shiro.common.entity.QueryParam;
-import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.common.util.ShiroUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -11,7 +11,6 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import javax.security.auth.Subject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +46,7 @@ public class BaseController {
 	 * @return session
 	 */
 	protected Session getSession(){
-		return ShiroUtil.getSubject().getSession();
+		return ShiroUtils.getSubject().getSession();
 	}
 	/**
 	 * 获取分页的结果集与总记录数

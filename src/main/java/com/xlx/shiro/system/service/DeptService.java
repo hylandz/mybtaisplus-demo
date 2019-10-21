@@ -1,6 +1,6 @@
 package com.xlx.shiro.system.service;
 
-import com.xlx.shiro.common.util.TreeUtil;
+import com.xlx.shiro.common.util.TreeUtils;
 import com.xlx.shiro.system.dao.DeptMapper;
 import com.xlx.shiro.system.dto.TreeDTO;
 import com.xlx.shiro.system.entity.Dept;
@@ -45,7 +45,7 @@ public class DeptService {
 			treeDTOList.add(treeDTO);
 		});
 		
-		return TreeUtil.build(treeDTOList);
+		return TreeUtils.build(treeDTOList);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)

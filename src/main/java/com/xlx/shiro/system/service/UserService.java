@@ -1,7 +1,7 @@
 package com.xlx.shiro.system.service;
 
 import com.xlx.shiro.common.exception.CustomizeException;
-import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.common.util.ShiroUtils;
 import com.xlx.shiro.system.dao.UserMapper;
 import com.xlx.shiro.system.dao.UserRoleMapper;
 import com.xlx.shiro.system.dto.ProfileDTO;
@@ -44,7 +44,7 @@ public class UserService {
 	 * @return 0:false; !=0:true
 	 */
 	public boolean createUser(User user) {
-		user.setSalt(ShiroUtil.getHexRandomNumber());
+		user.setSalt(ShiroUtils.getHexRandomNumber());
 		user.setGmtCreate(new Date());
 		return userMapper.insert(user) != 0;
 	}
@@ -59,9 +59,9 @@ public class UserService {
 	 */
 	public Boolean modifyPassword(User user, String newPwd) {
 		Long userId = user.getUserId();
-		String slat = ShiroUtil.getHexRandomNumber();
+		String slat = ShiroUtils.getHexRandomNumber();
 		user.setSalt(slat);
-		final String encryptPassword = ShiroUtil.encryptPassword(newPwd, user.getCredentialsSalt());
+		final String encryptPassword = ShiroUtils.encryptPassword(newPwd, user.getCredentialsSalt());
 		return userMapper.updatePassword(userId, slat, encryptPassword) != 0;
 	}
 	
@@ -72,13 +72,13 @@ public class UserService {
 	 * @return 正确:true
 	 */
 	public Boolean verifyPassword(String originPwd) {
-		User currentUser = (User) ShiroUtil.getSubject().getPrincipal();
+		User currentUser = (User) ShiroUtils.getSubject().getPrincipal();
 		if (currentUser == null) {
 			return false;
 		}
 		
 		//明文加密后比较
-		String encryptPwd = ShiroUtil.encryptPassword(originPwd, currentUser.getCredentialsSalt());
+		String encryptPwd = ShiroUtils.encryptPassword(originPwd, currentUser.getCredentialsSalt());
 		
 		if (encryptPwd.equals(currentUser.getUserPassword())) {
 			return true;
@@ -186,11 +186,11 @@ public class UserService {
 			return false;
 		}
 		
-		user.setSalt(ShiroUtil.getHexRandomNumber());
+		user.setSalt(ShiroUtils.getHexRandomNumber());
 		user.setGmtCreate(new Date());
 		user.setAvatarName(User.DEFAULT_AVATAR_NAME + new Random().nextInt(10));
 		user.setAvatarUrl(User.DEFAULT_AVATAR_URL);
-		String encrypt = ShiroUtil.encryptPassword(user.getUserPassword(), user.getCredentialsSalt());
+		String encrypt = ShiroUtils.encryptPassword(user.getUserPassword(), user.getCredentialsSalt());
 		user.setUserPassword(encrypt);
 		//插入到数据库后,user变量数据不能共享?
 		this.userMapper.insertSelective(user);
@@ -291,9 +291,9 @@ public class UserService {
 	 */
 	public Boolean registerUser(User user){
 		if (user != null){
-			String salt = ShiroUtil.getHexRandomNumber();
+			String salt = ShiroUtils.getHexRandomNumber();
 			user.setSalt(salt);
-			String password = ShiroUtil.encryptPassword(user.getUserPassword(), user.getCredentialsSalt());
+			String password = ShiroUtils.encryptPassword(user.getUserPassword(), user.getCredentialsSalt());
 			user.setUserPassword(password);
 			user.setGmtModified(new Date());
 			user.setLocked(Boolean.FALSE);

@@ -3,8 +3,8 @@ package com.xlx.shiro.system.controller;
 import com.xlx.shiro.common.constant.UserConstant;
 import com.xlx.shiro.common.entity.QueryParam;
 import com.xlx.shiro.common.exception.CustomizeExceptionEnum;
-import com.xlx.shiro.common.util.ShiroUtil;
-import com.xlx.shiro.common.util.poi.FileUtil;
+import com.xlx.shiro.common.util.ShiroUtils;
+import com.xlx.shiro.common.util.poi.FileUtils;
 import com.xlx.shiro.system.dto.ProfileDTO;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
@@ -45,7 +45,7 @@ public class UserController extends BaseController {
 	@GetMapping("/system/user")
 	@RequiresPermissions("system:user:view")
 	public String userManage(Model model) {
-		User currentUser = ShiroUtil.getCurrentUser();
+		User currentUser = ShiroUtils.getCurrentUser();
 		model.addAttribute(UserConstant.CURRENT_USER, currentUser);
 		return "system/user/user";
 	}
@@ -99,13 +99,13 @@ public class UserController extends BaseController {
 	@PostMapping("/user/updatePassword")
 	@ResponseBody
 	public ResultDTO modifyPassword(String newPassword) {
-		final User currentUser = ShiroUtil.getCurrentUser();
+		final User currentUser = ShiroUtils.getCurrentUser();
 		if (currentUser == null) {
 			return ResultDTO.failed("session已过期,请重新登录");
 		}
 		
 		if (this.userService.modifyPassword(currentUser, newPassword)) {
-			ShiroUtil.getSubject().logout();
+			ShiroUtils.getSubject().logout();
 			return ResultDTO.success("修改成功");
 		}
 		
@@ -131,7 +131,7 @@ public class UserController extends BaseController {
 	 */
 	@GetMapping("/user/profile")
 	public String userProfile(Model model) {
-		final User currentUser = ShiroUtil.getCurrentUser();
+		final User currentUser = ShiroUtils.getCurrentUser();
 		if (currentUser == null) {
 			return "redirect:/login";
 		}
@@ -146,7 +146,7 @@ public class UserController extends BaseController {
 	@GetMapping("/user/getUserProfile")
 	@ResponseBody
 	public ResultDTO getUserProfile() {
-		final User currentUser = ShiroUtil.getCurrentUser();
+		final User currentUser = ShiroUtils.getCurrentUser();
 		if (currentUser == null) {
 			return ResultDTO.failed("session已过期,请重新登录");
 		}
@@ -182,7 +182,7 @@ public class UserController extends BaseController {
 		}
 		
 		
-		final User currentUser = ShiroUtil.getCurrentUser();
+		final User currentUser = ShiroUtils.getCurrentUser();
 		if (currentUser == null) {
 			return ResultDTO.failed("session已过期,请重新登录");
 		}
@@ -312,7 +312,7 @@ public class UserController extends BaseController {
 	public ResultDTO downLoadExcel(User user, HttpServletResponse response){
 		List<User> userList = userService.listUserByPage(user);
 		try{
-			return FileUtil.createExcel("用户数据",userList,User.class,response);
+			return FileUtils.createExcel("用户数据",userList,User.class,response);
 		}catch (Exception e){
 			logger.error("导出用户excel失败:{}",e.getMessage());
 			return ResultDTO.failed("导出用户excel失败,请联系网站管理员!");

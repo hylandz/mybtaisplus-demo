@@ -1,6 +1,6 @@
 package com.xlx.shiro.common.util.poi.convert;
 
-import com.xlx.shiro.common.util.DateUtil;
+import com.xlx.shiro.common.util.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,7 @@ public class TimeConvertImpl implements IExportConvert{
         }
         
         try{
-            return DateUtil.formatCSTTime(val.toString(),DATE_TIME);
+            return DateUtils.formatCSTTime(val.toString(),DATE_TIME);
         }catch (Exception e){
             log.error("日期转换失败:{}",e.getMessage());
             return "";

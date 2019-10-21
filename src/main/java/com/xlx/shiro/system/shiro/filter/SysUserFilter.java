@@ -1,7 +1,7 @@
 package com.xlx.shiro.system.shiro.filter;
 
 import com.xlx.shiro.common.constant.UserConstant;
-import com.xlx.shiro.common.util.ShiroUtil;
+import com.xlx.shiro.common.util.ShiroUtils;
 import com.xlx.shiro.system.entity.User;
 import com.xlx.shiro.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class SysUserFilter extends PathMatchingFilter {
 	@Override
 	protected boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 		log.info("========PathMatchingFilter/onPreHandle方法================");
-		User user = (User) ShiroUtil.getSubject().getPrincipal();
+		User user = (User) ShiroUtils.getSubject().getPrincipal();
 		request.setAttribute(UserConstant.USER_SESSION,user);
 		return true;
 	}

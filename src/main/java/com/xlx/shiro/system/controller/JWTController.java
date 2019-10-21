@@ -1,7 +1,7 @@
 package com.xlx.shiro.system.controller;
 
-import com.xlx.shiro.common.util.DateUtil;
-import com.xlx.shiro.common.util.JwtUtil;
+import com.xlx.shiro.common.util.DateUtils;
+import com.xlx.shiro.common.util.JwtUtils;
 import com.xlx.shiro.system.dto.ResultDTO;
 import com.xlx.shiro.system.entity.User;
 import com.xlx.shiro.system.service.UserService;
@@ -55,9 +55,9 @@ public class JWTController {
 		}
 		//登录成功,更新登录时间?数据库插入有延迟1ms
 		Date loginDate = new Date();
-		log.info("记录登录时间:[{}]", DateUtil.formatString(loginDate));
+		log.info("记录登录时间:[{}]", DateUtils.formatString(loginDate));
 		this.userService.recordLoginTime(username);
-		return ResultDTO.success("登录成功", JwtUtil.generateToken(username, loginDate));
+		return ResultDTO.success("登录成功", JwtUtils.generateToken(username, loginDate));
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class JWTController {
 	@GetMapping("/index")
 	public ResultDTO login(HttpServletRequest request) {
 		String token = request.getParameter("token");
-		return JwtUtil.validateToken(token);
+		return JwtUtils.validateToken(token);
 	}
 
 

@@ -22,14 +22,14 @@ import java.util.UUID;
  */
 @Slf4j
 @Component
-public class JwtUtil {
+public class JwtUtils {
 
 
   private static UserService userService;
 
   @Autowired
-  public JwtUtil(UserService userService){
-    JwtUtil.userService = userService;
+  public JwtUtils(UserService userService){
+    JwtUtils.userService = userService;
   }
 
   public static final long EXPIRATION_TIME = 10*60*1000L; // 10 min
@@ -59,9 +59,9 @@ public class JwtUtil {
     //payload的私有/自定义声明
     Map<String,Object> privateClaim = new HashMap<>();
     privateClaim.put("username",userName);
-    privateClaim.put("generateTime",DateUtil.formatString(generateTime));
+    privateClaim.put("generateTime", DateUtils.formatString(generateTime));
 
-    log.info("有效时长:[{}]",DateUtil.formatString(new Date(generateTime.getTime() + EXPIRATION_TIME)));
+    log.info("有效时长:[{}]", DateUtils.formatString(new Date(generateTime.getTime() + EXPIRATION_TIME)));
     String jwt = Jwts.builder()
             .setHeader(header)
             .setClaims(privateClaim)

@@ -22,10 +22,10 @@ import java.net.URLEncoder;
  * @author xielx at 2019/10/17 22:02
  */
 @Slf4j
-public class POIUtil {
+public class POIUtils {
     
     
-    protected POIUtil() {}
+    protected POIUtils() {}
     
     /**
      * 一个sheet的最大行数
@@ -119,6 +119,8 @@ public class POIUtil {
             // response对象不为空,响应到浏览器下载
             if (response != null) {
                 response.setHeader("Content-disposition", "attachment;fileName=" + encode);
+                response.setContentType("multipart/form-data");
+                response.setCharacterEncoding("utf-8");
                 if (out == null) {
                     out = response.getOutputStream();
                 }

@@ -17,7 +17,7 @@ import java.util.Arrays;
  *
  * @author xielx on 2019/7/22
  */
-public class ShiroUtil {
+public class ShiroUtils {
 
 	//private static RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
 

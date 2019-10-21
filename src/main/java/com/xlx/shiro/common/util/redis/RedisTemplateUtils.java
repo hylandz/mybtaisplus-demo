@@ -11,7 +11,7 @@ import javax.annotation.Resource;
  * @author xielx on 2019/9/5
  */
 @Component
-public class RedisTemplateUtil {
+public class RedisTemplateUtils {
 	
 	@Resource
 	private RedisTemplate<Object,Object> redisTemplate;

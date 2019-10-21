@@ -1,7 +1,7 @@
 package com.xlx.shiro.common.handler;
 
 import com.xlx.shiro.common.exception.FileDownLoadException;
-import com.xlx.shiro.common.util.HttpUtil;
+import com.xlx.shiro.common.util.HttpUtils;
 import com.xlx.shiro.system.dto.ResultDTO;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.session.ExpiredSessionException;
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = AuthorizationException.class)
     public Object handleAuthorizationException(HttpServletRequest request) {
-        if (HttpUtil.isAjaxRequest(request)) {
+        if (HttpUtils.isAjaxRequest(request)) {
             return ResultDTO.failed("暂无权限,请联系管理员");
         }
         

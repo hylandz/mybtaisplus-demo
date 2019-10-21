@@ -12,9 +12,9 @@ import java.util.Map;
  *
  * @author xielx on 2019/9/5
  */
-public class TreeUtil {
+public class TreeUtils {
 	
-	protected TreeUtil(){}
+	protected TreeUtils(){}
 	
 	/**
 	 * 节点对象排序

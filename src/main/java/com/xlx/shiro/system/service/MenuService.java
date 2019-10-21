@@ -1,12 +1,10 @@
 package com.xlx.shiro.system.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.xlx.shiro.common.util.TreeUtil;
+import com.xlx.shiro.common.util.TreeUtils;
 import com.xlx.shiro.system.dao.MenuMapper;
 import com.xlx.shiro.system.dao.RoleMenuMapper;
 import com.xlx.shiro.system.dto.TreeDTO;
 import com.xlx.shiro.system.entity.Menu;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +56,7 @@ public class MenuService {
 				return treeDTO;
 			}).collect(Collectors.toList());
 		
-		return TreeUtil.build(treeDTOList);
+		return TreeUtils.build(treeDTOList);
 	}
 	
 	/**
@@ -73,7 +71,7 @@ public class MenuService {
 		//排序菜单
 		List<TreeDTO<Menu>> treeDTOList = new ArrayList<>();
 		buildTrees(treeDTOList,menuList);
-		return TreeUtil.build(treeDTOList);
+		return TreeUtils.build(treeDTOList);
 	}
 	
 	/**
@@ -88,7 +86,7 @@ public class MenuService {
 		//排序菜单
 		List<TreeDTO<Menu>> treeDTOList = new ArrayList<>();
 		buildTrees(treeDTOList,menuList);
-		return TreeUtil.build(treeDTOList);
+		return TreeUtils.build(treeDTOList);
 	}
 	
 	

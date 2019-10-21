@@ -16,9 +16,9 @@ import java.util.UUID;
  *
  * @author xielx at 2019/10/17 23:35
  */
-public class FileUtil {
+public class FileUtils {
 
-    private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(FileUtils.class);
     private static final String FILE_SUFFIX = ".xlsx";
     private static final String FILE_PATH = "file/";
     
@@ -55,8 +55,8 @@ public class FileUtil {
         String path = FILE_PATH + name;
         try {
             FileOutputStream fos = new FileOutputStream(path);
-            //isOk = ExcelUtil.build(clz).toExcel(list,fileName,fos);
-            isOk = ExcelUtil.export(clz,response).toExcel(list,fileName,fos);
+            //isOk = ExcelUtils.build(clz).toExcel(list,fileName,fos);
+            isOk = ExcelUtils.export(clz,response).toExcel(list,fileName,fos);
         } catch (FileNotFoundException e) {
             log.error("文件 [{}]未找到:{}",fileName,e.getMessage());
         }

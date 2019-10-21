@@ -1,6 +1,6 @@
 package com.xlx.shiro.system.shiro.credentials;
 
-import com.xlx.shiro.common.util.redis.StringRedisTemplateUtil;
+import com.xlx.shiro.common.util.redis.StringRedisTemplateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -20,7 +20,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
 
 	@Resource
-	private StringRedisTemplateUtil stringRedisTemplateUtil;
+	private StringRedisTemplateUtils stringRedisTemplateUtil;
 
 
 	/**

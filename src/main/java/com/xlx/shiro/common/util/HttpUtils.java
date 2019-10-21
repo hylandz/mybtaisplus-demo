@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author xielx on 2019/9/2
  */
-public class HttpUtil {
+public class HttpUtils {
 
 
-	private static final Logger log = LoggerFactory.getLogger(HttpUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
 
 
 	/**

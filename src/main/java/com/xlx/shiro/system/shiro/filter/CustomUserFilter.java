@@ -1,7 +1,7 @@
 package com.xlx.shiro.system.shiro.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.xlx.shiro.common.util.HttpUtil;
+import com.xlx.shiro.common.util.HttpUtils;
 import com.xlx.shiro.system.dto.ResultDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.UserFilter;
@@ -32,7 +32,7 @@ public class CustomUserFilter extends UserFilter {
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		//
-		if (HttpUtil.isAjaxRequest((HttpServletRequest) request)) {
+		if (HttpUtils.isAjaxRequest((HttpServletRequest) request)) {
 			log.info("onAccessDenied:拦截到AJAX请求~~");
 			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 			httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());

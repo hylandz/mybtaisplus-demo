@@ -25,7 +25,7 @@ import java.util.*;
  * @author xielx at 2019/10/18 12:08
  */
 @Slf4j
-public class ExcelUtil {
+public class ExcelUtils {
     
     
     /**
@@ -48,7 +48,7 @@ public class ExcelUtil {
     private Map<String, IExportConvert> convertMap = new HashMap<>();
     
     
-    protected ExcelUtil() {
+    protected ExcelUtils() {
     }
     
     
@@ -58,21 +58,21 @@ public class ExcelUtil {
      * @param aClass Class
      * @return 工具类实例
      */
-    static ExcelUtil build(Class<?> aClass) {
-        return new ExcelUtil(aClass);
+    static ExcelUtils build(Class<?> aClass) {
+        return new ExcelUtils(aClass);
     }
     
-    public static ExcelUtil export(Class<?> aClass, HttpServletResponse response) {
-        return new ExcelUtil(aClass, response);
+    public static ExcelUtils export(Class<?> aClass, HttpServletResponse response) {
+        return new ExcelUtils(aClass, response);
     }
     
     /**
      * 设置sheet存储量
      *
      * @param maxRecordPerSheet 最大
-     * @return ExcelUtil
+     * @return ExcelUtils
      */
-    public ExcelUtil setMaxRecordPerSheet(Integer maxRecordPerSheet) {
+    public ExcelUtils setMaxRecordPerSheet(Integer maxRecordPerSheet) {
         this.maxRecordPerSheet = maxRecordPerSheet;
         return this;
     }
@@ -80,12 +80,12 @@ public class ExcelUtil {
     /**
      * 构造
      */
-    private ExcelUtil(Class<?> aClass, HttpServletResponse response) {
+    private ExcelUtils(Class<?> aClass, HttpServletResponse response) {
         this.aClass = aClass;
         this.response = response;
     }
     
-    private ExcelUtil(Class<?> aClass) {
+    private ExcelUtils(Class<?> aClass) {
         this(aClass, null);
     }
     
@@ -169,7 +169,7 @@ public class ExcelUtil {
         
         
         // 2.创建工作簿,
-        SXSSFWorkbook workbook = POIUtil.newSXSSFWorkbook();
+        SXSSFWorkbook workbook = POIUtils.newSXSSFWorkbook();
         // sheet数量(类似分页)
         double sheetNum = Math.ceil(data.size() / maxRecordPerSheet);
         
@@ -177,12 +177,12 @@ public class ExcelUtil {
         while (index <= (sheetNum == 0.0 ? sheetNum : sheetNum - 1)) {
             
             // 2.1创建表头(excel表的标题)
-            SXSSFSheet sheet = POIUtil.newSXSSFSheet(workbook, sheetName + (index == 0 ? "" : "_" + index));
-            SXSSFRow row = POIUtil.newSXSSFRow(sheet, 0);
+            SXSSFSheet sheet = POIUtils.newSXSSFSheet(workbook, sheetName + (index == 0 ? "" : "_" + index));
+            SXSSFRow row = POIUtils.newSXSSFRow(sheet, 0);
             for (int i = 0; i < exportItemList.size(); i++) {
-                SXSSFCell cell = POIUtil.nweSXSSFCell(row, i);
+                SXSSFCell cell = POIUtils.nweSXSSFCell(row, i);
                 // 设置标题宽度
-                POIUtil.setColumnWidth(sheet, i, exportItemList.get(i).getWidth(), exportItemList.get(i).getDisplay());
+                POIUtils.setColumnWidth(sheet, i, exportItemList.get(i).getWidth(), exportItemList.get(i).getDisplay());
                 // 单元格填充内容(设置列名)
                 cell.setCellValue(exportItemList.get(i).getDisplay());
                 // 样式
@@ -208,7 +208,7 @@ public class ExcelUtil {
                 
                 int i = startNo;
                 while (i < endNo) {
-                    bodyRow = POIUtil.newSXSSFRow(sheet, i + 1 - startNo);
+                    bodyRow = POIUtils.newSXSSFRow(sheet, i + 1 - startNo);
                     for (int j = 0; j < exportItemList.size(); j++) {
                         String replace = exportItemList.get(j).getReplace();
                         try {
@@ -231,8 +231,8 @@ public class ExcelUtil {
                         }
                         
                         // 设置数据单元格宽度
-                        POIUtil.setColumnWidth(sheet,j,exportItemList.get(j).getWidth(),cellVal);
-                        bodyCell = POIUtil.nweSXSSFCell(bodyRow, j);
+                        POIUtils.setColumnWidth(sheet,j,exportItemList.get(j).getWidth(),cellVal);
+                        bodyCell = POIUtils.nweSXSSFCell(bodyRow, j);
                         bodyCell.setCellValue(Objects.equals("",cellVal) ? null : cellVal);
                         bodyCell.setCellStyle(style);
                     }
@@ -244,7 +244,7 @@ public class ExcelUtil {
     
         // 下载Excel
         try {
-            POIUtil.writeFromLocalBrowser(workbook,response,handler.exportFileName(sheetName),out);
+            POIUtils.writeFromLocalBrowser(workbook,response,handler.exportFileName(sheetName),out);
         } catch (IOException e) {
             log.error("下载excel文件失败:{}",e.getMessage());
             return false;
@@ -306,7 +306,7 @@ public class ExcelUtil {
     
     private void requireBuilderParams() {
         if (aClass == null) {
-            throw new IllegalArgumentException("请使用common.util.poi.ExcelUtil.build(Class<?> aClass)构造参数");
+            throw new IllegalArgumentException("请使用common.util.poi.ExcelUtils.build(Class<?> aClass)构造参数");
         }
     }
     
