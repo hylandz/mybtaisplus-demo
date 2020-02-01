@@ -1,5 +1,4 @@
 # ssm-shiro
-ssm整合shiro
 `Spring`+`SpringMVC`+`Mybatis-Plus`+`Shiro`
 ## 测试
 ```java

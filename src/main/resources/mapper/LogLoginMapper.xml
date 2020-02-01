@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
 <mapper namespace="com.xlx.ssmpshiro.system.dao.LogLoginMapper">
 
     <!-- 通用查询映射结果 -->
@@ -19,3 +20,120 @@
     </sql>
 
 </mapper>
+=======
+<mapper namespace="com.xlx.shiro.system.dao.LogLoginMapper">
+  <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.LogLogin">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, account, ip, browser, os, message, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from log_login
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from log_login
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xlx.shiro.system.entity.LogLogin">
+    insert into log_login (id, account, ip, 
+      browser, os, message, 
+      gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{browser,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.LogLogin">
+    insert into log_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="browser != null">
+        browser,
+      </if>
+      <if test="os != null">
+        os,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null">
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.LogLogin">
+    update log_login
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null">
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.LogLogin">
+    update log_login
+    set account = #{account,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166

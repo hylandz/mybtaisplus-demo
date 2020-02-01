@@ -9,14 +9,23 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.xlx</groupId>
+<<<<<<< HEAD
     <artifactId>spring-boot-shiro</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ssmp-shiro</name>
     <description>Demo project for Spring Boot,Shiro and MybatisPlus</description>
+=======
+    <artifactId>ssm-shiro</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>ssm-shiro</name>
+  
+    <description>Demo project for Spring Boot</description>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<<<<<<< HEAD
     </properties>
 
     <dependencies>
@@ -27,10 +36,19 @@
         </dependency>
 
         <!--spring-boot-web-->
+=======
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+
+        <!--web-->
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+<<<<<<< HEAD
 
         <!--spring-boot-test-->
         <dependency>
@@ -59,6 +77,28 @@
         </dependency>
 
         <!-- spring-boot-jdbc-->
+=======
+        <!--springboot-start-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!--springboot-test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- aop拦截器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!--jdbc-->
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -84,6 +124,7 @@
             <version>1.4.1</version>
         </dependency>
 
+<<<<<<< HEAD
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
@@ -130,6 +171,45 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
+=======
+
+        <!--quartz调度-->
+        <!-- quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+
+        <!-- spring cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <!-- service -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--shiro-service-->
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!--thymeleaf-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!--thymeleaf的shiro标签-->
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>2.0.0</version>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
         </dependency>
 
         <!--druid-->
@@ -139,11 +219,19 @@
             <version>1.1.14</version>
         </dependency>
 
+<<<<<<< HEAD
         <!--excel-->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>4.1.0</version>
+=======
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
         </dependency>
 
         <!--lombok-->
@@ -160,6 +248,7 @@
             <version>3.14.1</version>
         </dependency>
 
+<<<<<<< HEAD
         <!--javax mail-->
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -189,12 +278,50 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+=======
+        <!--commons工具包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+
+        <!--mybatis-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!--分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.12</version>
+        </dependency>
+
+        <!--sql解析-->
+
+
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
         <!--fastjson-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.57</version>
         </dependency>
+<<<<<<< HEAD
         <!--日志-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -211,6 +338,77 @@
 
     </dependencies>
 
+=======
+
+        <!--jwt:json web token-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+
+        <!--  持久化验证的API-->
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!--poi 文档导入导出-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+
+        <!-- xss过滤,HTML解析器 -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
+        <!-- reflecyions tools -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
+        </dependency>
+
+        <!-- google.guava/guava 工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>25.1-jre</version>
+        </dependency>
+
+        <!--获取Ip-->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>1.7</version>
+        </dependency>
+        <!-- jasypt加密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+    </dependencies>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
 
     <build>
         <plugins>
@@ -219,6 +417,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+<<<<<<< HEAD
             <!-- 如果mapper.xml是放在src/main/java目录下，需配置以下<resources>-->
 
             <!--mybatis的generator插件 -->
@@ -226,6 +425,21 @@
 
 
         </plugins>
+=======
+            <!--mybatis的generator插件 -->
+           <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.7</version>
+                <configuration>
+                    <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>ssm-shiro</finalName>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
     </build>
 
 </project>

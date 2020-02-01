@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<<<<<<< HEAD
 <mapper namespace="com.xlx.ssmpshiro.system.dao.MenuMapper">
 
     <!-- 通用查询映射结果 -->
@@ -23,3 +24,229 @@
     </sql>
 
 </mapper>
+=======
+<mapper namespace="com.xlx.shiro.system.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.xlx.shiro.system.entity.Menu">
+        <id column="menu_id" jdbcType="BIGINT" property="menuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="parent_ids" jdbcType="VARCHAR" property="parentIds"/>
+        <result column="permission" jdbcType="VARCHAR" property="permission"/>
+        <result column="available" jdbcType="BIT" property="available"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        menu_id, menu_name, icon, type, url, parent_id, parent_ids, permission, available,
+    gmt_create, gmt_modified
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where menu_id = #{menuId,jdbcType=BIGINT}
+    </select>
+
+    <!--根据用户名查询对应有效的权限-->
+    <select id="selectPermissionsByUserName" resultType="java.lang.String">
+        select m.permission
+        from sys_menu m
+                 left JOIN sys_role_menu rm on rm.menu_id = m.menu_id
+                 left JOIN sys_user_role ur ON ur.role_id = rm.role_id
+                 left JOIN sys_user u on u.user_id = ur.user_id
+        where m.permission IS NOT NULL
+          and m.available = 1
+          and u.user_name = #{userName,jdbcType=VARCHAR};
+    </select>
+    <!--根据用户名查询对应的菜单-->
+    <select id="selectMenuByUserName" resultType="com.xlx.shiro.system.entity.Menu">
+        SELECT DISTINCT m.menu_id, m.menu_name, m.icon, m.type, m.url, m.parent_id, m.available
+        from sys_menu m
+                 LEFT JOIN sys_role_menu rm on rm.menu_id = m.menu_id
+                 LEFT JOIN sys_user_role ur ON ur.role_id = rm.role_id
+                 LEFT JOIN sys_user u on u.user_id = ur.user_id
+        where m.type = 'menu'
+          AND m.available = 1
+          AND u.user_name = #{userName,jdbcType=VARCHAR}
+        ORDER BY m.menu_id;
+    </select>
+
+    <!--查询所有有效的菜单-->
+    <select id="selectAllMenus" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where available =1
+        <if test="menuName != null and menuName != ''">
+            and menu_name = #{menuName,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null and type != ''">
+            and type = #{type,jdbcType=VARCHAR}
+        </if>
+        order by menu_id
+    </select>
+
+    <!--菜单树-->
+    <select id="selectMenuTrees" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu
+        where available =1
+        and type = 'menu'
+        order by gmt_create
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from sys_menu
+        where menu_id = #{menuId,jdbcType=BIGINT}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteBatch" parameterType="java.lang.Long">
+        delete
+        from sys_menu
+        where menu_id in
+        <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+            #{menuId,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+    <insert id="insert" parameterType="com.xlx.shiro.system.entity.Menu">
+        insert into sys_menu (menu_id, menu_name, icon,
+                              type, url, parent_id,
+                              parent_ids, permission, available,
+                              gmt_create, gmt_modified)
+        values (#{menuId,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR},
+                #{type,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT},
+                #{parentIds,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, #{available,jdbcType=BIT},
+                #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.xlx.shiro.system.entity.Menu">
+        insert into sys_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                menu_id,
+            </if>
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="parentIds != null">
+                parent_ids,
+            </if>
+            <if test="permission != null">
+                permission,
+            </if>
+            <if test="available != null">
+                available,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuId != null">
+                #{menuId,jdbcType=BIGINT},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="parentIds != null">
+                #{parentIds,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null">
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                #{available,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xlx.shiro.system.entity.Menu">
+        update sys_menu
+        <set>
+            <if test="menuName != null">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="parentIds != null">
+                parent_ids = #{parentIds,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null">
+                permission = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                available = #{available,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where menu_id = #{menuId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xlx.shiro.system.entity.Menu">
+        update sys_menu
+        set menu_name    = #{menuName,jdbcType=VARCHAR},
+            icon         = #{icon,jdbcType=VARCHAR},
+            type         = #{type,jdbcType=VARCHAR},
+            url          = #{url,jdbcType=VARCHAR},
+            parent_id    = #{parentId,jdbcType=BIGINT},
+            parent_ids   = #{parentIds,jdbcType=VARCHAR},
+            permission   = #{permission,jdbcType=VARCHAR},
+            available    = #{available,jdbcType=BIT},
+            gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+        where menu_id = #{menuId,jdbcType=BIGINT}
+    </update>
+</mapper>
+>>>>>>> 846158696bd18a40ce7dde68403df78c131bc166
