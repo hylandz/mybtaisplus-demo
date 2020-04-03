@@ -20,8 +20,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-   <!-- <profiles>
-        &lt;!&ndash; 默认为开发配置 &ndash;&gt;
+    <profiles>
+        <!-- 默认为开发配置 -->
         <profile>
             <id>dev</id>
             <properties>
@@ -32,14 +32,14 @@
             </activation>
         </profile>
 
-        &lt;!&ndash; 生产配置 &ndash;&gt;
+        <!-- 生产配置 -->
         <profile>
             <id>prod</id>
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
         </profile>
-    </profiles>-->
+    </profiles>
 
 
     <dependencies>
@@ -68,13 +68,12 @@
         </dependency>
 
 
-        <!--mybatis-plus-->
+        <!-- Spring Boot: mybatis-plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>2.3.3</version>
+            <version>3.3.1.tmp</version>
         </dependency>
-
 
 
         <!--mybatis-plus generate插件-->
@@ -86,11 +85,11 @@
 
 
         <!--mysql-->
-       <!-- <dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -100,10 +99,10 @@
         </dependency>
 
         <!--thymeleaf-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -112,11 +111,11 @@
         </dependency>
 
         <!--druid-->
-        <!--<dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.14</version>
-        </dependency>-->
+        </dependency>
 
         <!--lombok-->
         <dependency>
@@ -124,8 +123,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-
 
 
         <!--commons-lang3工具包-->

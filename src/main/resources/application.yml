@@ -4,6 +4,8 @@ server:
 
   # spring配置
 spring:
+  profiles:
+    active: @spring.profiles.active@
   # jdbc配置
   datasource:
     driver-class-name: org.h2.Driver

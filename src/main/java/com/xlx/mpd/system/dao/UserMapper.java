@@ -1,12 +1,16 @@
 package com.xlx.mpd.system.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xlx.mpd.system.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * User
+ * <p>
+ *  Mapper 接口
+ * </p>
  *
- * @author xielx at 2020/4/3 14:40
+ * @author xlx
+ * @since 2020-04-03
  */
 public interface UserMapper extends BaseMapper<User> {
+
 }

@@ -1,13 +1,12 @@
-package com.xlx.mpd.generator;
+package com.xlx.mpd.common;
 
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.util.ArrayList;
@@ -22,16 +21,14 @@ import java.util.Map;
  * @author xielx on 2019/7/16
  */
 public class MpGenerator {
-
-
+  
   public static void main(String[] args) {
 
     //自动生成器
     AutoGenerator mpg = new AutoGenerator();
-    String projectPath = System.getProperty("user.dir");
     // 1.全局配置
     GlobalConfig gc = new GlobalConfig();
-    gc.setOutputDir(projectPath + "/src/main/java");
+    gc.setOutputDir(System.getProperty("user.dir") + "/src/main/java");
     gc.setFileOverride(true); //文件覆盖
     gc.setActiveRecord(true);// ActiveRecord
     gc.setEnableCache(false);// XML 二级缓存
@@ -51,19 +48,7 @@ public class MpGenerator {
     // 2.数据源配置
     DataSourceConfig dsc = new DataSourceConfig();
     dsc.setDbType(DbType.MYSQL);
-    dsc.setTypeConvert(new MySqlTypeConvert() {
-      // 自定义数据库表字段类型转换【可选】
-      @Override
-      public DbColumnType processTypeConvert(String fieldType) {
-        System.out.println("转换类型：" + fieldType);
-        // 将数据库的tinyint转换成自定义的[默认是Integer]
-        if (fieldType.toLowerCase().contains("tinyint")){
-          return DbColumnType.BASE_BOOLEAN;
-        }
-        // 注意！！processTypeConvert 存在默认类型转换，如果不是你要的效果请自定义返回、非如下直接返回。
-        return super.processTypeConvert(fieldType);
-      }
-    });
+    //dsc.setTypeConvert(new MySqlTypeConvert());
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
     dsc.setUsername("mango");
     dsc.setPassword("root5.7.22");
@@ -73,12 +58,11 @@ public class MpGenerator {
     // 3.策略配置
     StrategyConfig strategy = new StrategyConfig();
     strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
-    strategy.setTablePrefix(new String[]{"sys_"});// 数据库表前缀,生成的实体类名会省略前缀sys_users,users
+    strategy.setTablePrefix("sys_");// 数据库表前缀,生成的实体类名会省略前缀sys_users,users
     strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略(下划线变驼峰式)
-    strategy.setDbColumnUnderline(true);//数据库表名,字段名使用下划线
     strategy.setEntityLombokModel(true);//lombok注解
     //sys_users","sys_roles","sys_resources","sys_depts","sys_user_role","sys_role_resource
-    strategy.setInclude(new String[] { "log_error","log_login" }); // 需要生成的表
+    strategy.setInclude("sys_user"); // 需要生成的表
     // strategy.setExclude(new String[]{"test"}); // 排除生成的表
     // 自定义实体父类
     // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");
@@ -102,7 +86,7 @@ public class MpGenerator {
 
     // 4.包名配置
     PackageConfig pc = new PackageConfig();
-    pc.setParent("com.xlx.mpd")//父路径
+    pc.setParent("com.xlx.mpd.system")//父路径
             .setMapper("dao")
             .setService("service")
             .setController("controller")
@@ -119,9 +103,14 @@ public class MpGenerator {
         this.setMap(map);
       }
     };
-
-    // 自定义 xxList.jsp 生成
+  
+    // 如果模板引擎是 freemarker
+    //String templatePath = "/templates/mapper.xml.ftl";
+    // 如果模板引擎是 velocity
+    String templatePath = "/templates/mapper.xml.vm";
+    
     List<FileOutConfig> focList = new ArrayList<>();
+    // 自定义 xxList.jsp 生成
 //    focList.add(new FileOutConfig("/template/list.jsp.vm") {
 //      @Override
 //     public String outputFile(TableInfo tableInfo) {
@@ -133,16 +122,17 @@ public class MpGenerator {
 //   mpg.setCfg(cfg);
 
     // 调整 xml 生成目录演示
-    focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+    focList.add(new FileOutConfig(templatePath) {
       @Override
       public String outputFile(TableInfo tableInfo) {
-        return projectPath +"/src/main/resources/mapper/" + tableInfo.getEntityName() + "Mapper.xml";
+        return System.getProperty("user.dir") +"/src/main/resources/mapper/" + tableInfo.getEntityName()
+                       + "Mapper" + StringPool.DOT_XML;
       }
     });
     cfg.setFileOutConfigList(focList);
     mpg.setCfg(cfg);
 
-
+    
     // 关闭默认 xml 生成，调整生成 至 根目录
     TemplateConfig tc = new TemplateConfig();
     tc.setXml(null);
