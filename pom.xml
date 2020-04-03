@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.xlx</groupId>
-    <artifactId>ssmp-shiro</artifactId>
+    <artifactId>mybatisplus-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ssmp-shiro</name>
+    <name>mybatisplus-demo</name>
 
     <description>Demo project for Spring Boot</description>
 
@@ -19,6 +19,28 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+   <!-- <profiles>
+        &lt;!&ndash; 默认为开发配置 &ndash;&gt;
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        &lt;!&ndash; 生产配置 &ndash;&gt;
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>-->
+
 
     <dependencies>
         <dependency>
@@ -64,12 +86,18 @@
 
 
         <!--mysql-->
-        <dependency>
+       <!-- <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!--thymeleaf-->
         <dependency>
@@ -84,11 +112,11 @@
         </dependency>
 
         <!--druid-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.14</version>
-        </dependency>
+        </dependency>-->
 
         <!--lombok-->
         <dependency>
@@ -98,13 +126,6 @@
         </dependency>
 
 
-
-        <!--jwt/jJwt-->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
 
 
         <!--commons-lang3工具包-->
@@ -130,12 +151,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-
-
-
         </plugins>
-        <finalName>ssm-shiro</finalName>
+        <finalName>mybatisplus-demo</finalName>
     </build>
 
 </project>

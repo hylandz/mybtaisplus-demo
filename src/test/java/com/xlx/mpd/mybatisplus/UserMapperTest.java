@@ -27,11 +27,12 @@ public class UserMapperTest {
     context = new ClassPathXmlApplicationContext("applicationContext.xml");
     usersMapper = context.getBean("usersMapper", UserMapper.class);
   }
+  
   @Test
   public void testGetUserByAccount(){
     User users = new User();
-    users.setUserId(3L);
-    users.setUserPassword("123456");
+    users.setId(3L);
+    users.setName("123456");
     Integer r = usersMapper.updateById(users);
     System.out.println(r);
   }
