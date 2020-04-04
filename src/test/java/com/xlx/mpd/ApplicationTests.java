@@ -1,5 +1,10 @@
 package com.xlx.mpd;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xlx.mpd.system.dao.UserMapper;
+import com.xlx.mpd.system.entity.User;
+import com.xlx.mpd.system.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,18 +18,18 @@ import java.util.List;
 @SpringBootTest
 public class ApplicationTests {
 
-  //@Autowired
-  //private UserMapper userMapper;
+  @Autowired
+  private UserService userService;
   
   
-  /*@Test
+  @Test
   public void testSelect() {
   
     System.out.println("----------selectAll method test---------------");
-  
-    List<User> userList = userMapper.selectList(null);
-    Assert.assertEquals(5,userList.size());
-    userList.forEach(System.out::print);
-  }*/
+      User user = userService.getOne(new QueryWrapper<User>().eq("user_name", "admin"));
+      Assert.assertNotNull(user);
+      user.setUnnecessary("非数据库字段");
+      System.out.println(user);
+  }
 
 }

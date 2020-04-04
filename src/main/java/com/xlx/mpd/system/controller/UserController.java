@@ -1,6 +1,8 @@
 package com.xlx.mpd.system.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xlx.mpd.system.dto.ResultDTO;
 import com.xlx.mpd.system.entity.User;
 import com.xlx.mpd.system.service.UserService;
@@ -35,7 +37,8 @@ public class UserController {
     @GetMapping("/list")
     @ResponseBody
     public ResultDTO list(){
-        List<User> userList = userService.list();
+        IPage<User> page = userService.page(new Page<>());
+        List<User> userList = page.getRecords();
         return ResultDTO.ok().message("用户列表").data("stuList",userList);
     }
     

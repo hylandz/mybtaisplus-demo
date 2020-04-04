@@ -1,15 +1,22 @@
 package com.xlx.mpd.system.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
-import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.type.LocalDateTimeTypeHandler;
+import org.apache.ibatis.type.LocalDateTypeHandler;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import static com.baomidou.mybatisplus.annotation.FieldFill.INSERT;
+import static com.baomidou.mybatisplus.annotation.FieldFill.UPDATE;
 
 /**
  * <p>
@@ -22,7 +29,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_user")
+@TableName(value = "sys_user" ,autoResultMap = true)
 public class User extends Model<User> {
 
     private static final long serialVersionUID=1L;
@@ -74,23 +81,26 @@ public class User extends Model<User> {
     private String token;
 
     /**
-     * 性别,1:男;0:女
+     * 性别,1:男;2:女;0:保密
      */
     private Integer gender;
 
     /**
      * 出生年月,yyyy-MM-dd
      */
+    @TableField(typeHandler = LocalDateTypeHandler.class)
     private LocalDate birth;
 
     /**
      * 邮箱
      */
+    @TableField(value = "mail")
     private String mail;
 
     /**
      * 电话
      */
+    @JsonFormat(pattern = "")
     private String phone;
 
     /**
@@ -106,18 +116,26 @@ public class User extends Model<User> {
     /**
      * 最后登录时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime loginDate;
 
     /**
      * 创建时间
      */
+    @TableField(fill = INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime gmtCreate;
 
     /**
      * 修改时间
      */
+    @TableField(fill = UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private LocalDateTime gmtModified;
 
+    @TableField(exist = false)
+    private String unnecessary;
+    
 
     @Override
     protected Serializable pkVal() {

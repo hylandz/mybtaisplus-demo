@@ -3,7 +3,7 @@ package com.xlx.mpd.common.mpconfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 公共字段填充
@@ -13,6 +13,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
   /**
    * 插入时填充
+   * FieldFill.INSERT
    */
   @Override
   public void insertFill(MetaObject metaObject) {
@@ -26,18 +27,23 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     System.out.println("testType=" + testType);
 
     // 填充当前日期
-    setFieldValByName("gmtCreate",new Date(),metaObject);
+    this.setFieldValByName("gmtCreate",LocalDateTime.now(),metaObject);
   }
-
+  
+  /**
+   * 更新时填充
+   * FieldFill.UPDATE
+   * @param metaObject 元对象
+   */
   @Override
   public void updateFill(MetaObject metaObject) {
 
-    //更新填充
+    //更新时填充
     System.out.println("*************************");
     System.out.println("update fill");
     System.out.println("*************************");
 
     // 填充当前日期,可以多个
-    setFieldValByName("gmtModified",new Date(),metaObject);
+    this.setFieldValByName("gmtModified",  LocalDateTime.now(),metaObject);
   }
 }

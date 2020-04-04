@@ -1,7 +1,7 @@
 package com.xlx.mpd.system.dao;
 
-import com.xlx.mpd.system.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xlx.mpd.system.entity.User;
 
 /**
  * <p>
@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2020-04-03
  */
 public interface UserMapper extends BaseMapper<User> {
-
+    
 }

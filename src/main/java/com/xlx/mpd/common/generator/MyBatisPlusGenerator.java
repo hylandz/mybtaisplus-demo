@@ -1,4 +1,4 @@
-package com.xlx.mpd.common;
+package com.xlx.mpd.common.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * @author xielx on 2019/7/16
  */
-public class MpGenerator {
+public class MyBatisPlusGenerator {
   
   public static void main(String[] args) {
 

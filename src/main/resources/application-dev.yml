@@ -4,13 +4,32 @@ server:
 
   # spring配置
 spring:
-  # jdbc配置
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/springbootdb?useUnicode=true&characterEncoding=utf8
-    username: mango
-    password: root5.7.22
+    druid:
+      db-type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/springbootdb?useSSL=false&useUnicode=true&characterEncoding=utf8
+      username: mango
+      password: root5.7.22
+      # 连接池配置
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 连接等待超时时间
+      max-wait: 30000
+      # 配置检测可以关闭的空闲连接间隔时间
+      time-between-eviction-runs-millis: 60000
+      # 配置连接在池中的最小生存时间
+      min-evictable-idle-time-millis: 300000
+      validation-query: select '1' from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      #druid的监控
   #thymeleaf模板
   thymeleaf:
     mode: HTML
@@ -27,20 +46,20 @@ mybatis-plus:
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.xlx.mpd.system.entity
   typeEnumsPackage:
-  global-config:
-    db-config:
-      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
-      id-type: AUTO
-      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
-      #驼峰下划线转换
-      #数据库大写下划线转换
-      capital-mode: true
-      #逻辑删除配置
-      logic-delete-value: 0
-      logic-not-delete-value: 1
-    #刷新mapper 调试神器
   # 原生配置
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+    jdbc-type-for-null: null
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+  global-config:
+    db-config:
+      # 主键自增
+      id-type: AUTO
+      #逻辑删除配置
+      logic-delete-field: flag # 全局逻辑删除字段值,即数据库字段flag表示逻辑删除
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0

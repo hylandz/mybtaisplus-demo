@@ -14,7 +14,6 @@ import java.io.StringWriter;
 @Slf4j
 public class ExceptionLogUtil {
     
-    
     /**
      * 打印异常信息
      * @param e 异常
@@ -27,7 +26,7 @@ public class ExceptionLogUtil {
             e.printStackTrace(pw);
             pw.flush();;
             sw.flush();
-            str = pw.toString();
+            str = sw.toString();
             
         } catch (IOException ex) {
             ex.printStackTrace();

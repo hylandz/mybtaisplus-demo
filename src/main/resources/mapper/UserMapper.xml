@@ -4,29 +4,30 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.xlx.mpd.system.entity.User">
-        <id column="user_id" property="userId" />
-        <result column="dept_id" property="deptId" />
-        <result column="avatar_name" property="avatarName" />
-        <result column="avatar_url" property="avatarUrl" />
-        <result column="user_name" property="userName" />
-        <result column="user_real" property="userReal" />
-        <result column="user_password" property="userPassword" />
-        <result column="salt" property="salt" />
-        <result column="token" property="token" />
-        <result column="gender" property="gender" />
-        <result column="birth" property="birth" />
-        <result column="mail" property="mail" />
-        <result column="phone" property="phone" />
-        <result column="locked" property="locked" />
-        <result column="login_ip" property="loginIp" />
-        <result column="login_date" property="loginDate" />
-        <result column="gmt_create" property="gmtCreate" />
-        <result column="gmt_modified" property="gmtModified" />
+        <id column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="dept_id" property="deptId" jdbcType="BIGINT" />
+        <result column="avatar_name" property="avatarName" jdbcType="VARCHAR" />
+        <result column="avatar_url" property="avatarUrl"  jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName"  jdbcType="VARCHAR"/>
+        <result column="user_real" property="userReal" jdbcType="VARCHAR" />
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="token" property="token" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="INTEGER"/>
+        <result column="birth" property="birth" jdbcType="DATE" />
+        <result column="mail" property="mail" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="locked" property="locked" jdbcType="BIT"/>
+        <result column="login_ip" property="loginIp" jdbcType="VARCHAR"  />
+        <result column="login_date" property="loginDate" jdbcType="TIMESTAMP" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         user_id, dept_id, avatar_name, avatar_url, user_name, user_real, user_password, salt, token, gender, birth, mail, phone, locked, login_ip, login_date, gmt_create, gmt_modified
     </sql>
+
 
 </mapper>
