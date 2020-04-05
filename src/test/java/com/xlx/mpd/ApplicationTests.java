@@ -28,7 +28,7 @@ public class ApplicationTests {
     System.out.println("----------selectAll method test---------------");
       User user = userService.getOne(new QueryWrapper<User>().eq("user_name", "admin"));
       Assert.assertNotNull(user);
-      user.setUnnecessary("非数据库字段");
+      user.setAge(18);
       System.out.println(user);
   }
 

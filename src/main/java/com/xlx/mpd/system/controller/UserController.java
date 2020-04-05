@@ -1,7 +1,6 @@
 package com.xlx.mpd.system.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xlx.mpd.system.dto.ResultDTO;
 import com.xlx.mpd.system.entity.User;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.awt.image.RescaleOp;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ import java.util.List;
  * </p>
  *
  * @author xlx
- * @since 2020-04-03
+ * @since 2020-04-05
  */
 @Controller
 @RequestMapping("/user")
@@ -30,17 +30,19 @@ import java.util.List;
 public class UserController {
 
     
-    
     @Autowired
     private UserService userService;
     
     @GetMapping("/list")
     @ResponseBody
     public ResultDTO list(){
-        IPage<User> page = userService.page(new Page<>());
-        List<User> userList = page.getRecords();
-        return ResultDTO.ok().message("用户列表").data("stuList",userList);
+        Page<User> p = new Page<>();
+        p.setSize(5L);
+        
+        Page<User> page = userService.page(p);
+        List<User> records = page.getRecords();
+        
+        return ResultDTO.ok().message("用户列表").data("records",records);
     }
-    
 }
 

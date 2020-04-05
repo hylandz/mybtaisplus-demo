@@ -52,7 +52,7 @@ public class MyBatisPlusGenerator {
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
     dsc.setUsername("mango");
     dsc.setPassword("root5.7.22");
-    dsc.setUrl("jdbc:mysql://localhost:3306/springbootdb?useUnicode=true&characterEncoding=utf8");
+    dsc.setUrl("jdbc:mysql://localhost:3306/mybatisplusdb?useUnicode=true&characterEncoding=utf8");
     mpg.setDataSource(dsc);
 
     // 3.策略配置

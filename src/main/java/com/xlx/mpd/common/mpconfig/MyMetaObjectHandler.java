@@ -3,7 +3,11 @@ package com.xlx.mpd.common.mpconfig;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.temporal.IsoFields;
 
 /**
  * 公共字段填充
@@ -27,7 +31,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     System.out.println("testType=" + testType);
 
     // 填充当前日期
-    this.setFieldValByName("gmtCreate",LocalDateTime.now(),metaObject);
+    this.setFieldValByName("gmtCreate",LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8")),metaObject);
   }
   
   /**
@@ -42,8 +46,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     System.out.println("*************************");
     System.out.println("update fill");
     System.out.println("*************************");
-
+  
     // 填充当前日期,可以多个
-    this.setFieldValByName("gmtModified",  LocalDateTime.now(),metaObject);
+    this.setFieldValByName("gmtModified",  LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli(),metaObject);
   }
 }

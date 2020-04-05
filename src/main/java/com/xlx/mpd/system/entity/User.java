@@ -1,22 +1,20 @@
 package com.xlx.mpd.system.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.apache.ibatis.type.LocalDateTimeTypeHandler;
-import org.apache.ibatis.type.LocalDateTypeHandler;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import static com.baomidou.mybatisplus.annotation.FieldFill.INSERT;
-import static com.baomidou.mybatisplus.annotation.FieldFill.UPDATE;
+import org.apache.ibatis.type.JdbcType;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  * <p>
@@ -24,18 +22,18 @@ import static com.baomidou.mybatisplus.annotation.FieldFill.UPDATE;
  * </p>
  *
  * @author xlx
- * @since 2020-04-03
+ * @since 2020-04-05
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName(value = "sys_user" ,autoResultMap = true)
+@TableName(value = "sys_user",autoResultMap = true)
 public class User extends Model<User> {
 
     private static final long serialVersionUID=1L;
 
     /**
-     * 主键
+     * 主键,自增
      */
     @TableId(value = "user_id", type = IdType.AUTO)
     private Long userId;
@@ -43,100 +41,112 @@ public class User extends Model<User> {
     /**
      * 部门id
      */
+    @TableField(value = "dept_id",jdbcType = JdbcType.BIGINT)
     private Long deptId;
 
     /**
      * 昵称
      */
-    private String avatarName;
+    @TableField(value = "nick_name",jdbcType = JdbcType.VARCHAR)
+    private String nickName;
 
     /**
      * 头像url
      */
+    @TableField(value = "avatar_url",jdbcType = JdbcType.VARCHAR)
     private String avatarUrl;
 
     /**
-     * 帐号
+     * 用户名
      */
+    @TableField(value = "user_name",jdbcType = JdbcType.VARCHAR)
     private String userName;
 
     /**
-     * 真实姓名
+     * 真名
      */
-    private String userReal;
+    @TableField(value = "real_name",jdbcType = JdbcType.VARCHAR)
+    private String realName;
 
     /**
      * 密码
      */
-    private String userPassword;
+    @TableField(value = "password",jdbcType = JdbcType.VARCHAR)
+    private String password;
 
     /**
-     * 盐
+     * 盐值
      */
+    @TableField(value = "salt",jdbcType = JdbcType.VARCHAR)
     private String salt;
 
     /**
      * cookie使用
      */
+    @TableField(value = "token",jdbcType = JdbcType.VARCHAR)
     private String token;
 
     /**
      * 性别,1:男;2:女;0:保密
      */
+    @TableField(value = "gender",jdbcType = JdbcType.INTEGER)
     private Integer gender;
 
     /**
-     * 出生年月,yyyy-MM-dd
+     * 出生日期,yyyy-MM-dd
      */
-    @TableField(typeHandler = LocalDateTypeHandler.class)
+    @TableField(value = "birth",jdbcType = JdbcType.DATE)
     private LocalDate birth;
 
     /**
      * 邮箱
      */
-    @TableField(value = "mail")
-    private String mail;
+    @TableField(value = "email",jdbcType = JdbcType.VARCHAR)
+    private String email;
 
     /**
-     * 电话
+     * 联系方式
      */
-    @JsonFormat(pattern = "")
+    @TableField(value = "phone",jdbcType = JdbcType.VARCHAR)
     private String phone;
 
     /**
-     * 账户锁定,1:锁;0:不锁,默认
+     * 乐观锁
      */
-    private Boolean locked;
+    @TableField(value = "version",jdbcType = JdbcType.INTEGER)
+    private Integer version;
 
     /**
-     * 最后登录ip
+     * 逻辑删除,1:已删除;0:未删除
      */
-    private String loginIp;
+    @TableField(value = "deleted",jdbcType = JdbcType.INTEGER)
+    private Integer deleted;
 
     /**
-     * 最后登录时间
+     * 用户状态,枚举,1:正常,2:锁定等
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private LocalDateTime loginDate;
-
+    @TableField(value = "status",jdbcType = JdbcType.INTEGER)
+    private Integer status;
     /**
      * 创建时间
      */
-    @TableField(fill = INSERT)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private LocalDateTime gmtCreate;
+    @TableField(value = "gmt_create",jdbcType = JdbcType.BIGINT)
+    private Long gmtCreate;
+
 
     /**
      * 修改时间
      */
-    @TableField(fill = UPDATE)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private LocalDateTime gmtModified;
-
-    @TableField(exist = false)
-    private String unnecessary;
+    @TableField(value = "gmt_modified",jdbcType = JdbcType.BIGINT)
+    private Long gmtModified;
     
-
+    
+    /**
+     * 年龄,非数据库字段
+     */
+    @TableField(exist = false)
+    private Integer age;
+    
     @Override
     protected Serializable pkVal() {
         return this.userId;
