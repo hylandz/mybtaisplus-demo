@@ -17,7 +17,7 @@ public enum GenderEnum {
      * 性别编号
      */
     @Getter
-    private Integer genderNo;
+    private Integer genderNum;
     /**
      * 说明
      */
@@ -25,8 +25,8 @@ public enum GenderEnum {
     private String value;
     
     
-    GenderEnum(Integer genderNo, String value) {
-        this.genderNo = genderNo;
+    GenderEnum(Integer genderNum, String value) {
+        this.genderNum = genderNum;
         this.value = value;
     }
     

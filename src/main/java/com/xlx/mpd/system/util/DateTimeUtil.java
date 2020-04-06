@@ -36,7 +36,21 @@ public class DateTimeUtil {
         return LocalDateTime.ofEpochSecond(seconds,0,ZoneOffset.ofHours(8));
     }
     
+    /**
+     * 获取当前时间的秒数
+     * @return Long
+     */
+    public static Long getEpochSecondOfNow(){
+        return LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+    }
     
+    /**
+     * 获取当前时间的毫秒数
+     * @return Long
+     */
+    public static Long getMilliSecondOfNow(){
+        return LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+    }
     
     
     

@@ -1,18 +1,15 @@
 package com.xlx.mpd.common.mpconfig;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.xlx.mpd.system.util.DateTimeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
-import java.time.temporal.IsoFields;
 
 /**
  * 公共字段填充
  * @author xielx on 2019/7/17
  */
+@Slf4j
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
   /**
@@ -22,16 +19,16 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
   @Override
   public void insertFill(MetaObject metaObject) {
 
-    System.out.println("*************************");
-    System.out.println("insert fill");
-    System.out.println("*************************");
+    log.info("*************************");
+    log.info("插入数据时填充");
+    log.info("*************************");
 
     // 测试下划线
-    Object testType = getFieldValByName("gmtCreate", metaObject);//mybatis-plus版本2.0.9+
-    System.out.println("testType=" + testType);
+    Object testType = this.getFieldValByName("gmtCreate", metaObject);//mybatis-plus版本2.0.9+
+    log.info("testType={}" , testType);
 
     // 填充当前日期
-    this.setFieldValByName("gmtCreate",LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8")),metaObject);
+    this.setFieldValByName("gmtCreate",DateTimeUtil.getEpochSecondOfNow(),metaObject);
   }
   
   /**
@@ -43,11 +40,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
   public void updateFill(MetaObject metaObject) {
 
     //更新时填充
-    System.out.println("*************************");
-    System.out.println("update fill");
-    System.out.println("*************************");
+    log.info("*************************");
+    log.info("更新数据时填充");
+    log.info("*************************");
   
     // 填充当前日期,可以多个
-    this.setFieldValByName("gmtModified",  LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli(),metaObject);
+    this.setFieldValByName("gmtModified", DateTimeUtil.getMilliSecondOfNow(),metaObject);
   }
 }

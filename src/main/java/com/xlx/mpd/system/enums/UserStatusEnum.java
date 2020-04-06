@@ -19,7 +19,7 @@ public enum UserStatusEnum {
      * 编号
      */
     @Getter
-    private Integer stateNo;
+    private Integer stateNum;
 
     /**
      * 说明
@@ -28,8 +28,8 @@ public enum UserStatusEnum {
     private String state;
 
     
-    UserStatusEnum(Integer stateNo,String state){
-        this.stateNo = stateNo;
+    UserStatusEnum(Integer stateNum,String state){
+        this.stateNum = stateNum;
         this.state = state;
     }
 }
