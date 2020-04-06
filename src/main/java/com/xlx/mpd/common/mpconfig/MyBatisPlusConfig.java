@@ -44,4 +44,12 @@ public class MyBatisPlusConfig {
         return new MyMetaObjectHandler();
     }
     
+    /**
+     * 乐观锁,Version
+     * @return OptimisticLockerInterceptor
+     */
+    @Bean
+    public OptimisticLockerInterceptor optimisticLockerInterceptor(){
+        return new OptimisticLockerInterceptor();
+    }
 }
