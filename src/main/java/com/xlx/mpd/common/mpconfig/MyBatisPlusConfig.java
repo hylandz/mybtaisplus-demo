@@ -36,7 +36,7 @@ public class MyBatisPlusConfig {
     }
     
     /**
-     * 字段插入值
+     * 字段自动填充
      * @return MetaObjectHandler
      */
     @Bean
@@ -52,4 +52,5 @@ public class MyBatisPlusConfig {
     public OptimisticLockerInterceptor optimisticLockerInterceptor(){
         return new OptimisticLockerInterceptor();
     }
+    
 }

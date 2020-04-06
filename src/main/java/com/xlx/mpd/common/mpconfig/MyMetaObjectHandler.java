@@ -7,6 +7,7 @@ import org.apache.ibatis.reflection.MetaObject;
 
 /**
  * 公共字段填充
+ * 标注为@Component或者@Bean
  * @author xielx on 2019/7/17
  */
 @Slf4j
@@ -23,12 +24,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     log.info("插入数据时填充");
     log.info("*************************");
 
-    // 测试下划线
-    Object testType = this.getFieldValByName("gmtCreate", metaObject);//mybatis-plus版本2.0.9+
-    log.info("testType={}" , testType);
-
     // 填充当前日期
-    this.setFieldValByName("gmtCreate",DateTimeUtil.getEpochSecondOfNow(),metaObject);
+    this.strictInsertFill(metaObject,"gmtCreate",Long.class,DateTimeUtil.getMilliSecondOfNow());
   }
   
   /**
@@ -45,6 +42,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     log.info("*************************");
   
     // 填充当前日期,可以多个
-    this.setFieldValByName("gmtModified", DateTimeUtil.getMilliSecondOfNow(),metaObject);
+    this.strictUpdateFill(metaObject,"gmtModified",Long.class,DateTimeUtil.getMilliSecondOfNow());
   }
 }

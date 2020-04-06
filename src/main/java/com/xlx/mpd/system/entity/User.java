@@ -81,7 +81,7 @@ public class User extends Model<User> {
     private String token;
 
     /**
-     * 性别,1:男;2:女;0:保密
+     * 性别,1:男;2:女;0:保密,默认
      */
     @TableField(value = "gender",jdbcType = JdbcType.INTEGER)
     private Integer gender;
@@ -125,14 +125,14 @@ public class User extends Model<User> {
     /**
      * 创建时间
      */
-    @TableField(value = "gmt_create",jdbcType = JdbcType.BIGINT)
+    @TableField(value = "gmt_create",jdbcType = JdbcType.BIGINT,fill = FieldFill.INSERT)
     private Long gmtCreate;
 
 
     /**
      * 修改时间
      */
-    @TableField(value = "gmt_modified",jdbcType = JdbcType.BIGINT)
+    @TableField(value = "gmt_modified",jdbcType = JdbcType.BIGINT,fill = FieldFill.UPDATE)
     private Long gmtModified;
     
     

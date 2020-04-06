@@ -14,7 +14,8 @@ public enum ResultCodeEnum {
     FAILED(false,20001,"失败"),
     UNKNOWN_ERROR(false,20002,"系统异常"),
     PARAM_ERROR(false,20003,"参数错误"),
-    NULL_POINTER(false,20004,"空指针异常,可能参数或对象为空");
+    NULL_POINTER(false,20004,"空指针异常,可能参数或对象为空"),
+    DATA_NOT_FOUND(false,20005,"您查找的数据不存在");
     
     
     /**

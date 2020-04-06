@@ -25,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 /**
  * @author xielx at 2020/4/5 19:26
@@ -55,10 +56,13 @@ public class UserControllerTest {
     
     @Test
     public void testQueryUserByName() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/search").contentType(MediaType.APPLICATION_JSON_UTF8)
-                                .param("userName","G"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.records.size()").value(10));
+        String username = "F3860565";
+        String result = mockMvc.perform(MockMvcRequestBuilders.get("/user/search").contentType(MediaType.APPLICATION_JSON_UTF8)
+                                                         .param("userName", username))
+                                         .andExpect(MockMvcResultMatchers.status().isOk())
+                                         .andExpect(MockMvcResultMatchers.jsonPath("$.data.user").doesNotExist())
+                                         .andReturn().getResponse().getContentAsString();
+        log.info("查询用户名为[{}]的结果:{}" ,username,result);
     }
     
     @Test
@@ -73,40 +77,43 @@ public class UserControllerTest {
     @Test
     public void testInsert() throws Exception {
         User user = new User();
+        user.setDeptId(5L)
+                .setNickName("倔强的啥子")
+                .setAvatarUrl("default.jpg")
+                .setUserName("F3860565")
+                .setRealName("宝海一")
+                .setPassword("123456")
+                .setSalt("adadadda")
+                .setToken(UUID.randomUUID().toString())
+                .setBirth(LocalDate.parse("1996-09-19", DateTimeFormatter.ISO_LOCAL_DATE))
+                .setEmail("baohaiyi@qq.com")
+                .setPhone("13576637348")
+                .setGender(GenderEnum.MALE.getGenderNum());
         String content = JSON.toJSONString(user);
         String result = mockMvc.perform(MockMvcRequestBuilders.post("/user/create").contentType(MediaType.APPLICATION_JSON_UTF8)
                                                          .content(content))
                                          .andExpect(MockMvcResultMatchers.status().isOk())
-                                         .andExpect(MockMvcResultMatchers.jsonPath("$.data.success").value(true))
+                                         .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                                          .andReturn().getResponse().getContentAsString();
         log.info("新增用户返回的结果:" + result);
     }
     @Test
     public void testUpdate() throws Exception {
         User user = new User();
-        user.setDeptId(5L)
-                .setNickName("红孩儿")
-                .setAvatarUrl("default.jpg")
-                .setUserName("H3860565")
-                .setRealName("张海")
-                .setPassword("123456")
-                .setSalt("adadadda")
-                .setBirth(LocalDate.parse("1995-09-19", DateTimeFormatter.ISO_LOCAL_DATE))
-                .setEmail("zhanghai@qq.com")
-                .setGender(GenderEnum.FEMALE.getGenderNum())
-                .setDeleted(0)
-                .setStatus(UserStatusEnum.NORMAL.getStateNum());
+        user.setUserId(13L)
+                .setToken(UUID.randomUUID().toString())
+                .setVersion(1);
         String content = JSON.toJSONString(user);
-        String result = mockMvc.perform(MockMvcRequestBuilders.put("/user/create").contentType(MediaType.APPLICATION_JSON_UTF8)
+        String result = mockMvc.perform(MockMvcRequestBuilders.put("/user/modify").contentType(MediaType.APPLICATION_JSON_UTF8)
                                                 .content(content))
                                 .andExpect(MockMvcResultMatchers.status().isOk())
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.data.success").value(true))
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
                                 .andReturn().getResponse().getContentAsString();
         log.info("修改用户返回的结果:" + result);
     }
     @Test
     public void testDelete() throws Exception {
-        String result = mockMvc.perform(MockMvcRequestBuilders.delete("/user/del/13").contentType(MediaType.APPLICATION_JSON_UTF8))
+        String result = mockMvc.perform(MockMvcRequestBuilders.delete("/user/del/14").contentType(MediaType.APPLICATION_JSON_UTF8))
                                          .andExpect(MockMvcResultMatchers.status().isOk())
                                          .andReturn().getResponse().getContentAsString();
         log.info("删除用户结果:" + result);

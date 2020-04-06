@@ -69,8 +69,8 @@
                 <!-- 分页插件配置 -->
                 <bean id="paginationInterceptor"
                       class="com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor"/>
-                <!--分析插件-->
-                <!--<bean class="com.baomidou.mybatisplus.plugins.SqlExplainInterceptor">
+                <!--性能分析插件-->
+                <!--<bean class="com.baomidou.mybatisplus.extension.plugins.SqlExplainInterceptor">
                     <property name="stopProceed" value="true"></property>
                 </bean>-->
                 <!-- 乐观锁插件 -->
@@ -78,9 +78,9 @@
                       class="com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor">
                 </bean>
                 <!-- 性能拦截器，兼打印sql，不建议生产环境配置-->
-                <bean id="performanceInterceptor"
+                <!--<bean id="performanceInterceptor"
                       class="com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor">
-                </bean>
+                </bean>-->
             </array>
         </property>
     </bean>
@@ -102,7 +102,7 @@
     </bean>
 
     <!--逻辑删除-->
-   <!-- <bean id="logicSqlInjector" class="com.baomidou.mybatisplus.extension.injector.LogicSqlInjector"/>-->
+  <!-- <bean id="logicSqlInjector" class="com.baomidou.mybatisplus.extension.injector.methods.LogicDeleteByIdWithFill"/>-->
 
     <!-- 配置mybatis 扫描mapper接口的路径, 相当于注解@MapperScan，@MapperScan("com.baomidou.mybatisplus.test.h2.entity.mapper")-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">

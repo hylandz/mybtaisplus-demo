@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xlx.mpd.system.dto.ResultDTO;
 import com.xlx.mpd.system.entity.User;
+import com.xlx.mpd.system.enums.ResultCodeEnum;
 import com.xlx.mpd.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,9 @@ public class UserController {
     @GetMapping("/search")
     @ResponseBody
     public ResultDTO search(@RequestParam  String userName){
-        Page<User> page = userService.page(new Page<>(),new QueryWrapper<User>().like("user_name",userName));
-        List<User> records = page.getRecords();
+        User one = userService.getOne(new QueryWrapper<User>().eq("user_name", userName));
         
-        return ResultDTO.ok().message("用户列表").data("records",records);
+        return one != null ? ResultDTO.ok().message("用户查询").data("user",one) : ResultDTO.setResult(ResultCodeEnum.DATA_NOT_FOUND);
     }
     
     @GetMapping("/get")
@@ -59,6 +59,7 @@ public class UserController {
     }
     
     @PostMapping("/create")
+    @ResponseBody
     public ResultDTO addUser(@RequestBody User user){
         boolean save = userService.save(user);
         log.info("新增用户:" + save);
@@ -66,6 +67,7 @@ public class UserController {
     }
     
     @PutMapping("/modify")
+    @ResponseBody
     public ResultDTO updateUser(@RequestBody User user){
         boolean update = userService.updateById(user);
         log.info("修改用户:" + update);
@@ -73,6 +75,7 @@ public class UserController {
     }
     
     @DeleteMapping("del/{userId}")
+    @ResponseBody
     public ResultDTO deleteUser(@PathVariable Long userId){
         boolean remove = userService.removeById(userId);
         log.info("删除用户:" + remove);
