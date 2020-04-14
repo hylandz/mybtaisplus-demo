@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.apache.ibatis.type.JdbcType;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -72,12 +74,14 @@ public class User extends Model<User> {
      * 盐值
      */
     @TableField(value = "salt",jdbcType = JdbcType.VARCHAR)
+    @NotNull
     private String salt;
 
     /**
      * cookie使用
      */
     @TableField(value = "token",jdbcType = JdbcType.VARCHAR)
+    @NotNull
     private String token;
 
     /**
@@ -96,6 +100,7 @@ public class User extends Model<User> {
      * 邮箱
      */
     @TableField(value = "email",jdbcType = JdbcType.VARCHAR)
+    @Email
     private String email;
 
     /**

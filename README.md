@@ -1,8 +1,11 @@
 # mybatisplus-demo
 ## 一、简介
-学习`MyBatis-Plus`框架的,主要实现CRUD,和分页,逻辑删除,乐观锁,字段自动填充功能.采用的是代码注解实现
+学习[MyBatis-Plus](https://mp.baomidou.com/guide/)框架的,主要实现CRUD,和分页,逻辑删除,乐观锁,字段自动填充功能.采用的是代码注解实现
 
 ## 二、快速上手
+
+源码(gitee):  [https://gitee.com/XielinXG/mybatisplus-demo](https://gitee.com/XielinXG/mybatisplus-demo)
+
 ### 2.1 环境搭建
 > pom.xml
 ```xml
@@ -755,6 +758,7 @@ public class UserControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
     
+    // 分页查询用户数据
     @Test
     public void testQueryUsers() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/list").contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -762,6 +766,7 @@ public class UserControllerTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.data.records.size()").value(10));
     }
     
+    // 查询用户by userName
     @Test
     public void testQueryUserByName() throws Exception {
         String username = "F3860565";
@@ -773,6 +778,7 @@ public class UserControllerTest {
         log.info("查询用户名为[{}]的结果:{}" ,username,result);
     }
     
+    // 通过用户名获取用户
     @Test
     public void testGetUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/get").contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -781,7 +787,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.user.userName").value("admin"));
     }
     
-    
+    // 插入
     @Test
     public void testInsert() throws Exception {
         User user = new User();
@@ -806,6 +812,8 @@ public class UserControllerTest {
 			.andReturn().getResponse().getContentAsString();
         log.info("新增用户返回的结果:" + result);
     }
+    
+    // 修改
     @Test
     public void testUpdate() throws Exception {
         User user = new User();
@@ -820,6 +828,7 @@ public class UserControllerTest {
                                 .andReturn().getResponse().getContentAsString();
         log.info("修改用户返回的结果:" + result);
     }
+    // 逻辑删除
     @Test
     public void testDelete() throws Exception {
         String result = mockMvc.perform(MockMvcRequestBuilders.delete("/user/del/14").contentType(MediaType.APPLICATION_JSON_UTF8))
