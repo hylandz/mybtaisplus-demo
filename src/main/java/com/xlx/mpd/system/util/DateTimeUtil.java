@@ -2,6 +2,7 @@ package com.xlx.mpd.system.util;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 时间工具类
@@ -32,6 +33,7 @@ public class DateTimeUtil {
         return LocalDateTime.parse(str, formatter);
     }
     
+    // 秒数转换LocalDateTime
     public static LocalDateTime secondsToDateTime(Long seconds) throws Exception{
         return LocalDateTime.ofEpochSecond(seconds,0,ZoneOffset.ofHours(8));
     }
@@ -75,6 +77,37 @@ public class DateTimeUtil {
     public static String formatWithFormatter(LocalDateTime dateTime, DateTimeFormatter formatter) throws Exception{
         return dateTime.format(formatter);
     }
+    
+    
+    // LocalDateTime转Date
+    public static Date localDateTimeToDate(LocalDateTime localDateTime){
+        return Date.from(localDateTime.atZone(ZoneOffset.ofHours(8)).toInstant());
+    }
+    
+    // Date转LocalDateTime
+    public static LocalDateTime dateToLocalDateTime(Date date){
+        return date.toInstant().atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+    }
+    
+    // LocalDateTime转时间戳(毫秒)
+    public  static  Long localDateTimeToTimeStamp(LocalDateTime localDateTime){
+        return localDateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+    }
+    
+    // LocalDate转时间戳(毫秒)
+    public  static  Long localDateToTimeStamp(LocalDate localDate){
+        return localDate.atStartOfDay(ZoneOffset.ofHours(8)).toInstant().toEpochMilli();
+    }
+    
+    // 时间戳转LocalDateTime
+    public  static  LocalDateTime timeStampToLocalDateTime(Long millSecond){
+        return Instant.ofEpochMilli(millSecond).atZone(ZoneOffset.ofHours(8)).toLocalDateTime();
+    }
+    
+    
+    
+    
+    
     
     public static void main(String[] args) throws Exception {
     
