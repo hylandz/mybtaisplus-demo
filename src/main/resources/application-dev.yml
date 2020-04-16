@@ -2,7 +2,10 @@
 server:
   port: 8887
 
-  # spring配置
+mpd:
+  version: 2.1.0
+
+# spring配置
 spring:
   datasource:
     druid:
