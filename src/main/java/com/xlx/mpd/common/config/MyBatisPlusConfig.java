@@ -1,10 +1,9 @@
-package com.xlx.mpd.common.mpconfig;
+package com.xlx.mpd.common.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @Configuration
-@MapperScan(basePackages = "com.xlx.mpd.system.dao.*.mapper*")
+//@MapperScan(basePackages = "com.xlx.mpd.system.dao.*.mapper*")
 public class MyBatisPlusConfig {
     
     /**

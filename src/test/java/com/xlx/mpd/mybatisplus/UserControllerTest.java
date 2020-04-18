@@ -57,7 +57,7 @@ public class UserControllerTest {
     @Test
     public void testQueryUserByName() throws Exception {
         String username = "F3860565";
-        String result = mockMvc.perform(MockMvcRequestBuilders.get("/user/search").contentType(MediaType.APPLICATION_JSON_UTF8)
+        String result = mockMvc.perform(MockMvcRequestBuilders.get("/user/query").contentType(MediaType.APPLICATION_JSON_UTF8)
                                                          .param("userName", username))
                                          .andExpect(MockMvcResultMatchers.status().isOk())
                                          .andExpect(MockMvcResultMatchers.jsonPath("$.data.user").doesNotExist())

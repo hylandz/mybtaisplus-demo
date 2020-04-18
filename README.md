@@ -538,7 +538,7 @@ spring:
     </bean>
 
     <!--自定义填充字段处理-->
-    <bean id="myMetaObjectHandler" class="com.xlx.mpd.common.mpconfig.MyMetaObjectHandler"/>
+    <bean id="myMetaObjectHandler" class="com.xlx.mpd.common.config.MyMetaObjectHandler"/>
     <!--mp配置-->
     <bean id="mybatisConfig" class="com.baomidou.mybatisplus.core.MybatisConfiguration">
         <property name="mapUnderscoreToCamelCase" value="true"/>

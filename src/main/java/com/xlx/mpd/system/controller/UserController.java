@@ -8,6 +8,9 @@ import com.xlx.mpd.system.dto.ResultDTO;
 import com.xlx.mpd.system.entity.User;
 import com.xlx.mpd.system.enums.ResultCodeEnum;
 import com.xlx.mpd.system.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,8 @@ import java.util.List;
  * @author xlx
  * @since 2020-04-05
  */
-@Controller
+@Api(value = "用户管理API")
+@RestController
 @RequestMapping("/user")
 @Slf4j
 public class UserController {
@@ -34,8 +38,8 @@ public class UserController {
     @Autowired
     private UserService userService;
     
+    @ApiOperation(value = "查询所有用户")
     @GetMapping("/list")
-    @ResponseBody
     public ResultDTO listAll(){
         Page<User> page = userService.page(new Page<>());
         List<User> records = page.getRecords();
@@ -43,23 +47,21 @@ public class UserController {
         return ResultDTO.ok().message("用户列表").data("records",records);
     }
     
-    @GetMapping("/search")
-    @ResponseBody
-    public ResultDTO search(@RequestParam  String userName){
+    @ApiOperation(value = "查询用户")
+    @GetMapping("/query")
+    public ResultDTO search(@RequestParam  @ApiParam("用户名") String userName){
         User one = userService.getOne(new QueryWrapper<User>().eq("user_name", userName));
         
         return one != null ? ResultDTO.ok().message("用户查询").data("user",one) : ResultDTO.setResult(ResultCodeEnum.DATA_NOT_FOUND);
     }
     
     @GetMapping("/get")
-    @ResponseBody
     public ResultDTO getUser(@RequestParam  String userName){
         User user = userService.queryUserByName(userName);
         return ResultDTO.ok().data("user",user);
     }
     
     @PostMapping("/create")
-    @ResponseBody
     public ResultDTO addUser(@RequestBody User user){
         boolean save = userService.save(user);
         log.info("新增用户:" + save);
@@ -67,7 +69,6 @@ public class UserController {
     }
     
     @PutMapping("/modify")
-    @ResponseBody
     public ResultDTO updateUser(@RequestBody User user){
         boolean update = userService.updateById(user);
         log.info("修改用户:" + update);
@@ -75,7 +76,6 @@ public class UserController {
     }
     
     @DeleteMapping("del/{userId}")
-    @ResponseBody
     public ResultDTO deleteUser(@PathVariable Long userId){
         boolean remove = userService.removeById(userId);
         log.info("删除用户:" + remove);

@@ -1,4 +1,4 @@
-package com.xlx.mpd.common.mpconfig;
+package com.xlx.mpd.common.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.xlx.mpd.system.util.DateTimeUtil;
