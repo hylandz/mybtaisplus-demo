@@ -2,8 +2,6 @@
 server:
   port: 8887
 
-mpd:
-  version: 2.1.0
 
 # spring配置
 spring:
@@ -66,3 +64,6 @@ mybatis-plus:
       logic-delete-value: 1
       # 逻辑未删除值(默认为 0)
       logic-not-delete-value: 0
+
+mpd:
+  version: 2.1.0

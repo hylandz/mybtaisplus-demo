@@ -7,10 +7,9 @@ import lombok.Getter;
  *
  * @author xielx at 2020/3/26 20:47
  */
-@Getter
 public enum ResultCodeEnum {
     
-    SUCCESS(true,20000,"成功"),
+    SUCCESS(true,10000,"成功"),
     FAILED(false,20001,"失败"),
     UNKNOWN_ERROR(false,20002,"系统异常"),
     PARAM_ERROR(false,20003,"参数错误"),
@@ -21,16 +20,19 @@ public enum ResultCodeEnum {
     /**
      * 是否响应成功
      */
-    private Boolean isSuccess;
+    @Getter
+    private final Boolean isSuccess;
     /**
      * 状态码
      */
-    private Integer code;
+    @Getter
+    private final Integer code;
 
     /**
      * 状态码描述
      */
-    private String message;
+    @Getter
+    private final String message;
     
     ResultCodeEnum(Boolean isSuccess, Integer code, String message) {
         this.isSuccess = isSuccess;

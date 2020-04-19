@@ -24,12 +24,12 @@
         <!-- 默认为开发配置 -->
         <profile>
             <id>dev</id>
-            <properties>
-                <spring.profiles.active>dev</spring.profiles.active>
-            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
         </profile>
 
         <!-- 生产配置 -->

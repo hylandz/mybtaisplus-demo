@@ -1,6 +1,8 @@
 package com.xlx.mpd.system.dto;
 
 import com.xlx.mpd.system.enums.ResultCodeEnum;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -12,25 +14,30 @@ import java.util.Map;
  * @author xielx at 2020/3/26 20:54
  */
 @Data
+@ApiModel("统一返回结果类")
 public class ResultDTO {
     
     /**
      * 是否响应成功,true:成功
      */
+    @ApiModelProperty(value = "是否响应成功",example = "true")
     private Boolean success;
     /**
      * 状态码
      */
+    @ApiModelProperty(value = "状态码",example = "10002")
     private Integer code;
 
     /**
      * 状态码描述
      */
+    @ApiModelProperty(value = "状态码描述",example = "查询成功")
     private String message;
     
     /**
      * 响应数据
      */
+    @ApiModelProperty(value = "响应数据",example = "{user:[{'userId':1,'deptId':2,'nickName':'zs'}]}")
     private Map<String,Object> data = new HashMap<>();
     
     // 私有构造
